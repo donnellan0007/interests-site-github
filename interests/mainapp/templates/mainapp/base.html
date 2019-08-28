@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load avatar_tags %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+    <title>interests.</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="196x196" href="{% static 'images/favicon-192.png'%} ">
+    <link rel="icon" type="image/png" sizes="160x160" href="{% static 'images/favicon-160.png'%} ">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'images/favicon-96.png'%} ">
+    <link rel="icon" type="image/png" sizes="64x64" href="{% static 'images/favicon-64.png'%} ">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32.png'%} ">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16.png'%} ">
+    <link rel="apple-touch-icon" href="{% static 'favicon-57.png'%} ">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/favicon-114.png'%} ">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/favicon-72.png'%} ">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'images/favicon-144.png'%} ">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'images/favicon-60.png'%} ">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'images/favicon-120.png'%} ">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'images/favicon-76.png'%} ">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'images/favicon-152.png'%} ">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon-180.png'%} ">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="{% static 'images/favicon-144.png'%} ">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+</head>
+<script>
+    /* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "400px";
+  }
+  
+  /* Set the width of the side navigation to 0 */
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+<body>
+ 
+        <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                {% if user.is_authenticated %}
+                {% avatar user 100 class="img-circle img-responsive" id="user_avatar" %}
+                <a href="{% url 'mainapp:profile' %}">My Profile</a>
+                <a href="#">Discover New People</a>
+                <a href="#">Account Settings (Coming Soon!)</a>
+                {% else %}
+                <a href="{% url 'mainapp:user_login' %}">Login</a>
+                {% endif %}
+                {% if user.is_superuser %}
+                <a href="#">You are a superuser</a>
+                {% else %}
+                {% endif %}
+                
+                
+              </div>
+              
+    <nav class="navbar">
+        <li onclick="openNav()"><i class="fas fa-bars"></i></li>
+        <li><a href="#" class="navlink">interests<span id="dot">.</span></a></li>
+        <li><i class="fas fa-search"></i></li>
+        {% if user.is_authenticated %}
+        <!-- <li><a href="{% url 'logout' %}">Logout</a></li> -->
+        <!-- {% avatar user %}
+        <a href="{% url 'avatar_change' %}">Change Avatar</a> -->
+        {% else %}
+
+        {% endif %}
+    </nav>
+
+
+    {% if request.is_IE %}<div class="alert">Watch out! You're using IE, but unfortunately, this website need HTML5 features...</div>{% endif %}
+
+    {% block content %}
+   
+    {% endblock %}
+</body>
+</html>

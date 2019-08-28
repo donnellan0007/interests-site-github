@@ -1,0 +1,24 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+<div class="accounttext">
+    <h1 id='login'>Login to your<span class="mind"> interests </span>account</h1>
+</div>
+    <div class="mainform">
+    <form class="formclass" method="POST" action="{% url 'mainapp:user_login' %}">
+        {% csrf_token %}
+        <div class="formtext">
+        <label for="username">Username:</label>
+        <input required type="text" name="username" id="usernameinput" placeholder="Username">
+        </div>
+
+        <div class="formtext">
+        <label for="password">Password:</label>
+        <input required type="password" name="password" id="usernameinput" placeholder="Password">
+            </div>
+            <div class="submitdiv"><br>
+        <input type="submit" id="submit" value="Login">
+            </div>
+    </form>
+    </div>
+{% endblock %}

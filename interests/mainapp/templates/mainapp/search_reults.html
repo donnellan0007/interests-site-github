@@ -1,0 +1,14 @@
+{% extends 'mainapp/base.html' %}
+
+<h1>Search Results</h1>
+
+<div class="centre">
+        {% for post in object_list %}
+        <div class="post">
+            <h1><a href="{% url 'mainapp:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        </div>
+        <a href="{% url 'mainapp:post_detail' pk=post.pk %}">Comments: {{ post.approve_comments.count }}</a>
+    </div><br>
+    {% empty %}
+      <p>Sorry, no search results were found.</p>
+    {% endfor %}

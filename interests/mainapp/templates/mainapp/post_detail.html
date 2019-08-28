@@ -1,0 +1,42 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+<div class="postcontents">
+<h1 class='posttitle'>{{ post.title }}</h1>
+
+        {% if post.published_date %}
+            <div class="postdate">
+                {{ post.published_date }}
+            </div>
+
+        {% else %}
+            <a class="btn btn-outline-dark" href="{% url 'mainapp:post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+
+      <p class='postcontent' >{{ post.text|safe|linebreaksbr }}</p>
+          </div>
+    <div class="divider"></div><br>
+ <button class="commentbtn"><a class="aclass" href="{% url 'mainapp:add_comment_to_post' pk=post.pk %}">Add comment</a></button>
+
+  <div class="container">
+
+
+  {% for comment in post.comments.all %}
+  <br>
+  {% if user.is_authenticated or comment.approved_comment %}
+  <p>Posted by: <strong>{{ comment.author }}</strong></p> 
+  <p>{{ comment.text|safe|linebreaks }}</p>
+  {{ comment.created_date }}
+  {% if not comment.approved_comment %}
+      <a class="btn btn-primary" href="{% url 'mainapp:comment_remove' pk=comment.pk %}"><span class="fa fa-remove"></span></a>
+      <a class="btn btn-primary" href="{% url 'mainapp:comment_approve' pk=comment.pk %}"><span class="fa fa-check"></span></a>
+  {% endif %}
+ 
+
+
+{% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+</div>
+{% endblock %}

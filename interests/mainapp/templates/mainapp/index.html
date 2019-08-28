@@ -1,0 +1,17 @@
+{% extends "mainapp/base.html" %}
+
+{% block content %}
+
+<div class="main">
+    <div class="mainbit">
+        <h2 id="text">Meet like <span class="mind"> minded </span>people</h2>
+        
+        <form action="{% url 'mainapp:search_results' %}" method="GET" value="{{request.GET.q}}">
+                <!-- <input name="q" value="{{request.GET.q}}" type="text" placeholder="Search"> -->
+                <input name="q" value="{{request.GET.q}}" type="text" id="search" placeholder="Search for people or interests" >
+                
+            </form>
+    </div>
+</div>
+
+{% endblock %}
