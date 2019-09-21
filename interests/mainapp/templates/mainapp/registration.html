@@ -8,10 +8,9 @@
 <h1>Register here!!!</h1>
 <h4>Fill out the form</h4>
 
-<form method="POST" enctype="multipart/form-data">
+<form method="POST">
     {% csrf_token %}
-    {{ user_form.as_p}}
-    {{ profile_form.as_p }}
+    {{ form.as_p}}
     <input class="btn btn-primary" type="submit" value="Register">
 </form>
 

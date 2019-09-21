@@ -1,25 +1,57 @@
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone,timesince
 from django.contrib.auth.models import User
-from PIL import Image   
+from PIL import Image
+
+import tagulous
+from emoji_picker.widgets import EmojiPickerTextInput, EmojiPickerTextarea
+from taggit.managers import TaggableManager
 # Create your models here.
 
 
+
 class UserProfileInfo(models.Model):
-    user = models.CharField(max_length=50) #models.OneToOneField(User,'on_delete')#
-    bio = models.CharField(max_length=150)
-    profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50,blank=True,null=True)
+    last_name = models.CharField(max_length=50,blank=True,null=True)
+    description = models.CharField(max_length=150)
+    image = models.ImageField(upload_to='profile_pics',default='default.jpg')
+    joined_date = models.DateTimeField(blank=True,null=True,default=timezone.now)
+    verified = models.BooleanField( default=False)
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user.username} Profile'
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        
+
+    
 class Post(models.Model):
-    author = models.CharField(max_length=50)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=75)
-    text = models.TextField(max_length=250)
+    text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True,null=True)
+    image = models.ImageField(upload_to='post_images',blank=True,null=True)
+    file = models.FileField(upload_to='post_files',blank=True,null=True)
+    published_date = models.DateTimeField(blank=True,null=True,auto_now_add=True)
+    comments_disabled = models.BooleanField(default=False)
+    NSFW = models.BooleanField(default=False)
+    spoiler = models.BooleanField(default=False)
+
+    tags = TaggableManager()
+    
+    def __str__(self):
+        return self.title
+    
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+
+    
 
     def publish(self):
         self.published_date = timezone.now()
@@ -31,15 +63,15 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('mainapp:post_detail',kwargs={'pk':self.pk})
 
-    def __str__(self):
-        return self.title
+    
+    
 
 class Comment(models.Model):
     post = models.ForeignKey('mainapp.Post',related_name='comments',on_delete=models.CASCADE)
-    author = models.CharField(max_length=25)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=False)
+    approved_comment = models.BooleanField(default=True)
 
     def approve(self):
         self.approved_comment = True

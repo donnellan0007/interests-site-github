@@ -1,0 +1,9 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+{% for tag in tags %}
+    <li><a href="{% url 'mainapp:tagged' tag.slug %}">{{ tag.name }}</a></li>
+{% empty %}
+    <li>No tags</li>
+{% endfor %}
+{% endblock %}

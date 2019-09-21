@@ -5,6 +5,15 @@
     <h1 id='login'>Login to your<span class="mind"> interests </span>account</h1>
 </div>
     <div class="mainform">
+            {% for message in messages %}
+
+            <div class="alert alert-success">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+
+                {{ message }}
+
+            </div>
+    {% endfor %}
     <form class="formclass" method="POST" action="{% url 'mainapp:user_login' %}">
         {% csrf_token %}
         <div class="formtext">
@@ -17,7 +26,16 @@
         <input required type="password" name="password" id="usernameinput" placeholder="Password">
             </div>
             <div class="submitdiv"><br>
+                <div class="remember-me-div">
+                        <ul class="unstyled centered">
+                                <li>
+                                  <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
+                                  <label for="styled-checkbox-1">Remember Me?</label>
+                                </li>
+                              </ul>
+                </div>
         <input type="submit" id="submit" value="Login">
+        <p id="need-account">Don't have an account? Register <a href="{% url 'mainapp:register' %}">here</a></p>
             </div>
     </form>
     </div>

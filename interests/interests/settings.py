@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'mainapp.apps.MainappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #own
-    'mainapp',
     #third party
     'avatar',
+    'taggit',
+    'crispy_forms',
+    'emoji_picker',
+    'emoji',
+    'tagulous',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +140,8 @@ STATIC_DIR = [
     STATIC_DIR,
 ]
 
-MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = 'mainapp/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 LOGIN_URL = 'mainapp/user_login/'
+LOGIN_REDIRECT_URL = 'mainapp:post_list'

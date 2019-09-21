@@ -130,12 +130,7 @@
   #user_avatar {
       border-radius: 50%;
   }
-  .formtext {
-    padding-top: 2%;
-    text-align: center;
-    border: none;
-    font-family: 'Nunito', sans-serif;
-  }
+ 
   #usernameinput {
     border: none;
     border-bottom: solid black 2px;
@@ -186,20 +181,43 @@
   font-family: 'Nunito', sans-serif;
   color: black;
   padding-left: 3%;
-  background: rgb(221, 221, 221);
-  margin: 1%;
-  width: 80%;
-  height: 150px;
-  padding-top: 1%;
+  /* background: rgb(221, 221, 221); */
+  background: rgb(255, 255, 255);
+  -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+    -moz-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+  margin: 2%;
+  width: 70%;
+  padding-top: 2%;
+  padding-bottom: 2%;
   border-radius: 20px;
+}
+@media screen and (max-width: 600px) {
+  .post {
+    width: 100%;
+    padding: 2%;
+    margin: 0%;
+  }
+}
+.tag-list-box {
+  white-space: pre-line;
 }
 .title {
   color: black;
+  font-size: 35px;
+  font-weight: 100;
+  text-decoration: none;
+}
+.title:hover {
+  text-decoration: underline solid black;
 }
 .comment {
   color: black;
+  text-decoration: none;
 }
-
+#readmore {
+  text-decoration: none;
+}
 .postcontents {
   background: #3F51B5;
   margin: 2%;
@@ -213,11 +231,271 @@
 .posttitle {
   margin-left: 2%;
 }
+.controls {
+  margin: 2%;
+}
+.update {
+  background: #3F51B5;
+  padding: 8px 8px;
+  border-radius: 10px;
+  color: white;
+}
+.delete {
+  background: #F22C7D;
+  color: white;
+  padding: 8px 8px;
+  border-radius: 10px;
+}
+.search-form {
+  margin-left: 2%;
+  font-family: 'Nunito', sans-serif;
+  margin-top: 2%;
+}
+.search-box {
+  padding: 16px 16px;
+  -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+    -moz-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+    box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+  font-family: 'Nunito', sans-serif;
+  width: 40%;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+}
 .postcontent {
   margin-left: 2%;
+  resize: none;
+  /* overflow-wrap: break-word; */
+  margin: 2%;
+}
+#need-account {
+  font-family: 'Nunito', sans-serif;
+  padding-top: 2%;
+}
+.user-image {
+  border-radius: 10000px;
+}
+.pub-post {
+  margin-left: 2%;
+}
+.posted-by {
+  margin-left: 2%;
+  /* overflow-wrap: break-word; */
+}
+.nsfw {
+  width: 10%;
+  background: white;
+  border: solid 2px rgb(200, 26, 26);
+  border-radius: 5px;
+  text-align: center;
+}
+.tag-list {
+}
+.tags-list-detail {
+  display: flex;
+  list-style-type: none;
+  list-style: none;
+  white-space: pre-line;
+}
+
+.
+.remember-me-div {
+  text-align: center;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+}
+.remember-me {
+  background: #818181;
+  border-radius: 50px;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+.styled-checkbox {
+  position: absolute;
+  opacity: 0;
+  border-radius: 50px;
+}
+.styled-checkbox + label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+.styled-checkbox + label:before {
+  content: '';
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: text-top;
+  width: 20px;
+  height: 20px;
+  background: rgb(224, 224, 224);
+}
+.styled-checkbox:hover + label:before {
+  opacity: 0.4;
+}
+.styled-checkbox:focus + label:before {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+.styled-checkbox:checked + label:before {
+}
+.styled-checkbox:disabled + label {
+  color: #b8b8b8;
+  cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+  box-shadow: none;
+  background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 9px;
+  background: white;
+  width: 2px;
+  height: 2px;
+  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+  transform: rotate(45deg);
+}
+
+.unstyled {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+li {
+  margin: 10px 0;
+}
+.centered {
+  width: 300px;
+  margin: auto;
+}
+.title {
+  text-align: center;
+  color: black;
+}
+
+.formtext {
+  padding-top: 2%;
+  text-align: center;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+}
+/* Style the Image Used to Trigger the Modal */
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.if-comments {
+  margin-left: 2%;
+  font-family: 'Nunito', sans-serif;
+}
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+.tag-list-style {
+  margin-left: 2%;
+  padding: 5px 20px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  color: white;
+  background:
+      linear-gradient(
+        to left, 
+        rgba(127, 29, 255, 1) 0%,
+        rgba(127, 29, 255, 1) 12%,
+        rgba(242, 44, 125, 1) 47%,
+       rgba(242, 44, 125, 1) 100%
+      )
+      left 
+      bottom
+         
+      no-repeat; 
+      list-style: none;
+      text-decoration: none;
+      list-style-type: none;
+}
+.spoiler {
+  width: 10%;
+  background: white;
+  border: solid 2px rgb(100, 100, 100);
+  border-radius: 5px;
+  text-align: center;
 }
 .postdate {
   margin-left: 2%;
+  display: flex;
 }
 .commentbtn {
   margin-left: 2%;
@@ -244,9 +522,24 @@
   font-family: 'Nunito', sans-serif;
   text-decoration: none;
 }
+.textareaclass {
+  resize: none;
+}
 .commentbtn:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   transform: translateY(-2px);
+}
+#divider_post {
+  width: 40%;
+  background: black;
+  color: black;
+  border-top: black solid 1px;
+}
+.post-image-nsfw {
+  -webkit-filter: blur(20px);
+}
+.post-image-nsfw:hover {
+  -webkit-filter: blur(0px);
 }
 .divider {
   width: 30%;
@@ -260,4 +553,103 @@
 .container {
   margin-left: 2%;
   font-family: 'Nunito', sans-serif;
+}
+.profilepage {
+  margin-left: 2%;
+  margin-top: 2%;
+  font-family: 'Nunito', sans-serif;
+}
+.friendreq {
+  margin-top: 2%;
+  background:
+      linear-gradient(
+        to left, 
+        rgba(127, 29, 255, 1) 0%,
+        rgba(127, 29, 255, 1) 12%,
+        rgba(242, 44, 125, 1) 47%,
+       rgba(242, 44, 125, 1) 100%
+      )
+      left 
+      bottom
+         
+      no-repeat; 
+      padding: 10px 10px;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+}
+.friendreq:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  
+}
+/* The side navigation menu */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 25%;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar p {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+/* Active/current link */
+
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+  margin-left: 25%;
+  padding: 1px 16px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+#posted-by-page {
+  font-size: 30px;
+}
+#ie {
+  background: #3F51B5;
+  margin: 2%;
+  padding: 2%;
+  border-radius: 12px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+} 
+
+ #chrome {
+  display: none;
+  background: #3F51B5;
+  margin: 2%;
+  padding: 2%;
+  border-radius: 12px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+}
+
+.fa-times-circle {
+  color: white;
 }

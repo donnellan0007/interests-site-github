@@ -20,7 +20,8 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from avatar import urls
 from mainapp import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,8 @@ urlpatterns = [
     path('logout/',views.user_logout,name='logout'),
     path('profile/',views.profile_page,name='profile'),
     path('avatar/',include('avatar.urls')),
-    
-] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    path('emoji/',include('emoji.urls')),
+]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
