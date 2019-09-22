@@ -1,0 +1,7 @@
+django
+bcrypt
+django[argon2]
+pillow
+django-taggit
+django-imagekit==2.0.4
+django-tagulous

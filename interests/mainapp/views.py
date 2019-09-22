@@ -46,8 +46,13 @@ def register(request):
     return render(request, 'mainapp/registration.html', {'form': form})
 
 
-@login_required
+@login_required(login_url='/mainapp/user_login/')
 def profile_page(request):
+    return render(request,'mainapp/profile.html')
+
+
+@login_required
+def profile_update(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
@@ -67,7 +72,7 @@ def profile_page(request):
         'u_form': u_form,
         'p_form': p_form
     }
-    return render(request,'mainapp/profile.html',context)
+    return render(request,'mainapp/profile_update.html',context)
 
 
 

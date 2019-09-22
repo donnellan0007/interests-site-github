@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'emoji_picker',
     'emoji',
     'tagulous',
+    'imagekit',
 ]
 
 MIDDLEWARE = [

@@ -3,9 +3,9 @@ from django.urls import reverse
 from django.utils import timezone,timesince
 from django.contrib.auth.models import User
 from PIL import Image
-
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 import tagulous
-from emoji_picker.widgets import EmojiPickerTextInput, EmojiPickerTextarea
 from taggit.managers import TaggableManager
 # Create your models here.
 
@@ -16,7 +16,11 @@ class UserProfileInfo(models.Model):
     first_name = models.CharField(max_length=50,blank=True,null=True)
     last_name = models.CharField(max_length=50,blank=True,null=True)
     description = models.CharField(max_length=150)
-    image = models.ImageField(upload_to='profile_pics',default='default.jpg')
+    image = ProcessedImageField(upload_to='profile_pics',
+                                           processors=[ResizeToFill(150, 150)],
+                                           default='default.jpg',
+                                           format='JPEG',
+                                           options={'quality': 60})
     joined_date = models.DateTimeField(blank=True,null=True,default=timezone.now)
     verified = models.BooleanField( default=False)
 

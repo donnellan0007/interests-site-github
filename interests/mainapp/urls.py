@@ -16,6 +16,7 @@ urlpatterns = [
     path('register/',user_view.register,name='register'),
     path('user_login/',auth_views.LoginView.as_view(template_name='mainapp/login.html'),name='user_login'),
     path('profile/',views.profile_page,name='profile'),
+    path('profile/update/',views.profile_update,name='profile_update'),
     # path('user/<str:username>',views.ProfileView.as_view(),name='profile'),
     path('post/<int:pk>', views.PostDetailView.as_view(), name='post_detail'),
     path('post_new/', views.CreatePostView.as_view(), name='post_new'),
