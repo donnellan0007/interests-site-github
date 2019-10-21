@@ -6,7 +6,7 @@
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
-.navbar {
+#navbar {
     display: flex;
     list-style: none;
     font-size: 40px;
@@ -18,6 +18,44 @@
     background-color: white;
     padding-top: 1%;
     padding-bottom: 1%;
+}
+.navbar {
+  display: flex;
+  list-style: none;
+  font-size: 40px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  justify-content: space-around;
+  text-align: center;
+  box-shadow: 0 14px 28px rgba(0,0,0,0), 0 5px 5px rgba(0,0,0,0.2);
+  background-color: white;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.navbar-new ul {
+  display: flex;
+  font-family: 'Nunito', sans-serif;
+  list-style: none;
+  justify-content: flex-start;
+}
+.navlink-header {
+  font-size: 2rem;
+}
+.navlink-new {
+  margin: 2rem;
+  font-size: 1.2rem;
+}
+.navlink-profile {
+  float: right;  
+}
+
+.darkmode-layer, .darkmode-toggle {
+  z-index: 500;
 }
 .mind {
   background: linear-gradient(to right, #F22C7D 0%, #7F1DFF 100%); 
@@ -73,7 +111,28 @@
       font-family: 'Nunito', sans-serif;
       outline: none;
   }
-
+#search-navbar {
+  text-align: center;
+  padding: 12px 18px;
+  border: none;
+  border-bottom: rgba(58, 56, 56, 0.623) 1px solid;
+  border-radius: 4px;
+  font-family: 'Nunito', sans-serif;
+  width: 60%;
+}
+#search-navbar:focus {
+  /* box-shadow: 0 0 3pt 2pt rgba(117, 70, 179, 0.246); */
+  outline: none;
+  border-bottom: rgb(78, 150, 218) 1.25px solid;
+  width: 75%;
+  text-align: center;
+}
+.button-search {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
   /* The side navigation menu */
 .sidenav {
   font-family: 'Nunito', sans-serif;
@@ -177,16 +236,22 @@
 .centercontent {
   padding-top: 3%;
 }
+.post-text {
+  word-wrap: break-word;
+  white-space: pre-line;
+}
 .post {
   font-family: 'Nunito', sans-serif;
   color: black;
   padding-left: 3%;
+
   /* background: rgb(221, 221, 221); */
   background: rgb(255, 255, 255);
   -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
     -moz-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
     box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
-  margin: 2%;
+  margin-left: 2%;
+  margin-top: 1%;
   width: 70%;
   padding-top: 2%;
   padding-bottom: 2%;
@@ -200,7 +265,29 @@
   }
 }
 .tag-list-box {
-  white-space: pre-line;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+}
+.tag-list-box-profile {
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+  background:
+  linear-gradient(
+    to left, 
+    rgba(127, 29, 255, 1) 0%,
+    rgba(127, 29, 255, 1) 25%,
+    rgba(242, 44, 125, 1) 50%,
+   rgba(242, 44, 125, 1) 100%
+  )
+  left 
+  bottom
+     
+  no-repeat;
+padding: 8px;
+margin: 4px;
+border: none;
+border-radius: 8px;
+color: white;
 }
 .title {
   color: black;
@@ -211,9 +298,30 @@
 .title:hover {
   text-decoration: underline solid black;
 }
+#moderator {
+  background: linear-gradient(to right, #F22C7D 0%, #7F1DFF 100%); 
+	-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+  font-family: 'Nunito', sans-serif;
+}
 .comment {
   color: black;
   text-decoration: none;
+}
+.profile-image-round {
+  border-radius: 50%;
+  margin: 2%;
+}
+#tags-test {
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+.fa-fire {
+  color: rgb(245, 57, 0);
+}
+#trending {
+  color: rgb(245, 57, 0);
 }
 #readmore {
   text-decoration: none;
@@ -289,16 +397,16 @@
   border-radius: 5px;
   text-align: center;
 }
-.tag-list {
+.tag-list-a {
+  
 }
 .tags-list-detail {
   display: flex;
   list-style-type: none;
   list-style: none;
+  word-wrap: break-word;
   white-space: pre-line;
 }
-
-.
 .remember-me-div {
   text-align: center;
   border: none;
@@ -465,6 +573,8 @@ li {
 }
 .tag-list-style {
   margin-left: 2%;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
   padding: 5px 20px;
   border-radius: 3px;
   border: none;
@@ -486,6 +596,7 @@ li {
       text-decoration: none;
       list-style-type: none;
 }
+.tag-list-box {}
 .spoiler {
   width: 10%;
   background: white;
@@ -554,6 +665,22 @@ li {
   margin-left: 2%;
   font-family: 'Nunito', sans-serif;
 }
+.container-home {
+  margin-left: 2%;
+  font-family: 'Nunito', sans-serif;
+}
+.create-post-link {
+  margin-left: 2%;
+  font-family: 'Nunito', sans-serif;
+  padding: 12px 12px;
+  background: #3F51B5;
+  margin-top: 2%;
+  color: white;
+  border-radius: 12px;
+}
+.list-of-groups {
+  background: red;
+}
 .profilepage {
   margin-left: 2%;
   margin-top: 2%;
@@ -583,18 +710,20 @@ li {
   
 }
 /* The side navigation menu */
-.sidebar {
+#sidebar {
   margin: 0;
   padding: 0;
   width: 25%;
   background-color: #f1f1f1;
   position: fixed;
-  height: 100%;
+  height: 100vh;
+  z-index: 0;
   overflow: auto;
+  font-family: 'Nunito', sans-serif;
 }
 
 /* Sidebar links */
-.sidebar p {
+#sidebar p {
   display: block;
   color: black;
   padding: 16px;
@@ -608,22 +737,30 @@ li {
 div.content {
   margin-left: 25%;
   padding: 1px 16px;
+  font-family: 'Nunito', sans-serif;
 }
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 700px) {
-  .sidebar {
+  #sidebar {
     width: 100%;
     height: auto;
     position: relative;
   }
-  .sidebar a {float: left;}
+  #sidebar a {float: left;}
   div.content {margin-left: 0;}
+}
+@media screen and (max-width: 700px) {
+  .navbar-logo {
+    width: 15%;
+    height: 15%;
+    position: relative;
+  }
 }
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
 @media screen and (max-width: 400px) {
-  .sidebar a {
+  #sidebar a {
     text-align: center;
     float: none;
   }
@@ -632,6 +769,7 @@ div.content {
   font-size: 30px;
 }
 #ie {
+  display: flex;
   background: #3F51B5;
   margin: 2%;
   padding: 2%;
@@ -653,3 +791,98 @@ div.content {
 .fa-times-circle {
   color: white;
 }
+
+
+.tags-list-tag-page {
+  font-family: 'Nunito', sans-serif;
+  margin-left: 2%;
+}
+/* Player Skin Designer for Video.js http://videojs.com To customize the player skin edit the CSS below. Click "details" below to add comments or questions. This file uses some SCSS. Learn more at http://sass-lang.com/guide) This designer can be linked to at: https://codepen.io/heff/pen/EarCt/left/?editors=010 */
+ 
+.video-js {
+	/* The base font size controls the size of everything, not just text. All dimensions use em-based sizes so that the scale along with the font size. Try increasing it to 15px and see what happens. */
+	 font-size: 10px;
+	/* The main font color changes the ICON COLORS as well as the text */
+	 color: #fff;
+}
+/* The "Big Play Button" is the play button that shows before the video plays. To center it set the align values to center and middle. The typical location of the button is the center, but there is trend towards moving it to a corner where it gets out of the way of valuable content in the poster image.*/
+ .vjs-default-skin .vjs-big-play-button {
+	/* The font size is what makes the big play button...big. All width/height values use ems, which are a multiple of the font size. If the .video-js font-size is 10px, then 3em equals 30px.*/
+	 font-size: 3em;
+	/* We're using SCSS vars here because the values are used in multiple places. Now that font size is set, the following em values will be a multiple of the new font size. If the font-size is 3em (30px), then setting any of the following values to 3em would equal 30px. 3 * font-size. */
+	/* 1.5em = 45px default */
+	 line-height: 1.5em;
+	 height: 1.5em;
+	 width: 3em;
+	/* 0.06666em = 2px default */
+	 border: 0.06666em solid #fff;
+	/* 0.3em = 9px default */
+	 border-radius: 1em;
+	/* Align center */
+	 left: 50%;
+	 top: 50%;
+	 margin-left: -1.5em;
+	 margin-top: -0.75em;
+}
+/* The default color of control backgrounds is mostly black but with a little bit of blue so it can still be seen on all-black video frames, which are common. */
+ .video-js .vjs-control-bar, .video-js .vjs-big-play-button, .video-js .vjs-menu-button .vjs-menu-content {
+	/* IE8 - has no alpha support */
+	 background-color: #342d36;
+	/* Opacity: 1.0 = 100%, 0.0 = 0% */
+	 background-color: rgba(52, 45, 54, 0.7);
+}
+/* Slider - used for Volume bar and Progress bar */
+ .video-js .vjs-slider {
+	 background-color: #8c7b91;
+	 background-color: rgba(140, 123, 145, 0.5);
+}
+/* The slider bar color is used for the progress bar and the volume bar (the first two can be removed after a fix that's coming) */
+ .video-js .vjs-volume-level, .video-js .vjs-play-progress, .video-js .vjs-slider-bar {
+	 background: #fff;
+}
+/* The main progress bar also has a bar that shows how much has been loaded. */
+ .video-js .vjs-load-progress {
+	/* For IE8 we'll lighten the color */
+	 background: #c8c0cb;
+	/* Otherwise we'll rely on stacked opacities */
+	 background: rgba(140, 123, 145, 0.5);
+}
+/* The load progress bar also has internal divs that represent smaller disconnected loaded time ranges */
+ .video-js .vjs-load-progress div {
+	/* For IE8 we'll lighten the color */
+	 background: #fff;
+	/* Otherwise we'll rely on stacked opacities */
+	 background: rgba(140, 123, 145, 0.75);
+}
+ 
+
+/* Profile stuff */
+
+.profile-page-container {
+  margin-top: 2rem;
+  display: flex;
+}
+
+.profile-page-info {
+  margin-left: 4rem;
+}
+
+#username-profile-page {
+  font-size: 3rem;
+}
+.profile-page-user-desc-box {
+  background: #818181;
+  padding: 2rem;
+  width: 35%;
+}
+@media screen and (max-width:600px){
+  .profile-page-container{
+    display: block;
+    margin: 0;
+  }
+}
+
+.user-post-user-profile-page {
+}
+
+/* End profile */

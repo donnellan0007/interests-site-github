@@ -7,6 +7,35 @@ console.log(`
 `);
 
 
+  var options = {
+    bottom: '64px', // default: '32px'
+    right: 'unset', // default: '32px'
+    left: '32px', // default: 'unset'
+    time: '0.5s', // default: '0.3s'
+    mixColor: '#fff', // default: '#fff'
+    backgroundColor: '#fff',  // default: '#fff'
+    buttonColorDark: '#100f2c',  // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    saveInCookies: false, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+  }
+window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("sidebar");
+var ie = document.getElementById("ie")
+var sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    ie.classList.add("sticky")
+  } else {
+    ie.classList.remove("sticky");
+    ie.classList.add("navbar")
+  }
+}
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
 
 
 console.log('Hello');                                  
@@ -27,6 +56,15 @@ function demoDisplay() {
 document.getElementById("ie").style.display = "none";
 }
 
+
+function openSearch() {
+  document.getElementById("mySearch").style.width = "400px";
+}
+
+/* Set the width of the side navigation to 0 */
+// function closeNav() {
+//   document.getElementById("mySidenav").style.width = "0";
+// }
 
 
  /* if (GetIEVersion() > 0){

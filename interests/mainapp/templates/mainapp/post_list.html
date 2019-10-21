@@ -1,11 +1,48 @@
 {% extends 'mainapp/base.html' %}
 {% load staticfiles %}
-{% block content %}
-
+{% load humanize %}
+{% load hitcount_tags %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% block pre_post_content %}
 <form class="search-form" action="{% url 'mainapp:search_results' %}" method="GET" value="{{request.GET.q}}">
     <input class="search-box" name="q" value="{{request.GET.q}}" type="text" placeholder="Search">
 </form>
+{% if user.is_authenticated %}
+<br><br>
+<a class="create-post-link" href="{% url 'mainapp:post_new' %}">Create Post&nbsp;&nbsp;<i class="fas fa-pen"></i></a>
+<br>
+{% else %}
+<br><br>
+<a class="create-post-link" href="{% url 'mainapp:user_login' %}">Login or Signup<i class="fas fa-sign-in-alt"></i></a>
+<br>
+{% endif %} <br>
 
+{% if user.is_authenticated %}
+<p>People to connect with</p>
+{% for user in users %}
+<a href="{% url 'mainapp:view_profile_with_pk' pk=user.pk %}">
+    <p>{{ user.username }}</p>
+</a>
+{% if not user in friends %}
+<a href="{% url 'mainapp:change_friends' operation='add' pk=user.pk %}">
+    <button type="button">Add friend</button>
+</a>
+{% endif %}
+{% endfor %} <br>
+
+<p>Friends: <strong>{{ friends.count }}</strong></p>
+
+{% for friend in friends %}
+<a href="{% url 'mainapp:view_profile_with_pk' pk=friend.pk %}">
+    <p>{{ friend.username }}</p>
+</a>
+<a href="{% url 'mainapp:change_friends' operation='remove' pk=friend.pk %}">
+    <button type="button">Remove Friend</button>
+</a>
+{% empty %}
+<p>You have no friends</p>
+{% endfor %}
+{% endif %}
 <!-- {% for tag in tags %}
 <div class="tag-list">
     <li><a href="{% url 'mainapp:tagged' tag.slug %}">{{ tag.name }}</a></li>
@@ -13,46 +50,63 @@
     <li>No tags</li>
 </div>
 {% endfor %} -->
+<br><br><br>
+<script>
+    $(document).ready(function(){
+      $("button").click(function(){
+        $("#list-of-groups").toggle();
+      });
+    });
+    </script>
+<!-- <button>Toggle between hiding and showing the paragraphs</button>
+<div class="list-of-groups">
+{% if request.user.is_authenticated %}
+<div class="group-list-home">
+<h3>Your Groups</h3>
+    {% for user_group in user_groups %}
+    <li>
+        <a href="{% url 'mainapp:single' slug=user_group.slug %}">{{ user_group.name }}</a>
+    </li>
+    {% endfor %}
+    </div>
+{% endif %}
 
-{% for user in users %}
-<h3>{{ user.username }}</h3>
+<h3>All Groups</h3>
+{# {% get_other_groups as other_groups %} #}
+{% for group in all_groups %}
+    <li><a href="{% url 'mainapp:single' slug=group.slug %}">{{ group.name }}</a></li>
 {% endfor %}
+</div> -->
 
-<div class="centercontent">
-    {% for post in post_list %}
-    <div class="post">
-        
-        <p>Posted by <a href="{% url 'mainapp:user-posts' post.author.username %}"><strong>{{ post.author }}</strong></a>{% if post.author.is_superuser %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %} {{ post.published_date|timesince }} ago</p>
-        <br><hr id="divider_post"><br>
-        <h1><a title="View {{ post.title }}" class="title" href="{% url 'mainapp:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>&nbsp;{% if post.NSFW %} <div class="nsfw"><p>NSFW</p></div> 
-        <br>
-        <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk %}">Read this NSFW Post&nbsp;<i class="fas fa-angle-right"></i></a></p>
-        {% elif post.spoiler %}<div class="spoiler"><p>Spoiler</p></div> 
-        <br>
-        <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk %}">Read this post which contains a spoiler&nbsp;<i class="fas fa-angle-right"></i></a></p>
-        {% elif post.spoiler and post.NSFW %}<div class="nsfw"><p>NSFW</p></div> <div class="spoiler"><p>Spoiler</p></div> 
-        <br>
-        <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk %}">Woah! This post is a double wammy of NSFW and has a spoiler! Proceed with care!&nbsp;<i class="fas fa-angle-right"></i></a></p>
-        {% else %}
-        {{ post.text|safe|linebreaksbr|truncatechars_html:50 }}
-        <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk %}">Read More&nbsp;<i class="fas fa-angle-right"></i></a></p>
-        {% endif %}
-        <br>
-        <div class="tags-list-detail">
-            {% for tag in post.tags.all %}
-            <li class="tag-list-box"><a class="tag-list-style" href="{% url 'mainapp:tagged' tag.slug %}">{{ tag.name|safe|linebreaksbr }}</a></li>&nbsp;&nbsp;
-            {% empty %}
-            <li>No tags</li>
-            {% endfor %}
-            </div>
-        <br>
-       
-        
-    <br>
-    <a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' pk=post.pk %}">Comments: {{ post.approve_comments.count }}</a>
-</div>
-</div><br>
-
-{% endfor %}
 {% endblock %}
-<!--The way this code works is-->
+
+
+{% block content %}
+<div class="centercontent">
+    {% for post in posts %}
+    {% include 'mainapp/_post.html' %}
+{% endfor %}
+</div> 
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock %}

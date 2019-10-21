@@ -12,6 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
     <title>interests.</title>
+    <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet">
+
+  <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+  <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico">
@@ -35,6 +39,8 @@
     <meta name="msapplication-TileImage" content="{% static 'images/favicon-144.png'%} ">
     <meta name="msapplication-config" content="/browserconfig.xml">
     <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.4.0/lib/darkmode-js.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 </head>
@@ -58,22 +64,49 @@
         return false;
    });
   </script>
+
+<script>
+  var options = {
+    bottom: '64px', // default: '32px'
+    right: 'unset', // default: '32px'
+    left: '32px', // default: 'unset'
+    time: '0.5s', // default: '0.3s'
+    mixColor: '#fff', // default: '#fff'
+    backgroundColor: '#fff',  // default: '#fff'
+    buttonColorDark: '#100f2c',  // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    saveInCookies: false, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+  }
   
-<body>
-    <!-- <div id="ie1">
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+  
+</script>
+<body> 
+  <!-- {% if user.is_superuser %}
+  <div id="ie">
          <a href="javascript:void(0)" class="closebtn" onclick="demoDisplay()"><i class="far fa-times-circle"></i></a> 
-        You are using Internet Explorer. Please upgrade to a modern browser, such as Chrome or Firefox. The website will not work properly on Internet Explorer
+        <p>Admin Tools</p>
+        <a href="{% url 'admin:index' %}">Admin Panel</a>
       </div>
-       -->
+      {% endif %} -->
   <div class="bodydiv">
         
         <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                 {% if user.is_authenticated %}
+                <form action="{% url 'mainapp:search_results_user' %}" method="GET" value="{{request.GET.q}}">
+                    <!-- <input name="q" value="{{request.GET.q}}" type="text" placeholder="Search"> -->
+                    <input required name="q" value="{{request.GET.q}}" type="text" id="search-navbar" placeholder="Search for people">
+                </form>
                 <a href="{% url 'mainapp:profile' %}">My Profile</a>
                 <a href="{% url 'mainapp:post_new' %}">Make a new post</a>
                 <a href="#">Discover New People</a>
                 <a href="#">Account Settings (Coming Soon!)</a>
+                <a href="{% url 'logout' %}">Logout</a>
+                
                 {% else %}
                 <a href="{% url 'mainapp:user_login' %}">Login/Register</a>
                 {% endif %}
@@ -85,26 +118,49 @@
                 
               </div>
               
-    <nav class="navbar">
+              
+    <nav id="navbar">
         <li onclick="openNav()"><i class="fas fa-bars"></i></li>
-        <li><a href="{% url 'mainapp:post_list' %}" class="navlink">interests<span id="dot">.</span></a></li>
-        <li><i class="fas fa-search"></i></li>
+        <!-- <li><a class="navbar-text-logo" href="{% url 'mainapp:post_list' %}" class="navlink">interests<span class="navbar-text-logo" id="dot">.</span></a></li> -->
+        <img class="navbar-logo" src="{% static 'images/logos/interests.png' %}" alt="" srcset="" width="5%" height="5%">
+        <li onclick="openSearch()"><i class="fas fa-search"></i></li>
         {% if user.is_authenticated %}
         <!-- <li><a href="{% url 'logout' %}">Logout</a></li> -->
         <!-- {% avatar user %}
         <a href="{% url 'avatar_change' %}">Change Avatar</a> -->
+        
         {% else %}
 
         {% endif %}
     </nav>
+<!--     
+    <div class="navbar-container">
+    <nav class="navbar-new">
+      <ul class="navbar-items">
+        <li class="navlink-header">interests.</li>
+        <li class="navlink-new">your feed</li>
+        <li class="navlink-new">discover</li>
+        <li class="navlink-new">your profile</li>
+      </ul>
+    </nav>
+    </div> -->
 
 
-    {% if request.is_IE %}<div class="alert">Watch out! You're using IE, but unfortunately, this website need HTML5 features...</div>{% endif %}
+    <!-- {% if request.is_IE %}<div class="alert">Watch out! You're using IE, but unfortunately, this website need HTML5 features...</div>{% endif %} -->
 
+
+    {% block pre_post_content %}
+    {% endblock %}
     {% block content %}
     {% load staticfiles %}
     {% load avatar_tags %}
     {% endblock %}
+    
     </div>
+    
+    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
+    <script>
+      
+    </script>
 </body>
 </html>

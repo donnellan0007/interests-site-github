@@ -31,6 +31,8 @@ urlpatterns = [
     path('profile/',views.profile_page,name='profile'),
     path('avatar/',include('avatar.urls')),
     path('emoji/',include('emoji.urls')),
+    path('hitcount/', include('hitcount.urls', namespace='hitcount')),
+    path('', include('django_private_chat.urls')),
 ]
 
 if settings.DEBUG:

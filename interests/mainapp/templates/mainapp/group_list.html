@@ -1,0 +1,26 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <a href="{% url 'mainapp:create_group' %}">Create a new group</a>
+{% else %}
+    <a href="{% url 'mainapp:user_login' %}">Login to make a group</a>
+{% endif %}
+
+{% for group in object_list %}
+<div class="group-list">
+<a href="{% url 'mainapp:single' slug=group.slug %}">
+    <h3>{{ group.name }}</h3>
+    <p>{{ group.description|safe }}</p>
+    <small>
+        {{ group.members.count }} member{{ group.members.count|pluralize }}
+    </small>
+    <small>
+        {{ group.posts.count }} post{{ group.posts.count|pluralize }}
+    </small>
+</a>
+</div><br><br>
+{% endfor %}
+
+{% endblock %}

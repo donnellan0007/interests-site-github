@@ -1,0 +1,7 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+<h1>Generate a random number</h1>
+<a href="{% url 'mainapp:random_number' %}">Generate random number</a>
+{{ random_number }}
+{% endblock %}

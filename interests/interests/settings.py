@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #own
@@ -46,10 +47,17 @@ INSTALLED_APPS = [
     'crispy_forms',
     'emoji_picker',
     'emoji',
+    'django_private_chat',
     'tagulous',
     'imagekit',
+    'django_countries',
+    'channels',
+    'hitcount',
+    'bootstrap4'
 ]
-
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,6 +69,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'interests.urls'
+
+ASGI_APPLICATION = 'interests.routing.application'
 
 TEMPLATES = [
     {
@@ -80,7 +90,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'interests.wsgi.application'
 
-
+AUTH_PROFILE_MODULE = "mainapp.UserProfileInfo"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 

@@ -1,11 +1,14 @@
 {% extends 'mainapp/base.html' %}
 {% load crispy_forms_tags %}
+{% load bootstrap4 %}
 {% block content %}
 <h1>Make a new post to share with the world</h1>
-<form class="post-form" method="post" enctype="multipart/form-data">
+<form class="post-form form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    {% endbuttons %}
     <script>var editor = new MediumEditor('.editable');</script>
 </form>
 {% endblock %}

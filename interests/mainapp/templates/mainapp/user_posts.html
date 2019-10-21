@@ -1,16 +1,13 @@
 {% extends 'mainapp/base.html' %}
-
+{% load static %}
+<script src="{% static 'js/app.js' %}"></script>
 {% block content %}
-<div class="sidebar">
+<div id="sidebar">
         <p class="active" href="#">{{ view.kwargs.username }}</p>
         <button class="commentbtn"><a class="aclass" href="#">Connect with {{ view.kwargs.username }}</a></button>
-        
+        <p>{{ user.userprofileinfo.description }}</p>
         <p>Lorem</p>
       </div>
-<!-- <div class="profilepage">
-<h1 id="posted-by-page">Posts by {{ view.kwargs.username }}</h1><br>
-<a href="#" class="friendreq">Connect with {{ view.kwargs.username }}</a>
-</div><br><br> -->
 
 
 {% for post in posts %}
@@ -33,4 +30,18 @@
                   </div>
                   </div>
 {% endfor %}
+<script>
+    window.onscroll = function() {myFunction()};
+    
+    var navbar = document.getElementById("sidebar");
+    var sticky = navbar.offsetTop;
+    
+    function myFunction() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky")
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+    </script>
 {% endblock %}

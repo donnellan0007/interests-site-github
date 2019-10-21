@@ -1,9 +1,12 @@
 {% extends 'mainapp/base.html' %}
 
 {% block content %}
+<div class="tags-list-tag-page">
+    <h2>List of interests</h2>
 {% for tag in tags %}
-    <li><a href="{% url 'mainapp:tagged' tag.slug %}">{{ tag.name }}</a></li>
+    <li><a href="{% url 'mainapp:tagged' tag.slug %}">{{ tag.name|safe }}</a></li>
 {% empty %}
     <li>No tags</li>
 {% endfor %}
+</div>
 {% endblock %}

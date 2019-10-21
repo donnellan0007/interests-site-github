@@ -1,0 +1,14 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+
+<div class="search-container">
+
+            {% for user in object_list %}
+            
+            {% include 'mainapp/_users.html' %}
+       
+    {% empty %}
+      <p>Sorry, no search results were found.</p>
+    {% endfor %}
+  
+{% endblock %}
