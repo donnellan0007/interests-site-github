@@ -18,8 +18,6 @@ import uuid
 
 class UserProfileInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,max_length=30)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
     description = models.TextField(max_length=150)
     country = CountryField()
     website = models.URLField(max_length=200,blank=True,null=True)
@@ -149,6 +147,32 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+class Reply(models.Model):
+    comment = models.ForeignKey('mainapp.Comment',related_name='replies',on_delete=models.CASCADE)
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name_plural = "replies"
+
+    def get_absolute_url(self):
+        return reverse('post_list')
+
+    def __str__(self):
+        return self.text
+
+
+class SendMessageToAdmin(models.Model):
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    title = models.CharField(max_length=25)
+    text = models.TextField(max_length=100)
+
+    def get_absolute_url(self):
+        return reverse('mainapp:post_list')
+
+    def __str__(self):
+        return self.text
 
 class Friend(models.Model):
     users = models.ManyToManyField(User)

@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixi
 from django.db import IntegrityError
 from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required
-from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference
+from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference,Reply,SendMessageToAdmin
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
@@ -24,7 +24,7 @@ from hitcount.views import HitCountDetailView
 from braces.views import SelectRelatedMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import View
-from mainapp.forms import UserCreationForm,UserProfileInfoForms,UserUpdateForm,ProfileUpdateForm
+from mainapp.forms import UserCreationForm,UserProfileInfoForms,UserUpdateForm,ProfileUpdateForm,ReplyForm,AdminMessageForm
 import random
 from django.core.paginator import Paginator
 from django.conf.urls import (
@@ -199,13 +199,6 @@ class SearchResultsViewUsers(ListView):
     
     def get_queryset(self): # new
         query = self.request.GET.get('q')
-        # if query == 'Koalo':
-        #     print('Koalo was searched for')
-        #     koalo = 'You found Koalo!'
-        #     context = {
-        #         'You found Koalo!':koalo
-        #     }
-        #     return context
         return User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
         
         
@@ -332,6 +325,15 @@ class CreatePostView(LoginRequiredMixin,CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+class SendAdminMessage(LoginRequiredMixin,CreateView):
+    login_url = reverse_lazy('mainapp:user_login')
+    redirect_field_name = 'mainapp/post_details.html'
+    form_class = AdminMessageForm
+    model = SendMessageToAdmin
+    def form_valid(self,form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 @login_required(login_url='/mainapp/user_login/')
 def add_comment_to_post(request,pk):
     post = get_object_or_404(Post,pk=pk)
@@ -350,6 +352,28 @@ def add_comment_to_post(request,pk):
     
 def get_queryset(self):
     return Comment.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
+
+@login_required(login_url='/mainapp/user_login/')
+def add_reply_to_comment(request,pk):
+    comment = get_object_or_404(Comment,pk=pk)
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.comment = comment
+            reply.author = request.user
+            reply.save()
+            return redirect('mainapp:post_detail',pk=comment.pk)
+    else:
+        form = ReplyForm()
+    return render(request,'mainapp/reply_form.html',{'form':form})
+def get_queryset(self):
+    return Reply.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
+
+# @login_required(login_url='/mainapp/user_login/')
+# # def add_reply_to_reply(request,pk):
+ #     reply
+
 
 class PostDeleteView(LoginRequiredMixin,DeleteView,UserPassesTestMixin):
     model = Post

@@ -777,7 +777,10 @@ div.content {
   color: white;
   font-family: 'Nunito', sans-serif;
 } 
-
+.reply-li {
+  margin-left: 2%;
+  list-style: disc;
+}
  #chrome {
   display: none;
   background: #3F51B5;

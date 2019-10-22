@@ -4,7 +4,7 @@ from . import views as user_view
 from .views import SearchResultsView,UserPostListView,PostUpdateView,PostDeleteView,postpreference
 from django.conf import settings
 from django.conf.urls.static import static
-from mainapp.forms import UserCreationForm,UserProfileInfoForms,UserUpdateForm,ProfileUpdateForm
+from mainapp.forms import UserCreationForm,UserProfileInfoForms,UserUpdateForm,ProfileUpdateForm,ReplyForm
 from django.contrib.auth import views as auth_views
 app_name = 'mainapp'
 
@@ -25,6 +25,7 @@ urlpatterns = [
     path('drafts/', views.DraftListView.as_view(), name='post_draft_list'),
     path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
+    path('comment/<int:pk>/reply',views.add_reply_to_comment,name='add_reply_to_comment'),
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
     path('posts_search/',views.SearchResultsView.as_view(),name='search_results'),
@@ -41,6 +42,7 @@ urlpatterns = [
     path('connect/<operation>/<pk>',views.change_friends,name='change_friends'),
     path('random_number/',views.random,name='random_number'),
     path('<postid>/preference/<userpreference>/',views.postpreference,name='postpreference'),
+    path('admin/send/',views.SendAdminMessage.as_view(),name='send_admin_msg'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

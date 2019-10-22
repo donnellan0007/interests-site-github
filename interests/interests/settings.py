@@ -51,9 +51,8 @@ INSTALLED_APPS = [
     'tagulous',
     'imagekit',
     'django_countries',
-    'channels',
     'hitcount',
-    'bootstrap4'
+    'bootstrap4',
 ]
 CHAT_WS_SERVER_HOST = 'localhost'
 CHAT_WS_SERVER_PORT = 5002
@@ -69,8 +68,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'interests.urls'
-
-ASGI_APPLICATION = 'interests.routing.application'
 
 TEMPLATES = [
     {

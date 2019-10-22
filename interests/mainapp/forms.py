@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfileInfo, Post, Comment
+from .models import UserProfileInfo, Post, Comment, Reply, SendMessageToAdmin
 from emoji_picker.widgets import EmojiPickerTextInput, EmojiPickerTextarea
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
@@ -23,15 +23,26 @@ class PostForm(forms.ModelForm):
             'text':forms.Textarea(attrs={'class':'textareaclass editable'}),
             
         }
-    # def clean_tags(self):
+        def __init__(self, *args, **kwargs):
+            super(PostForm, self).__init__(*args, **kwargs)
+            self.fields['image'].required = False
+            self.fields['file'].required = False
+        # def clean_tags(self):
     #     tn = self.cleaned_data.get('tags', [])
     #     if len(tn) > 3:
     #         raise ValidationError('Invalid number of tags')
 
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        self.fields['image'].required = False
-        self.fields['file'].required = False
+class AdminMessageForm(forms.ModelForm):
+    class Meta():
+        model = SendMessageToAdmin
+        fields = ['title','text']
+
+        def __init__(self,*args,**kwargs):
+            super(AdminMessageForm,self).__str__(*args,**kwargs)
+
+    
+
+    
     
     
 
@@ -41,6 +52,14 @@ class CommentForm(forms.ModelForm):
     class Meta():
         model = Comment
         fields = ['text',]
+        widgets = {
+            'text':forms.Textarea(attrs={'class':'textareaclass'}),
+        }
+
+class ReplyForm(forms.ModelForm):
+    class Meta():
+        model = Reply
+        fields = ['text']
         widgets = {
             'text':forms.Textarea(attrs={'class':'textareaclass'}),
         }
@@ -55,4 +74,4 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfileInfo
-        fields = ['first_name','last_name','image','country','description','tags','website']
+        fields = ['image','description','tags','website']

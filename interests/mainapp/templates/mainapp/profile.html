@@ -12,7 +12,7 @@
     <p class="active" href="#">{{ user }} {% if user.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15"> {% endif %}  {% if user.userprofileinfo.moderator %} <span title="Moderator" id="moderator">[M]</span>{% endif %}</p>
     <p>{{ user.first_name }} {{ user.last_name }}</p>
     {% if request.user == user %}
-    <button class="commentbtn"><a class="aclass" href="#">You can't connect with yourself silly</a></button>
+    <!-- <button class="commentbtn"><a class="aclass" href="#">You can't connect with yourself silly</a></button> -->
     {% else %}
     {% if not user in friends %}
     <button class="commentbtn"><a class="aclass" href="{% url 'mainapp:change_friends' operation='add' pk=user.pk %}">Connect</a></button>
@@ -21,7 +21,7 @@
     {% endif %}
     {% endif %}
     <p>{{ user.userprofileinfo.description }}</p>
-    <p><i class="flag2x {{ user.userprofileinfo.country.flag_css }}"></i></p>
+    <!-- <p><i class="flag2x {{ user.userprofileinfo.country.flag_css }}"></i></p> -->
     {% if user.userprofileinfo.joined_date %}
     <p>{{ user.userprofileinfo.joined_date|date:"F d Y" }}</p>
     {% elif user.userprofileinfo.owner %}
