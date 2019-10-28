@@ -10,6 +10,7 @@ from django.template.defaultfilters import slugify
 from taggit.managers import TaggableManager
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from pyuploadcare.dj.models import ImageField
 from django_countries.fields import CountryField
 import uuid
 # Create your models here.
@@ -17,6 +18,14 @@ import uuid
 
 
 class UserProfileInfo(models.Model):
+    MALE = 'Male'
+    FEMALE = 'Female'
+
+    GENDER = [
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+    ]
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE,max_length=30)
     description = models.TextField(max_length=150)
     country = CountryField()
@@ -27,6 +36,11 @@ class UserProfileInfo(models.Model):
                                            format='JPEG',
                                            options={'quality': 60})
     joined_date = models.DateTimeField(blank=True,null=True,default=timezone.now)
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDER,
+        default=MALE,
+    )
     verified = models.BooleanField(default=False)
     moderator = models.BooleanField(default=False)
     owner = models.CharField(max_length=100,default="",blank=True,null=True)
@@ -91,13 +105,13 @@ class Post(models.Model):
     group = models.ForeignKey(Group,null=True,blank=True,related_name='posts',on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
     image = models.ImageField(upload_to='post_images',blank=True,null=True)
+    # image = ImageField(blank=True, manual_crop="")
     file = models.FileField(upload_to='post_files',blank=True,null=True)
     published_date = models.DateTimeField(blank=True,null=True,auto_now_add=True)
     comments_disabled = models.BooleanField(default=False)
     NSFW = models.BooleanField(default=False)
     spoiler = models.BooleanField(default=False)
     likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
 
     tags = TaggableManager()
     

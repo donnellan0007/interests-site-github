@@ -2,7 +2,7 @@
 {% load hitcount_tags %}
 <div class="post">
         
-    <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk %}"><strong title="{{ post.author.first_name }} {{ post.author.last_name }}">{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %} {% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %}  {{ post.published_date|timesince }} ago {% if post.group %}in <a href="{% url 'mainapp:single' slug=post.group.slug %}">{{ post.group.name }}</a>{% endif %}</p>
+    <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk %}"><strong title="{{ post.author.first_name }} {{ post.author.last_name }}">{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %} {% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %} {{ post.published_date|timesince }} ago {% if post.group %}in <a href="{% url 'mainapp:single' slug=post.group.slug %}">{{ post.group.name }}</a>{% endif %}</p>
     <br>
     <!-- {% if hitcount.total_hits >= 50 %}
   <p title="This post has gained over 50 views, meaning it is trending" id="trending"><i class="fas fa-fire"></i> {{ hitcount.total_hits }} Views</p>

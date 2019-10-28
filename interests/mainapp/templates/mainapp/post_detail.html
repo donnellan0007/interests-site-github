@@ -47,17 +47,13 @@
         {{ post.text|safe|linebreaksbr }}
 </div>
         <br>
+        <form method="post">
+          {% csrf_token %}
+          <a class="btn" href="{% url 'mainapp:postpreference' post.id %}">Like {{ post.likes }}</a>
+      </form>
         <div class="tags-list-detail">
-            <!-- <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{ post.likes }}   |   <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{ post.dislikes }}
-            <form id="likebutton" method="POST" action="/mainapp/{{ post.id }}/preference/1/">
-              {% csrf_token %}
-              <input type="hidden">
-              </form>
+            
               
-              <form id="dislikebutton" method="POST" action="/mainapp/{{ post.id}}/preference/2/">
-              {% csrf_token %}
-              <input type="hidden">
-              </form> -->
         {% for tag in post.tags.all|slice:"0:5" %}
         <a class="tag-list-a" href="{% url 'mainapp:tagged' tag.slug %}" class="tag-list-box"><button class="tag-list-style">{{ tag.name|safe|truncatechars_html:10 }}</button></a>&nbsp;&nbsp;
         <!-- <p id="tags-test">{{ tag.name|linebreaksbr }}</p>&nbsp;&nbsp; -->

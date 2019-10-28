@@ -41,7 +41,7 @@ urlpatterns = [
     path('leave/<slug>/',views.LeaveGroup.as_view(),name='leave'),
     path('connect/<operation>/<pk>',views.change_friends,name='change_friends'),
     path('random_number/',views.random,name='random_number'),
-    path('<postid>/preference/<userpreference>/',views.postpreference,name='postpreference'),
+    path('<int:pk>/like/',views.add_like_to_post,name='postpreference'),
     path('admin/send/',views.SendAdminMessage.as_view(),name='send_admin_msg'),
 ]
 if settings.DEBUG:

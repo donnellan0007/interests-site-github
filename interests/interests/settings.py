@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'taggit',
     'crispy_forms',
     'emoji_picker',
+    'pyuploadcare.dj',
     'emoji',
     'django_private_chat',
     'tagulous',
@@ -66,6 +67,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+UPLOADCARE = {
+    'pub_key': '77f8b0fda406347f9af4',
+    'secret': '508667823fede6f66860',
+}
 
 ROOT_URLCONF = 'interests.urls'
 

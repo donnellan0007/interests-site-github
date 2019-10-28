@@ -99,7 +99,7 @@
                 {% if user.is_authenticated %}
                 <form action="{% url 'mainapp:search_results_user' %}" method="GET" value="{{request.GET.q}}">
                     <!-- <input name="q" value="{{request.GET.q}}" type="text" placeholder="Search"> -->
-                    <input required name="q" value="{{request.GET.q}}" type="text" id="search-navbar" placeholder="Search for people">
+                    <input title="" required name="q" value="{{request.GET.q}}" type="text" id="search-navbar" placeholder="Search for people">
                 </form>
                 <a href="{% url 'mainapp:profile' %}">My Profile</a>
                 <a href="{% url 'mainapp:post_new' %}">Make a new post</a>

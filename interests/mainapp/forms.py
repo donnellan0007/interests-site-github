@@ -21,7 +21,6 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title':forms.TextInput(attrs={'class':'textinputclass'}),
             'text':forms.Textarea(attrs={'class':'textareaclass editable'}),
-            
         }
         def __init__(self, *args, **kwargs):
             super(PostForm, self).__init__(*args, **kwargs)
@@ -74,4 +73,4 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfileInfo
-        fields = ['image','description','tags','website']
+        fields = ['image','description','gender','tags','website']

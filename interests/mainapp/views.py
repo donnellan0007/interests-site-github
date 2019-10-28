@@ -428,6 +428,29 @@ def comment_approve(request,pk):
     comment.approve()
     return redirect('mainapp:post_detail',pk=comment.post.pk)
 
+class AddLikeToPost(LoginRequiredMixin,ListView):
+    model = Post
+    login_url = '/login/'
+    redirect_field_name = 'mainapp/post_list.html'
+    
+    def form_valid(self,postid):
+        form.instance.author = self.request.user
+        post = get_object_or_404(Post,id=postid)
+        post.likes += 1
+        return super().form_valid(form)
+
+    # def test_func(self):
+    #     post = self.get_object()
+
+
+@login_required
+def add_like_to_post(request,pk):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        post.likes += 1
+        post.save()
+    return render(request,'mainapp/post_list.html')
+
 @login_required
 def postpreference(request,postid,userpreference):
     if request.method == 'POST':

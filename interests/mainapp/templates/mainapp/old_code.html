@@ -1,0 +1,15 @@
+<!-- <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{ post.likes }}   |   <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{ post.dislikes }}
+            <form id="likebutton" method="POST" action="/mainapp/{{ post.id }}/preference/1/">
+              {% csrf_token %}
+              <input type="hidden">
+              </form>
+              
+              <form id="dislikebutton" method="POST" action="/mainapp/{{ post.id}}/preference/2/">
+              {% csrf_token %}
+              <input type="hidden">
+              </form> -->
+              <!-- <a href="/mainapp/{{ post.id }}/like" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{ post.likes }}
+            <form id="likebutton" method="POST" action="/mainapp/{{ post.id }}/like">
+              {% csrf_token %}
+              <input type="hidden">
+              </form> -->

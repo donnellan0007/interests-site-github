@@ -116,7 +116,6 @@
   padding: 12px 18px;
   border: none;
   border-bottom: rgba(58, 56, 56, 0.623) 1px solid;
-  border-radius: 4px;
   font-family: 'Nunito', sans-serif;
   width: 60%;
 }
@@ -133,6 +132,7 @@
   outline: none;
   font-size: 1rem;
 }
+
   /* The side navigation menu */
 .sidenav {
   font-family: 'Nunito', sans-serif;
@@ -889,3 +889,16 @@ div.content {
 }
 
 /* End profile */
+
+.post-form {
+  margin: 2%;
+  background: #2f73aa;
+  padding: 2%;
+  font-family: 'Nunito', sans-serif;
+  width: 75%;
+  border-radius: 8px;
+}
+
+.title {
+  font-family: 'Nunito', sans-serif;
+}
