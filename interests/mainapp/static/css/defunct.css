@@ -88,13 +88,11 @@
     font-family: 'Nunito', sans-serif;
 }
 
-.like-count {
+.like-btn {
   color: black;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 100;
 }
 
-.fa-thumbs-up {
+.thumbs-up {
   color: black;
 }
 

@@ -1,5 +1,6 @@
 {% load static %}
 {% load hitcount_tags %}
+
 <div class="post">
         
     <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk %}"><strong title="{{ post.author.first_name }} {{ post.author.last_name }}">{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %} {% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %}  {{ post.published_date|timesince }} ago {% if post.group %}in <a href="{% url 'mainapp:single' slug=post.group.slug %}">{{ post.group.name }}</a>{% endif %}</p>
@@ -9,6 +10,10 @@
   {% else %}
   <p>{{ hitcount.total_hits }} Views</p>
   {% endif %} -->
+  
+  <a href="{% url 'mainapp:post_likes' pk=post.pk %}">
+    <i class="fas fa-thumbs-up">&nbsp;{{ post.likes.count }}</i>
+  </a>
     <hr id="divider_post"><br>
     <h1><a title="View {{ post.title }}" class="title" href="{% url 'mainapp:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>&nbsp;{% if post.NSFW %} <div class="nsfw"><p>NSFW</p></div> 
     <br>
@@ -40,3 +45,38 @@
 <a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' pk=post.pk %}">Comments: {{ post.approve_comments.count }}</a>
 </div>
 </div><br>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script>
+
+function updateText(btn,newCount){
+  btn.text(newCount + " " + verb)
+}
+
+$(".like-btn").click(function(e) {
+  e.preventDefault()
+  var this_ = $(this_)
+  var likeUrl = this_.attr("data-href")
+  var likeCount = parseInt(this_.attr("data-likes"))
+  $.ajax({
+    url: likeUrl,
+    method: "GET",
+    data: {},
+    success: function(data){
+      console.log(data)
+      var newLikes;
+      if (data.liked){
+        newLikes = likeCount + 1
+        //add like
+        updateText(this_,newLikes, "Unlike")
+      } else{
+        newLikes = likeCount - 1
+        //remove like
+        updateText(this_,newLikes, "Like")
+      }
+    }, error: function(error){
+      console.log(error)
+      console.log("error")
+    }
+  })
+})
+</script>

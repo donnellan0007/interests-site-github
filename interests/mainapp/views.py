@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse,reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin,UserPassesTestMixin
 from django.db import IntegrityError
-from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView
+from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView,RedirectView
 from django.contrib.auth.decorators import login_required
 from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference,Reply,SendMessageToAdmin
 from django.db.models import Q
@@ -119,6 +119,57 @@ class PostDetailView(HitCountDetailView,DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm() # Inject CommentForm
         return context
+
+class PostLikeRedirect(RedirectView):
+    def get_redirect_url(self,*args,**kwargs):
+        pk = self.kwargs.get("pk")
+        print(pk) #dev purposes
+        obj = get_object_or_404(Post,pk=pk)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated:
+            if user in obj.likes.all():
+                obj.likes.remove(user)
+            else:
+                obj.likes.add(user)
+        return url_
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+from django.contrib.auth.models import User
+
+class PostLikeAPIRedirect(APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk=None, format=None):
+        #pk = self.kwargs.get("pk")
+        obj = get_object_or_404(Post,pk=pk)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        updated = False
+        liked = False
+        
+        if user.is_authenticated:
+            if user in obj.likes.all():
+                liked = False
+                obj.likes.remove(user)
+            else:
+                liked = True
+                obj.likes.add(user)
+                updated = True
+        data = {
+            'updated':updated,
+            'liked':liked
+        }
+        return Response(data)
 
 class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     login_url = '/login/'

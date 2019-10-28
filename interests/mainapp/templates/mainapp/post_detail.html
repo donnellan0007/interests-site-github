@@ -3,8 +3,44 @@
 {% load emoji_tags %}
 {% load hitcount_tags %}
 {% block content %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script>
+
+function updateText(btn,newCount){
+  btn.text(newCount + " " + verb)
+}
+
+$(".like-btn").click(function(e) {
+  e.preventDefault()
+  var this_ = $(this_)
+  var likeUrl = this_.attr("data-href")
+  var likeCount = parseInt(this_.attr("data-likes"))
+  $.ajax({
+    url: likeUrl,
+    method: "GET",
+    data: {},
+    success: function(data){
+      console.log(data)
+      var newLikes;
+      if (data.liked){
+        newLikes = likeCount + 1
+        //add like
+        updateText(this_,newLikes, "Unlike")
+      } else{
+        newLikes = likeCount - 1
+        //remove like
+        updateText(this_,newLikes, "Like")
+      }
+    }, error: function(error){
+      console.log(error)
+      console.log("error")
+    }
+  })
+})
+</script>
 <div class="post">
-        
+
   <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk %}"><strong>{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %}{% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %} {% if post.published_date == 0 %}just now {% else %}{{ post.published_date|timesince }} ago {% endif%} {% if post.group %}in <a href="#">{{ post.group.name }}</a>{% endif %}</p>
   <br>
   {% if hitcount.total_hits >= 50 %}
@@ -12,6 +48,10 @@
   {% else %}
   <p>{{ hitcount.total_hits }} Views</p>
   {% endif %}
+  <br>
+  <a class='like-btn' data-href="{% url 'mainapp:post_api_likes' pk=post.pk %}" data-likes="{{ post.likes.count }}" href="{% url 'mainapp:post_likes' pk=post.pk %}">
+    <i class="fas fa-thumbs-up">&nbsp;<span class="like-count">{{ post.likes.count }}</span></i>
+  </a>
         <br><hr id="divider_post"><br>
         {% if object.author == user %}
           <div>

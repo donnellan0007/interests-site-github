@@ -1,18 +1,16 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
-{% load bootstrap4 %}
 {% block content %}
+
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
         <legend class="border-bottom mb-4">Profile Info</legend>
-        {% bootstrap_form u_form %}
-        {% bootstrap_form p_form %}
+        {{ u_form.as_p }}
+        {{ p_form.as_p }}
     </fieldset>
     <div class="form-group">
-        {% buttons %}
   		<button type="submit" class="btn btn-primary btn-large">Update Profile</button>
-  	{% endbuttons %}
     </div>
 </form>
 {% endblock %}

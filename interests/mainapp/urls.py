@@ -1,7 +1,7 @@
 from django.urls import path,include
 from . import views
 from . import views as user_view
-from .views import SearchResultsView,UserPostListView,PostUpdateView,PostDeleteView,postpreference
+from .views import SearchResultsView,UserPostListView,PostUpdateView,PostDeleteView,postpreference,PostLikeRedirect,PostLikeAPIRedirect
 from django.conf import settings
 from django.conf.urls.static import static
 from mainapp.forms import UserCreationForm,UserProfileInfoForms,UserUpdateForm,ProfileUpdateForm,ReplyForm
@@ -21,6 +21,8 @@ urlpatterns = [
     path('account/update/',views.profile_update,name='profile_update'),
     # path('user/<str:username>',views.ProfileView.as_view(),name='profile'),
     path('post/<int:pk>', views.PostDetailView.as_view(), name='post_detail'),
+    path('post/<int:pk>/like', views.PostLikeRedirect.as_view(), name='post_likes'),
+    path('api/post/<int:pk>/like', views.PostLikeAPIRedirect.as_view(), name='post_api_likes'),
     path('post_new/', views.CreatePostView.as_view(), name='post_new'),
     path('drafts/', views.DraftListView.as_view(), name='post_draft_list'),
     path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),

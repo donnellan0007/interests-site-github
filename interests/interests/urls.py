@@ -29,6 +29,7 @@ urlpatterns = [
     path('mainapp/',include('mainapp.urls')),
     path('logout/',views.user_logout,name='logout'),
     path('profile/',views.profile_page,name='profile'),
+    path('api-auth/', include('rest_framework.urls')),
     path('avatar/',include('avatar.urls')),
     path('emoji/',include('emoji.urls')),
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),

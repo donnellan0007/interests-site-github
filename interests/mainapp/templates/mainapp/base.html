@@ -44,20 +44,6 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 </head>
-  <script>
-      console.log(`        
-      (_)     | |                   | |      
-       _ _ __ | |_ ___ _ __ ___  ___| |_ ___ 
-      | | '_ \| __/ _ \ '__/ _ \/ __| __/ __|
-      | | | | | ||  __/ | |  __/\__ \ |_\__ \
-      |_|_| |_|\__\___|_|  \___||___/\__|___/
-      `);
-      
-      
-      console.log('Hello');                                  
-      
-      
-  </script>
   <script>var editor = new MediumEditor('.editable');</script>
   <script>
       $("img").on("contextmenu",function(e){
@@ -65,24 +51,43 @@
    });
   </script>
 
+
+  
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 <script>
-  var options = {
-    bottom: '64px', // default: '32px'
-    right: 'unset', // default: '32px'
-    left: '32px', // default: 'unset'
-    time: '0.5s', // default: '0.3s'
-    mixColor: '#fff', // default: '#fff'
-    backgroundColor: '#fff',  // default: '#fff'
-    buttonColorDark: '#100f2c',  // default: '#100f2c'
-    buttonColorLight: '#fff', // default: '#fff'
-    saveInCookies: false, // default: true,
-    label: '🌓', // default: ''
-    autoMatchOsTheme: true // default: true
-  }
-  
-  const darkmode = new Darkmode(options);
-  darkmode.showWidget();
-  
+
+function updateText(btn,newCount){
+  btn.text(newCount + " " + verb)
+}
+
+$(".like-btn").click(function(e) {
+  e.preventDefault()
+  var this_ = $(this_)
+  var likeUrl = this_.attr("data-href")
+  var likeCount = parseInt(this_.attr("data-likes"))
+  $.ajax({
+    url: likeUrl,
+    method: "GET",
+    data: {},
+    success: function(data){
+      console.log(data)
+      var newLikes;
+      if (data.liked){
+        newLikes = likeCount + 1
+        //add like
+        updateText(this_,newLikes, "Unlike")
+      } else{
+        newLikes = likeCount - 1
+        //remove like
+        updateText(this_,newLikes, "Like")
+      }
+    }, error: function(error){
+      console.log(error)
+      console.log("error")
+    }
+  })
+})
 </script>
 <body> 
   <!-- {% if user.is_superuser %}

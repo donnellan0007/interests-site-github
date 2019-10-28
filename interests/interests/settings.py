@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'avatar',
     'taggit',
     'crispy_forms',
+    'rest_framework',
     'emoji_picker',
     'emoji',
     'django_private_chat',

@@ -29,6 +29,7 @@ class UserProfileInfo(models.Model):
     joined_date = models.DateTimeField(blank=True,null=True,default=timezone.now)
     verified = models.BooleanField(default=False)
     moderator = models.BooleanField(default=False)
+    skills = models.PositiveIntegerField(default=0)
     owner = models.CharField(max_length=100,default="",blank=True,null=True)
     
     tags = TaggableManager()
@@ -96,7 +97,7 @@ class Post(models.Model):
     comments_disabled = models.BooleanField(default=False)
     NSFW = models.BooleanField(default=False)
     spoiler = models.BooleanField(default=False)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User,blank=True,related_name='post_likes')
     dislikes = models.IntegerField(default=0)
 
     tags = TaggableManager()
