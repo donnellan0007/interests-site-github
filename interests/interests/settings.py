@@ -26,7 +26,8 @@ SECRET_KEY = 'm0-up!(#l)jr08sb*^9s82$h2lp%y)nwguwm%z6=b)!j#malgd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
+
 
 
 # Application definition
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'avatar',
     'taggit',
     'crispy_forms',
+    'rest_framework',
     'emoji_picker',
     'pyuploadcare.dj',
     'emoji',
@@ -83,9 +85,9 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
             ],
         },
     },

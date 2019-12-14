@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse,reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin,UserPassesTestMixin
 from django.db import IntegrityError
-from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView
+from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView,RedirectView
 from django.contrib.auth.decorators import login_required
 from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference,Reply,SendMessageToAdmin
 from django.db.models import Q
@@ -31,10 +31,23 @@ from django.conf.urls import (
 handler400, handler403, handler404, handler500
 )
 # Create your views here.
-def index(request):
+def index(self,request):
     users = User.objects.exclude(id=request.user.id)
-    return render(request,'mainapp/index.html')
-    
+    user = self.request.user
+    if user.is_authenticated:
+        return render(request,'mainapp/index.html')
+    else:
+        return render(request,'mainapp/registration.html')
+
+class Home(View):
+    def get(self,request):
+        user = self.request.user
+        if user.is_authenticated:
+            return render(request,'mainapp/index.html')
+        else:
+            return HttpResponseRedirect("register")
+
+
 def random(request):
     import random
     random_number = random.randint(100,1000)
@@ -114,14 +127,83 @@ def profile_update(request):
 class PostDetailView(HitCountDetailView,DetailView):
     model = Post
     count_hit = True
-
+    query_pk_and_slug = True
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm() # Inject CommentForm
         return context
 
+
+
+class PostLikeRedirect(RedirectView):
+    def get_redirect_url(self,*args,**kwargs):
+        pk = self.kwargs.get("pk")
+        slug = self.kwargs.get("slug")
+        print(pk) #dev purposes
+        obj = get_object_or_404(Post,pk=pk,slug=slug)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated:
+            if user in obj.likes.all():
+                obj.likes.remove(user)
+            else:
+                obj.likes.add(user)
+        return url_
+
+class PostSaveRedirect(RedirectView):
+    def get_redirect_url(self,*args,**kwargs):
+        pk = self.kwargs.get("pk")
+        slug = self.kwargs.get("slug")
+        obj = get_object_or_404(Post,pk=pk,slug=slug)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated:
+            if user in obj.saves.all():
+                obj.saves.remove(user)
+            else:
+                obj.saves.add(user)
+        return url_
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+from django.contrib.auth.models import User
+
+class PostLikeAPIRedirect(APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk=None, format=None):
+        #pk = self.kwargs.get("pk")
+        obj = get_object_or_404(Post,pk=pk)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        updated = False
+        liked = False
+        
+        if user.is_authenticated:
+            if user in obj.likes.all():
+                liked = False
+                obj.likes.remove(user)
+            else:
+                liked = True
+                obj.likes.add(user)
+                updated = True
+        data = {
+            'updated':updated,
+            'liked':liked
+        }
+        return Response(data)
+
 class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     login_url = '/login/'
+    query_pk_and_slug = True
     redirect_field_name = 'mainapp/post_details.html'
     form_class = PostForm
     model = Post
@@ -167,6 +249,23 @@ class PostListView(HitCountDetailView,SelectRelatedMixin,TagMixin,ListView):
 
     def get_queryset(self):
         return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+
+class PostSaveListView(ListView):
+    model = Post
+    template_name = 'mainapp/post_saved.html'
+    paginate_by = 10
+    context_object_name = 'post'
+    
+    def get(self,request):
+        posts = Post.objects.filter(saves__in=[self.request.user]).order_by('-published_date').distinct()
+        args = {
+            'posts':posts,
+        }
+        return render(request, self.template_name,args)
+
+    def get_queryset(self):
+        object_list = Post.objects.filter(saves__in=[self.request.user]).order_by('-published_date').distinct()
+        return object_list
 
 def change_friends(request,operation,pk):
     friend = User.objects.get(pk=pk)
@@ -335,8 +434,8 @@ class SendAdminMessage(LoginRequiredMixin,CreateView):
         return super().form_valid(form)
 
 @login_required(login_url='/mainapp/user_login/')
-def add_comment_to_post(request,pk):
-    post = get_object_or_404(Post,pk=pk)
+def add_comment_to_post(request,pk,slug):
+    post = get_object_or_404(Post,pk=pk,slug=slug)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -344,7 +443,7 @@ def add_comment_to_post(request,pk):
             comment.post = post
             comment.author = request.user # add this line
             comment.save()
-            return redirect('mainapp:post_detail',pk=post.pk)
+            return redirect('mainapp:post_detail',pk=post.pk,slug=post.slug)
            
     else:
         form = CommentForm()
@@ -354,8 +453,9 @@ def get_queryset(self):
     return Comment.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
 
 @login_required(login_url='/mainapp/user_login/')
-def add_reply_to_comment(request,pk):
+def add_reply_to_comment(request,pk,slug):
     comment = get_object_or_404(Comment,pk=pk)
+    post = get_object_or_404(Post,pk=pk,slug=slug)
     if request.method == 'POST':
         form = ReplyForm(request.POST)
         if form.is_valid():
@@ -363,7 +463,7 @@ def add_reply_to_comment(request,pk):
             reply.comment = comment
             reply.author = request.user
             reply.save()
-            return redirect('mainapp:post_detail',pk=comment.pk)
+            return redirect('mainapp:post_detail',pk=post.pk,slug=post.slug)
     else:
         form = ReplyForm()
     return render(request,'mainapp/reply_form.html',{'form':form})
@@ -377,6 +477,7 @@ def get_queryset(self):
 
 class PostDeleteView(LoginRequiredMixin,DeleteView,UserPassesTestMixin):
     model = Post
+    query_pk_and_slug = True
     success_url = reverse_lazy('mainapp:post_list')
     def test_func(self):
         post = self.get_object()
@@ -411,7 +512,7 @@ def change_friends(request,operation,pk):
         Friend.make_friend(request.user,friend)
     elif operation == 'remove':
         Friend.lose_friend(request.user,friend)
-    return redirect('mainapp:post_list')
+    return redirect('mainapp:view_profile_with_pk',pk=pk)
 
 #function views
 
@@ -451,89 +552,6 @@ def add_like_to_post(request,pk):
         post.save()
     return render(request,'mainapp/post_list.html')
 
-@login_required
-def postpreference(request,postid,userpreference):
-    if request.method == 'POST':
-        post = get_object_or_404(Post,id=postid)
-
-        obj = ""
-
-        valueobj = ""
-
-        try:
-            obj = Preference.objects.get(user=request.user,post=post)
-
-            valueobj = obj.value
-
-            valueobj = int(valueobj)
-
-            userpreference = int(userpreference)
-
-            if valueobj != userpreference:
-                obj.delete
-
-                upref = Preference()
-                upref.user = request.user
-
-                upref.post = post
-
-                upref.value = userpreference
-
-                if userpreference == 1 and valueobj != 1:
-                    post.likes += 1
-                    eachpost.dislikes -= 1
-                elif userpreference == 2 and valueobj != 2:
-                    post.dislikes += 1
-                    post.likes -= 1
-
-                upref.save()
-
-                post.save()
-
-                context = {'eachpost':post,'postid':postid}
-
-                return render(request,'mainapp:post_list',context)
-            
-            elif valueobj == userpreference:
-                obj.delete
-
-                if userpreference == 1:
-                    post.likes -= 1
-                elif userpreference == 2:
-                    post.dislikes -= 1
-
-                post.save()
-
-                context = {'eachpost':post,'postid':postid}
-
-                return render(request,'mainapp:post_list',context)
-
-        except Preference.DoesNotExist:
-            upref = Preference()
-
-            upref.user = request.user
-
-            upref.post = post
-
-            upref.value = userpreference
-
-            userpreference = int(userpreference)
-
-            if userpreference == 1:
-                post.likes += 1
-            elif userpreference == 2:
-                post.dislikes += 1
-            
-            upref.save()
-
-            post.save()
-
-            context = {'eachpost':post,'postid':postid}
-
-            return render(request,'mainapp:post_list',context)
-    else:
-        post = get_object_or_404(Post,id=postid)
-        context = {'eachpost':post,'postid':postid}
 
 @login_required
 def comment_remove(request,pk):

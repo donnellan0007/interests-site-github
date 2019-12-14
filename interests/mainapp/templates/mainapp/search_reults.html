@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="search-container">
-
+  <h3 class="search-results-thing" >Search results for <span class="search-thing"><strong>{{ request.GET.q }}</strong></span></h3>
             {% for post in object_list %}
             {% include 'mainapp/_post.html' %}
        

@@ -5,6 +5,9 @@
     padding: 0%;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+    animation-name: opacity-set;
+    /* animation-duration: 1s; */
+    
 }
 #navbar {
     display: flex;
@@ -33,7 +36,7 @@
   padding-bottom: 1%;
 }
 .sticky {
-  position: fixed;
+  transform: translateY(-35%);
   top: 0;
   width: 100%;
 }
@@ -88,7 +91,38 @@
     font-family: 'Nunito', sans-serif;
 }
 
-  #search {
+.like-count {
+  color: black;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 100;
+  -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+        user-select: none;
+}
+
+.fa-thumbs-up {
+  color: black;
+  text-decoration: none;
+  -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+        user-select: none;
+}
+.like-btn {
+  text-decoration: none;
+  -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+        user-select: none;
+}
+#search {
       text-align:center;
     padding-bottom:5px;
     background:
@@ -257,6 +291,14 @@
   padding-bottom: 2%;
   border-radius: 20px;
 }
+.navbar-image {
+  -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+        user-select: none;
+}
 @media screen and (max-width: 600px) {
   .post {
     width: 100%;
@@ -289,14 +331,37 @@ border: none;
 border-radius: 8px;
 color: white;
 }
+.tag-list-box-profile-profile {
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+padding: 8px;
+margin: 4px;
+border: none;
+border-radius: 8px;
+color: white;
+}
 .title {
   color: black;
   font-size: 35px;
   font-weight: 100;
   text-decoration: none;
 }
+.search-results-thing {
+  margin-left: 2%;
+  font-family: 'Nunito', sans-serif;
+  font-size: 2rem;
+}
+.search-thing {
+  text-transform: uppercase;
+  background: linear-gradient(to right, #F22C7D 0%, #7F1DFF 100%); 
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
 .title:hover {
   text-decoration: underline solid black;
+}
+.verified-tick {
+  background-image: url(interests/mainapp/static/images/verified.png);
 }
 #moderator {
   background: linear-gradient(to right, #F22C7D 0%, #7F1DFF 100%); 
@@ -396,6 +461,12 @@ color: white;
   border: solid 2px rgb(200, 26, 26);
   border-radius: 5px;
   text-align: center;
+  -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+        user-select: none;
 }
 .tag-list-a {
   
@@ -565,11 +636,31 @@ li {
   margin-left: 2%;
   font-family: 'Nunito', sans-serif;
 }
+.account-settings-logout-div {
+  display: flex;
+  justify-content: space-between;
+}
+#saved-posts- {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  color: white;
+  opacity: 0.4;
+  user-select: none;
+  text-transform: uppercase;
+  transform: translateY(5rem);
+}
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
   .modal-content {
     width: 100%;
   }
+}
+#profile-header-overview {
+  text-transform: uppercase;
+  margin: 0 auto;
+}
+br {
+  user-select: none;
 }
 .tag-list-style {
   margin-left: 2%;
@@ -580,27 +671,25 @@ li {
   border: none;
   outline: none;
   color: white;
-  background:
-      linear-gradient(
-        to left, 
-        rgba(127, 29, 255, 1) 0%,
-        rgba(127, 29, 255, 1) 12%,
-        rgba(242, 44, 125, 1) 47%,
-       rgba(242, 44, 125, 1) 100%
-      )
-      left 
-      bottom
-         
-      no-repeat; 
-      list-style: none;
-      text-decoration: none;
-      list-style-type: none;
+  background: linear-gradient(90deg, rgba(242,44,125,1) 0%, rgba(127,29,255,1) 100%);
 }
+.check-circle {
+    text-transform: uppercase;
+    background: linear-gradient(90deg, rgba(242,44,125,1) 0%, rgba(127,29,255,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+ } 
 .tag-list-box {}
 .spoiler {
   width: 10%;
   background: white;
   border: solid 2px rgb(100, 100, 100);
+  -webkit-touch-callout: none;
+       -webkit-user-select: none;
+       -khtml-user-select: none;
+       -moz-user-select: none;
+       -ms-user-select: none;
+        user-select: none;
   border-radius: 5px;
   text-align: center;
 }
@@ -609,24 +698,12 @@ li {
   display: flex;
 }
 .commentbtn {
-  margin-left: 2%;
   padding: 8px 8px;
   border-radius: 50px;
   border: none;
   outline: none;
   color: white;
-  background:
-      linear-gradient(
-        to left, 
-        rgba(127, 29, 255, 1) 0%,
-        rgba(127, 29, 255, 1) 12%,
-        rgba(242, 44, 125, 1) 47%,
-       rgba(242, 44, 125, 1) 100%
-      )
-      left 
-      bottom
-         
-      no-repeat; 
+  background: linear-gradient(90deg, rgba(242,44,125,1) 0%, rgba(127,29,255,1) 100%); 
 }
 .aclass {
   color: white;
@@ -635,6 +712,31 @@ li {
 }
 .textareaclass {
   resize: none;
+}
+.empty-text {
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  margin-top: 1rem;
+}
+.profile-image-header {
+  border-radius: 100%;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.profile-header {
+  height: auto;
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(90deg, rgba(242,44,125,1) 0%, rgba(127,29,255,1) 100%); 
+  font-family: 'Nunito', sans-serif;
+  color: white;
+
+}
+#profile-header-desc {
+  font-size: larger;
+  
 }
 .commentbtn:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -711,17 +813,63 @@ li {
 }
 /* The side navigation menu */
 #sidebar {
-  margin: 0;
-  padding: 0;
+  text-align: center;
+  transform: translateY(-35%);
+  -webkit-box-shadow: 0px 0px 13px -2px rgba(0,0,0,0.49);
+  -moz-box-shadow: 0px 0px 13px -2px rgba(0,0,0,0.49);
+  box-shadow: 0px 0px 13px -2px rgba(0,0,0,0.49);
+  border-radius: 12px;
+  margin: 1rem;
+  padding: 1rem;
   width: 25%;
-  background-color: #f1f1f1;
-  position: fixed;
-  height: 100vh;
+  background-color: #ffffff;
+  position: absolute;
+  height: 90vh;
   z-index: 0;
-  overflow: auto;
   font-family: 'Nunito', sans-serif;
 }
+@keyframes opacity-set {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.image-profile {
+  transform: translateY(-50%);
+}
+.header-profile-image {
+  transform: translateY(-50%);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
 
+#header-profile {
+  text-align: left;
+  font-weight: 500;
+  font-size: x-large;
+}
+#description-profile-page {
+  text-align: left;
+  font-weight: 100;
+}
+.sign-in-alt {
+  color: #818181;
+}
+.sign-out-alt {
+  color: #818181;
+}
 /* Sidebar links */
 #sidebar p {
   display: block;
@@ -878,6 +1026,12 @@ div.content {
   padding: 2rem;
   width: 35%;
 }
+#sign-up-head {
+  opacity: 0.3;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
 @media screen and (max-width:600px){
   .profile-page-container{
     display: block;
@@ -889,16 +1043,87 @@ div.content {
 }
 
 /* End profile */
-
+.textinputclass {
+  padding: 1%;
+  margin-top: 1%;
+}
+.text-title {
+  width: 50%;
+  border-radius: 8px;
+  outline: none;
+  font-family: 'Nunito', sans-serif;
+  border: none;
+}
+.editable {
+  border-radius: 8px;
+  resize: vertical;
+  background: white;
+  outline: none;
+}
+.screen {
+  background-image: url(/interests/mainapp/static/images/interests-bg.svg);
+}
+#subBtn {
+  background: rgb(242,44,125);
+background: linear-gradient(90deg, rgba(242,44,125,1) 0%, rgba(127,29,255,1) 100%);
+padding: 8px 26px;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 12px;
+}
+#nextBtn {
+  background: rgb(242,44,125);
+  background: linear-gradient(90deg, rgba(242,44,125,1) 0%, rgba(127,29,255,1) 100%);
+  padding: 8px 26px;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.post-form-submit {
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-top: 1%;
+  background: #8E2DE2;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+font-family: 'Nunito', sans-serif;
+font-size: 1rem;
+  border: none;
+  outline: none;
+}
 .post-form {
   margin: 2%;
-  background: #2f73aa;
+  background: #c7cace;
   padding: 2%;
   font-family: 'Nunito', sans-serif;
   width: 75%;
   border-radius: 8px;
 }
-
+.comment-form {
+  margin: 2%;
+  font-family: 'Nunito', sans-serif;
+  width: 75%;
+  border-radius: 8px;
+}
+.comment-from {
+  font-family: 'Nunito', sans-serif;
+  width: 50%;
+  outline: none;
+  padding: 1%;
+  resize: vertical;
+  border: #c7cace solid 1px;
+  border-radius: 8px;
+}
+.comment-from:focus {
+  border: rgb(78, 150, 218) 1.25px solid;
+}
 .title {
   font-family: 'Nunito', sans-serif;
+}
+.fa-bookmark {
+  color: black;
 }

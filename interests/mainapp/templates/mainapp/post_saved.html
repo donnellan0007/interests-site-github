@@ -1,0 +1,17 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+{% include 'mainapp/profile_header.html' %}
+
+{% include 'mainapp/oldprofile.html' %}
+    {% for post in posts %}
+    <div class="content">
+        {% include 'mainapp/_post.html' %}
+    </div> 
+    {% empty %}
+    <div class="empty-text">
+    <p>There doesn't seem to be anything here...</p>
+    </div>
+    {% endfor %}
+    
+{% endblock %}

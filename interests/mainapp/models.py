@@ -6,12 +6,13 @@ from PIL import Image
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 import tagulous
-from django.template.defaultfilters import slugify
+from django.utils.text import slugify
 from taggit.managers import TaggableManager
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from pyuploadcare.dj.models import ImageField
 from django_countries.fields import CountryField
+from .validators import validate_file_extension
 import uuid
 # Create your models here.
 
@@ -30,6 +31,12 @@ class UserProfileInfo(models.Model):
     description = models.TextField(max_length=150)
     country = CountryField()
     website = models.URLField(max_length=200,blank=True,null=True)
+    banner = ProcessedImageField(upload_to='banner_pics',
+                                           processors=[ResizeToFill(1920, 600)],
+                                           default='default_banner.jpg',
+                                           format='JPEG',
+                                           options={'quality': 60})
+
     image = ProcessedImageField(upload_to='profile_pics',
                                            processors=[ResizeToFill(150, 150)],
                                            default='default.jpg',
@@ -42,7 +49,9 @@ class UserProfileInfo(models.Model):
         default=MALE,
     )
     verified = models.BooleanField(default=False)
+    colour = models.CharField(max_length=500,default='#4287f5')
     moderator = models.BooleanField(default=False)
+    skills = models.PositiveIntegerField(default=0)
     owner = models.CharField(max_length=100,default="",blank=True,null=True)
     
     tags = TaggableManager()
@@ -94,9 +103,16 @@ class GroupMember(models.Model):
         return self.user.username
 
     class Meta():
-        unique_together = ("group","user") 
+        unique_together = ("group","user")
+        
 
+class Tag(models.Model):
+    name = models.CharField(max_length=150,unique=True)
+
+    def __str__(self):
+        return self.name
     
+
 class Post(models.Model):
     author = models.ForeignKey(User,related_name='posts',on_delete=models.CASCADE)
     title = models.CharField(max_length=75)
@@ -106,21 +122,26 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     image = models.ImageField(upload_to='post_images',blank=True,null=True)
     # image = ImageField(blank=True, manual_crop="")
-    file = models.FileField(upload_to='post_files',blank=True,null=True)
     published_date = models.DateTimeField(blank=True,null=True,auto_now_add=True)
+    file = models.FileField(upload_to="post_files",blank=True,null=True, validators=[validate_file_extension])
     comments_disabled = models.BooleanField(default=False)
     NSFW = models.BooleanField(default=False)
     spoiler = models.BooleanField(default=False)
-    likes = models.IntegerField(default=0)
-
+    likes = models.ManyToManyField(User,blank=True,related_name='post_likes')
+    saves = models.ManyToManyField(User,blank=True,related_name='post_saves')
     tags = TaggableManager()
+    tag = models.ManyToManyField(Tag,related_name='tags',blank=True)
+    slug = models.SlugField(
+        default='',
+        editable=False,
+        max_length=75,
+    )
     
     def __str__(self):
         return self.title
     
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+   
 
     def publish(self):
         self.published_date = timezone.now()
@@ -130,7 +151,16 @@ class Post(models.Model):
         return self.comments.filter(approved_comment=True)
     
     def get_absolute_url(self):
-        return reverse('mainapp:post_detail',kwargs={'pk':self.pk})
+        kwargs = {
+            'pk': self.id,
+            'slug':self.slug,
+        }
+        return reverse('mainapp:post_detail',kwargs=kwargs)
+    
+    def save(self, *args, **kwargs):
+        value = self.title
+        self.slug = slugify(value,allow_unicode=True)
+        super().save(*args, **kwargs)
 
 class Preference(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)

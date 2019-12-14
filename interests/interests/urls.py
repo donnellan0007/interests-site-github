@@ -22,15 +22,18 @@ from avatar import urls
 from mainapp import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index,name='index'),
+    path('', views.Home.as_view(),name='index'),
     path('mainapp/',include('mainapp.urls')),
     path('logout/',views.user_logout,name='logout'),
     path('profile/',views.profile_page,name='profile'),
+    path('api-auth/', include('rest_framework.urls')),
     path('avatar/',include('avatar.urls')),
     path('emoji/',include('emoji.urls')),
+    path('register/',views.register,name='register'),
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),
     path('', include('django_private_chat.urls')),
 ]

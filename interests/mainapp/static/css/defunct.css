@@ -1,0 +1,958 @@
+/* CSS IS WORKING */
+* {
+  margin: 0%;
+  box-sizing: border-box;
+  padding: 0%;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+#navbar {
+  display: flex;
+  list-style: none;
+  font-size: 40px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  justify-content: space-around;
+  text-align: center;
+  box-shadow: 0 14px 28px rgba(0,0,0,0), 0 5px 5px rgba(0,0,0,0.2);
+  background-color: white;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+.navbar {
+display: flex;
+list-style: none;
+font-size: 40px;
+font-family: 'Nunito', sans-serif;
+font-weight: 900;
+justify-content: space-around;
+text-align: center;
+box-shadow: 0 14px 28px rgba(0,0,0,0), 0 5px 5px rgba(0,0,0,0.2);
+background-color: white;
+padding-top: 1%;
+padding-bottom: 1%;
+}
+.sticky {
+position: fixed;
+top: 0;
+width: 100%;
+}
+.navbar-new ul {
+display: flex;
+font-family: 'Nunito', sans-serif;
+list-style: none;
+justify-content: flex-start;
+}
+.navlink-header {
+font-size: 2rem;
+}
+.navlink-new {
+margin: 2rem;
+font-size: 1.2rem;
+}
+.navlink-profile {
+float: right;  
+}
+
+.darkmode-layer, .darkmode-toggle {
+z-index: 500;
+}
+.mind {
+background: linear-gradient(to right, #F22C7D 0%, #7F1DFF 100%); 
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+.navlink {
+  text-decoration: none;
+  color: black;
+}
+.fa-bars {
+  font-size: 25px;
+  cursor: pointer;
+}
+.fa-bars:hover {
+color: rgb(70, 70, 70);
+}
+.fa-search {
+  font-size: 25px;
+}
+#dot {
+  color: #3F51B5;
+}
+
+.main {
+  padding-top: 15%;
+  justify-content: space-around;
+  text-align: center;
+  font-size: 25px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.like-count {
+color: black;
+font-family: 'Nunito', sans-serif;
+font-weight: 100;
+}
+
+.fa-thumbs-up {
+color: black;
+}
+
+#search {
+    text-align:center;
+  padding-bottom:5px;
+  background:
+    linear-gradient(
+      to left, 
+      rgba(127, 29, 255, 1) 0%,
+      rgba(127, 29, 255, 1) 12%,
+      rgba(242, 44, 125, 1) 47%,
+     rgba(242, 44, 125, 1) 100%
+    )
+    left 
+    bottom
+       
+    no-repeat; 
+  background-size:100% 5px ;
+  
+  border: none;
+    width: 30%;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+}
+#search-navbar {
+text-align: center;
+padding: 12px 18px;
+border: none;
+border-bottom: rgba(58, 56, 56, 0.623) 1px solid;
+font-family: 'Nunito', sans-serif;
+width: 60%;
+}
+#search-navbar:focus {
+/* box-shadow: 0 0 3pt 2pt rgba(117, 70, 179, 0.246); */
+outline: none;
+border-bottom: rgb(78, 150, 218) 1.25px solid;
+width: 75%;
+text-align: center;
+}
+.button-search {
+background: none;
+border: none;
+outline: none;
+font-size: 1rem;
+}
+
+/* The side navigation menu */
+.sidenav {
+font-family: 'Nunito', sans-serif;
+  height: 100%; /* 100% Full-height */
+  text-align: center;
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: white; /* Black*/
+  box-shadow: 10px 0 20px -10px #888;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+#user_avatar {
+    border-radius: 50%;
+}
+
+#usernameinput {
+  border: none;
+  border-bottom: solid black 2px;
+  outline: none;
+  width: 25%;
+  font-family: 'Nunito', sans-serif;
+}
+.mainform {
+  padding-top: 2%;
+}
+#login {
+font-family: 'Nunito', sans-serif;
+}
+.accounttext {
+ justify-content: space-around;
+ text-align: center;
+ padding-top: 5%;
+}
+#submit {
+ justify-content: space-around;
+ text-align: center;
+ align-content: center;
+ outline: none;
+ border-radius: 20px;
+ border: none;
+ background-color: #3F51B5;
+ padding: 10px 20px;
+ font-family: 'Nunito', sans-serif;
+ cursor: pointer;
+ color: white;
+}
+#submit:hover {
+ background: rgba(63, 81, 181, 0.719);
+ box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+ transform: translateY(-2px);
+}
+.submitdiv {
+ justify-content: space-around;
+ text-align: center;
+}
+
+/* POST LIST */
+
+.centercontent {
+padding-top: 3%;
+}
+.post-text {
+word-wrap: break-word;
+white-space: pre-line;
+}
+.post {
+font-family: 'Nunito', sans-serif;
+color: black;
+padding-left: 3%;
+
+/* background: rgb(221, 221, 221); */
+background: rgb(255, 255, 255);
+-webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+  -moz-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+  box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+margin-left: 2%;
+margin-top: 1%;
+width: 70%;
+padding-top: 2%;
+padding-bottom: 2%;
+border-radius: 20px;
+}
+@media screen and (max-width: 600px) {
+.post {
+  width: 100%;
+  padding: 2%;
+  margin: 0%;
+}
+}
+.tag-list-box {
+font-family: 'Nunito', sans-serif;
+cursor: pointer;
+}
+.tag-list-box-profile {
+font-family: 'Nunito', sans-serif;
+cursor: pointer;
+background:
+linear-gradient(
+  to left, 
+  rgba(127, 29, 255, 1) 0%,
+  rgba(127, 29, 255, 1) 25%,
+  rgba(242, 44, 125, 1) 50%,
+ rgba(242, 44, 125, 1) 100%
+)
+left 
+bottom
+   
+no-repeat;
+padding: 8px;
+margin: 4px;
+border: none;
+border-radius: 8px;
+color: white;
+}
+.title {
+color: black;
+font-size: 35px;
+font-weight: 100;
+text-decoration: none;
+}
+.title:hover {
+text-decoration: underline solid black;
+}
+#moderator {
+background: linear-gradient(to right, #F22C7D 0%, #7F1DFF 100%); 
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+font-weight: bolder;
+font-family: 'Nunito', sans-serif;
+}
+.comment {
+color: black;
+text-decoration: none;
+}
+.profile-image-round {
+border-radius: 50%;
+margin: 2%;
+}
+#tags-test {
+word-wrap: break-word;
+white-space: pre-line;
+}
+.fa-fire {
+color: rgb(245, 57, 0);
+}
+#trending {
+color: rgb(245, 57, 0);
+}
+#readmore {
+text-decoration: none;
+}
+.postcontents {
+background: #3F51B5;
+margin: 2%;
+margin-right: 30%;
+font-family: 'Nunito', sans-serif;
+background: rgb(221, 221, 221);
+border-radius: 20px;
+padding-top: 2%;
+padding-bottom: 2%;
+}
+.posttitle {
+margin-left: 2%;
+}
+.controls {
+margin: 2%;
+}
+.update {
+background: #3F51B5;
+padding: 8px 8px;
+border-radius: 10px;
+color: white;
+}
+.delete {
+background: #F22C7D;
+color: white;
+padding: 8px 8px;
+border-radius: 10px;
+}
+.search-form {
+margin-left: 2%;
+font-family: 'Nunito', sans-serif;
+margin-top: 2%;
+}
+.search-box {
+padding: 16px 16px;
+-webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+  -moz-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+  box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
+font-family: 'Nunito', sans-serif;
+width: 40%;
+border: none;
+outline: none;
+border-radius: 12px;
+}
+.postcontent {
+margin-left: 2%;
+resize: none;
+/* overflow-wrap: break-word; */
+margin: 2%;
+}
+#need-account {
+font-family: 'Nunito', sans-serif;
+padding-top: 2%;
+}
+.user-image {
+border-radius: 10000px;
+}
+.pub-post {
+margin-left: 2%;
+}
+.posted-by {
+margin-left: 2%;
+/* overflow-wrap: break-word; */
+}
+.nsfw {
+width: 10%;
+background: white;
+border: solid 2px rgb(200, 26, 26);
+border-radius: 5px;
+text-align: center;
+}
+.tag-list-a {
+
+}
+.tags-list-detail {
+display: flex;
+list-style-type: none;
+list-style: none;
+word-wrap: break-word;
+white-space: pre-line;
+}
+.remember-me-div {
+text-align: center;
+border: none;
+font-family: 'Nunito', sans-serif;
+}
+.remember-me {
+background: #818181;
+border-radius: 50px;
+height: 25px;
+width: 25px;
+background-color: #eee;
+}
+.styled-checkbox {
+position: absolute;
+opacity: 0;
+border-radius: 50px;
+}
+.styled-checkbox + label {
+position: relative;
+cursor: pointer;
+padding: 0;
+}
+.styled-checkbox + label:before {
+content: '';
+margin-right: 10px;
+display: inline-block;
+vertical-align: text-top;
+width: 20px;
+height: 20px;
+background: rgb(224, 224, 224);
+}
+.styled-checkbox:hover + label:before {
+opacity: 0.4;
+}
+.styled-checkbox:focus + label:before {
+box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+.styled-checkbox:checked + label:before {
+}
+.styled-checkbox:disabled + label {
+color: #b8b8b8;
+cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+box-shadow: none;
+background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+content: '';
+position: absolute;
+left: 5px;
+top: 9px;
+background: white;
+width: 2px;
+height: 2px;
+box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+transform: rotate(45deg);
+}
+
+.unstyled {
+margin: 0;
+padding: 0;
+list-style-type: none;
+}
+li {
+margin: 10px 0;
+}
+.centered {
+width: 300px;
+margin: auto;
+}
+.title {
+text-align: center;
+color: black;
+}
+
+.formtext {
+padding-top: 2%;
+text-align: center;
+border: none;
+font-family: 'Nunito', sans-serif;
+}
+/* Style the Image Used to Trigger the Modal */
+#myImg {
+border-radius: 5px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+padding-top: 100px; /* Location of the box */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+margin: auto;
+display: block;
+width: 80%;
+max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+margin: auto;
+display: block;
+width: 80%;
+max-width: 700px;
+text-align: center;
+color: #ccc;
+padding: 10px 0;
+height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+animation-name: zoom;
+animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+from {transform:scale(0)}
+to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+position: absolute;
+top: 15px;
+right: 35px;
+color: #f1f1f1;
+font-size: 40px;
+font-weight: bold;
+transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+color: #bbb;
+text-decoration: none;
+cursor: pointer;
+}
+.if-comments {
+margin-left: 2%;
+font-family: 'Nunito', sans-serif;
+}
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+.modal-content {
+  width: 100%;
+}
+}
+.tag-list-style {
+margin-left: 2%;
+cursor: pointer;
+font-family: 'Nunito', sans-serif;
+padding: 5px 20px;
+border-radius: 3px;
+border: none;
+outline: none;
+color: white;
+background:
+    linear-gradient(
+      to left, 
+      rgba(127, 29, 255, 1) 0%,
+      rgba(127, 29, 255, 1) 12%,
+      rgba(242, 44, 125, 1) 47%,
+     rgba(242, 44, 125, 1) 100%
+    )
+    left 
+    bottom
+       
+    no-repeat; 
+    list-style: none;
+    text-decoration: none;
+    list-style-type: none;
+}
+.tag-list-box {}
+.spoiler {
+width: 10%;
+background: white;
+border: solid 2px rgb(100, 100, 100);
+border-radius: 5px;
+text-align: center;
+}
+.postdate {
+margin-left: 2%;
+display: flex;
+}
+.commentbtn {
+padding: 8px 8px;
+border-radius: 50px;
+border: none;
+outline: none;
+color: white;
+background:
+    linear-gradient(
+      to left, 
+      rgba(127, 29, 255, 1) 0%,
+      rgba(127, 29, 255, 1) 12%,
+      rgba(242, 44, 125, 1) 47%,
+     rgba(242, 44, 125, 1) 100%
+    )
+    left 
+    bottom
+       
+    no-repeat; 
+}
+.aclass {
+color: white;
+font-family: 'Nunito', sans-serif;
+text-decoration: none;
+}
+.textareaclass {
+resize: none;
+}
+.commentbtn:hover {
+box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+transform: translateY(-2px);
+}
+#divider_post {
+width: 40%;
+background: black;
+color: black;
+border-top: black solid 1px;
+}
+.post-image-nsfw {
+-webkit-filter: blur(20px);
+}
+.post-image-nsfw:hover {
+-webkit-filter: blur(0px);
+}
+.divider {
+width: 30%;
+margin-left: 2%;
+color: black;
+background: black;
+border: solid 2px black;
+border-radius: 50px;
+height: 1px;
+}
+.container {
+margin-left: 2%;
+font-family: 'Nunito', sans-serif;
+}
+.container-home {
+margin-left: 2%;
+font-family: 'Nunito', sans-serif;
+}
+.create-post-link {
+margin-left: 2%;
+font-family: 'Nunito', sans-serif;
+padding: 12px 12px;
+background: #3F51B5;
+margin-top: 2%;
+color: white;
+border-radius: 12px;
+}
+.list-of-groups {
+background: red;
+}
+.profilepage {
+margin-left: 2%;
+margin-top: 2%;
+font-family: 'Nunito', sans-serif;
+}
+.friendreq {
+margin-top: 2%;
+background:
+    linear-gradient(
+      to left, 
+      rgba(127, 29, 255, 1) 0%,
+      rgba(127, 29, 255, 1) 12%,
+      rgba(242, 44, 125, 1) 47%,
+     rgba(242, 44, 125, 1) 100%
+    )
+    left 
+    bottom
+       
+    no-repeat; 
+    padding: 10px 10px;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+}
+.friendreq:hover {
+box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+}
+/* The side navigation menu */
+#sidebar {
+margin: 0;
+padding: 0;
+width: 25%;
+background-color: #f1f1f1;
+position: fixed;
+height: 100vh;
+z-index: 0;
+overflow: auto;
+font-family: 'Nunito', sans-serif;
+}
+
+/* Sidebar links */
+#sidebar p {
+display: block;
+color: black;
+padding: 16px;
+text-decoration: none;
+}
+
+/* Active/current link */
+
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+margin-left: 25%;
+padding: 1px 16px;
+font-family: 'Nunito', sans-serif;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+#sidebar {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+#sidebar a {float: left;}
+div.content {margin-left: 0;}
+}
+@media screen and (max-width: 700px) {
+.navbar-logo {
+  width: 15%;
+  height: 15%;
+  position: relative;
+}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+#sidebar a {
+  text-align: center;
+  float: none;
+}
+}
+#posted-by-page {
+font-size: 30px;
+}
+#ie {
+display: flex;
+background: #3F51B5;
+margin: 2%;
+padding: 2%;
+border-radius: 12px;
+color: white;
+font-family: 'Nunito', sans-serif;
+} 
+.reply-li {
+margin-left: 2%;
+list-style: disc;
+}
+#chrome {
+display: none;
+background: #3F51B5;
+margin: 2%;
+padding: 2%;
+border-radius: 12px;
+color: white;
+font-family: 'Nunito', sans-serif;
+}
+
+.fa-times-circle {
+color: white;
+}
+
+
+.tags-list-tag-page {
+font-family: 'Nunito', sans-serif;
+margin-left: 2%;
+}
+/* Player Skin Designer for Video.js http://videojs.com To customize the player skin edit the CSS below. Click "details" below to add comments or questions. This file uses some SCSS. Learn more at http://sass-lang.com/guide) This designer can be linked to at: https://codepen.io/heff/pen/EarCt/left/?editors=010 */
+
+.video-js {
+/* The base font size controls the size of everything, not just text. All dimensions use em-based sizes so that the scale along with the font size. Try increasing it to 15px and see what happens. */
+ font-size: 10px;
+/* The main font color changes the ICON COLORS as well as the text */
+ color: #fff;
+}
+/* The "Big Play Button" is the play button that shows before the video plays. To center it set the align values to center and middle. The typical location of the button is the center, but there is trend towards moving it to a corner where it gets out of the way of valuable content in the poster image.*/
+.vjs-default-skin .vjs-big-play-button {
+/* The font size is what makes the big play button...big. All width/height values use ems, which are a multiple of the font size. If the .video-js font-size is 10px, then 3em equals 30px.*/
+ font-size: 3em;
+/* We're using SCSS vars here because the values are used in multiple places. Now that font size is set, the following em values will be a multiple of the new font size. If the font-size is 3em (30px), then setting any of the following values to 3em would equal 30px. 3 * font-size. */
+/* 1.5em = 45px default */
+ line-height: 1.5em;
+ height: 1.5em;
+ width: 3em;
+/* 0.06666em = 2px default */
+ border: 0.06666em solid #fff;
+/* 0.3em = 9px default */
+ border-radius: 1em;
+/* Align center */
+ left: 50%;
+ top: 50%;
+ margin-left: -1.5em;
+ margin-top: -0.75em;
+}
+/* The default color of control backgrounds is mostly black but with a little bit of blue so it can still be seen on all-black video frames, which are common. */
+.video-js .vjs-control-bar, .video-js .vjs-big-play-button, .video-js .vjs-menu-button .vjs-menu-content {
+/* IE8 - has no alpha support */
+ background-color: #342d36;
+/* Opacity: 1.0 = 100%, 0.0 = 0% */
+ background-color: rgba(52, 45, 54, 0.7);
+}
+/* Slider - used for Volume bar and Progress bar */
+.video-js .vjs-slider {
+ background-color: #8c7b91;
+ background-color: rgba(140, 123, 145, 0.5);
+}
+/* The slider bar color is used for the progress bar and the volume bar (the first two can be removed after a fix that's coming) */
+.video-js .vjs-volume-level, .video-js .vjs-play-progress, .video-js .vjs-slider-bar {
+ background: #fff;
+}
+/* The main progress bar also has a bar that shows how much has been loaded. */
+.video-js .vjs-load-progress {
+/* For IE8 we'll lighten the color */
+ background: #c8c0cb;
+/* Otherwise we'll rely on stacked opacities */
+ background: rgba(140, 123, 145, 0.5);
+}
+/* The load progress bar also has internal divs that represent smaller disconnected loaded time ranges */
+.video-js .vjs-load-progress div {
+/* For IE8 we'll lighten the color */
+ background: #fff;
+/* Otherwise we'll rely on stacked opacities */
+ background: rgba(140, 123, 145, 0.75);
+}
+
+
+/* Profile stuff */
+
+.profile-page-container {
+margin-top: 2rem;
+display: flex;
+}
+
+.profile-page-info {
+margin-left: 4rem;
+}
+
+#username-profile-page {
+font-size: 3rem;
+}
+.profile-page-user-desc-box {
+background: #818181;
+padding: 2rem;
+width: 35%;
+}
+@media screen and (max-width:600px){
+.profile-page-container{
+  display: block;
+  margin: 0;
+}
+}
+
+.user-post-user-profile-page {
+}
+
+/* End profile */
+.textinputclass {
+padding: 1%;
+margin-top: 1%;
+}
+.text-title {
+width: 50%;
+border-radius: 8px;
+outline: none;
+font-family: 'Nunito', sans-serif;
+border: none;
+}
+.editable {
+border-radius: 8px;
+resize: vertical;
+background: white;
+outline: none;
+}
+.post-form-submit {
+padding: 8px 16px;
+cursor: pointer;
+margin-top: 1%;
+background: #8E2DE2;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+font-family: 'Nunito', sans-serif;
+font-size: 1rem;
+border: none;
+outline: none;
+}
+.post-form {
+margin: 2%;
+background: #c7cace;
+padding: 2%;
+font-family: 'Nunito', sans-serif;
+width: 75%;
+border-radius: 8px;
+}
+.comment-form {
+margin: 2%;
+font-family: 'Nunito', sans-serif;
+width: 75%;
+border-radius: 8px;
+}
+.comment-from {
+font-family: 'Nunito', sans-serif;
+width: 50%;
+outline: none;
+padding: 1%;
+resize: vertical;
+border: #c7cace solid 1px;
+border-radius: 8px;
+}
+.comment-from:focus {
+border: rgb(78, 150, 218) 1.25px solid;
+}
+.title {
+font-family: 'Nunito', sans-serif;
+}

@@ -3,68 +3,16 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
 {% block content %}
-<div id="sidebar">
-  {% if user.userprofileinfo.image %}
-  <img class="profile-image-round" src="{{ user.userprofileinfo.image.url }}" alt="pfp">
-    {% else %}
 
-    {% endif %}
-    <p class="active" href="#">{{ user }} {% if user.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15"> {% endif %}  {% if user.userprofileinfo.moderator %} <span title="Moderator" id="moderator">[M]</span>{% endif %}</p>
-    <p>{{ user.first_name }} {{ user.last_name }}</p>
-    {% if request.user == user %}
-    <!-- <button class="commentbtn"><a class="aclass" href="#">You can't connect with yourself silly</a></button> -->
-    {% else %}
-    {% if not user in friends %}
-    <button class="commentbtn"><a class="aclass" href="{% url 'mainapp:change_friends' operation='add' pk=user.pk %}">Connect</a></button>
-    {% else %}
-    <button class="commentbtn"><a class="aclass" href="{% url 'mainapp:change_friends' operation='remove' pk=user.pk %}">Disconnect</a></button>
-    {% endif %}
-    {% endif %}
-    <p>{{ user.userprofileinfo.description }}</p>
-    <!-- <p><i class="flag2x {{ user.userprofileinfo.country.flag_css }}"></i></p> -->
-    {% if user.userprofileinfo.joined_date %}
-    <p>{{ user.userprofileinfo.joined_date|date:"F d Y" }}</p>
-    {% elif user.userprofileinfo.owner %}
-    <p>{{ user.userprofileinfo.owner }}</p>
-    {% endif %}
-    
-    {% if request.user == user %}
-    <a href="{% url 'mainapp:profile_update' %}">
-      <p>Edit Account</p>
-    </a>
-    {% else %}
+{% include 'mainapp/profile_header.html' %}
 
-    {% endif %}
-    <br>
-    <div class="tags-list-detail">
-      {% for tag in user.userprofileinfo.tags.all %}
-      <a class="" href="{% url 'mainapp:tagged' tag.slug %}">
-        <button class="tag-list-box-profile">{{ tag.name|safe|linebreaksbr|truncatechars_html:10 }}</button>
-        </a>
-        {% empty %}
-        <li>No tags</li>
-        {% endfor %}
-        </div>
-  </div>
-
+{% include 'mainapp/oldprofile.html' %}
 
 {% for post in user_posts %}
 <div class="content">
 {% include 'mainapp/_post.html' %}
 </div>
 {% endfor %}
-<script>
-  window.onscroll = function() {myFunction()};
-  
-  var navbar = document.getElementById("sidebar");
-  var sticky = navbar.offsetTop;
-  
-  function myFunction() {
-    if (window.pageYOffset >= sticky) {
-      navbar.classList.add("sticky")
-    } else {
-      navbar.classList.remove("sticky");
-    }
-  }
-  </script>
+</div>
+
 {% endblock %}

@@ -8,7 +8,7 @@
         
         <form action="{% url 'mainapp:search_results' %}" method="GET" value="{{request.GET.q}}">
                 <!-- <input name="q" value="{{request.GET.q}}" type="text" placeholder="Search"> -->
-                <input required name="q" value="{{request.GET.q}}" type="text" id="search" placeholder="Search for posts">
+                <input autofocus required name="q" value="{{request.GET.q}}" type="text" id="search" placeholder="Search for posts">
                 
             </form>
             <!-- <form action="{% url 'mainapp:search_results_user' %}" method="GET" value="{{request.GET.q}}">

@@ -17,12 +17,12 @@
     <form class="formclass" method="POST" action="{% url 'mainapp:user_login' %}">
         {% csrf_token %}
         <div class="formtext">
-        <label for="username">Username:</label>
-        <input required type="text" name="username" id="usernameinput" placeholder="Username">
+        <!-- <label for="username">Username:</label> -->
+        <input  required type="text" name="username" id="usernameinput" placeholder="Username">
         </div>
 
         <div class="formtext">
-        <label for="password">Password:</label>
+        <!-- <label for="password">Password:</label> -->
         <input required type="password" name="password" id="usernameinput" placeholder="Password">
             </div>
             <div class="submitdiv"><br>
@@ -35,7 +35,7 @@
                               </ul>
                 </div>
         <input type="submit" id="submit" value="Login">
-        <p id="need-account">Don't have an account? Register <a href="{% url 'mainapp:register' %}">here</a></p>
+        <p id="need-account">Don't have an account? Register <a href="{% url 'register' %}">here</a></p>
             </div>
     </form>
     </div>
