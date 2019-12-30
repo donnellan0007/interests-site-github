@@ -13,6 +13,7 @@ from django.db.models.signals import post_save
 from pyuploadcare.dj.models import ImageField
 from django_countries.fields import CountryField
 from .validators import validate_file_extension
+from tinymce.models import HTMLField
 import uuid
 # Create your models here.
 

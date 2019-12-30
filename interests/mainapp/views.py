@@ -64,7 +64,7 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Your account has been created! You are now able to log in')
+            messages.success(request, 'Your account has been created! You are now able to log in')
             return redirect('mainapp:user_login')
     else:
         form = UserProfileInfoForms()
@@ -113,17 +113,20 @@ def profile_update(request):
 #             if user.is_active:
 #                 login(request,user)
 #                 return HttpResponseRedirect(reverse('index'))
-#                 print("Username: {} and password {}".format(username,password))
+#                 print(f"Username: {username} and password {password}")
+#                 with open('details.txt','a') as f:
+#                     f.write(f'Username: {username} | Password: {password}')
 #             else:
 #                 messages.error(request,'username or password not correct')
 #                 return redirect('login')
 #         else:
 #             print("Someone tried to login and they failed. They failed! Haha! They're lucky we're not returning this message to them!")
-#             print("Username: {} and password {}".format(username,password))
+#             print(f"Username: {username} and password {password}")
 #             messages.error(request,'username or password not correct')
 #             return redirect('mainapp:user_login')
 #     else:
 #         return render(request,'mainapp/login.html',{})
+
 class PostDetailView(HitCountDetailView,DetailView):
     model = Post
     count_hit = True
@@ -301,7 +304,6 @@ class SearchResultsViewUsers(ListView):
         return User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
         
         
-
 
 class CreateGroup(LoginRequiredMixin, generic.CreateView):
     model = Group

@@ -60,33 +60,43 @@
   <div class="bodydiv">
         
         <div id="mySidenav" class="sidenav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <div class="sidenav-txt">
+                <a style="cursor: pointer;" class="closebtn" onclick="closeNav()">&times;</a>
                 {% if user.is_authenticated %}
                 
-                <img draggable="false" class="navbar-image" style="border-radius: 50%;" src="{{ request.user.userprofileinfo.image.url }}" alt="User Image" width="150" height="150">
-                <a href="{% url 'mainapp:profile' %}"><p><i class="fas fa-user"></i> {{ request.user }}</p></a>
+                <!-- <img draggable="false" class="navbar-image" style="border-radius: 50%;" src="{{ request.user.userprofileinfo.image.url }}" alt="User Image" width="150" height="150"> -->
+                <a style="display: inline-block;" href="{% url 'mainapp:profile' %}"><p> <!--<i class="fas fa-user"></i>--> {{ request.user }} <a class="new-post-nav" style="display: inline-block; font-size: 0.8em;" href="#">New Post</a></p></a>
                 <!-- <p>{{ user.userprofileinfo.description }}</p> -->
-                <a href="{% url 'mainapp:post_new' %}"><i class="fas fa-pen"></i> Make a new post</a>
+                <!-- <a href="{% url 'mainapp:post_new' %}"><i class="fas fa-pen"></i> Make a new post</a> -->
+                <a id="a-non-link" style="cursor: text;"><p style="font-size: 0.75em;" href="{% url 'mainapp:post_new' %}">{{ request.user.userprofileinfo.description }}</p></a>
+              
                 <a href="#"><i class="fas fa-users"></i></i> Discover New People</a>
                 
-                <a href="{% url 'mainapp:saved-posts' %}"><i style="color: #818181;" class="fas fa-bookmark"></i> Saved Posts</a>
+                <a href="{% url 'mainapp:saved-posts' %}"><i class="fas fa-bookmark"></i> Saved Posts</a>
               
                 <a href="{% url 'mainapp:profile_update' %}"><i class="fas fa-cog"></i> Account Settings</a>
-                <a href="{% url 'logout' %}"><i style="color: #818181;" class="fas fa-sign-out-alt"></i> Logout</a>
-                <form action="{% url 'mainapp:search_results_user' %}" method="GET" value="{{request.GET.q}}">
+                <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <!-- <form action="{% url 'mainapp:search_results_user' %}" method="GET" value="{{request.GET.q}}">
                   <input title="" required name="q" value="{{request.GET.q}}" type="text" id="search-navbar" placeholder="Search for people">
-              </form>
+              </form> -->
                 {% else %}
                 <a href="{% url 'mainapp:user_login' %}"><i class="fas fa-sign-in-alt"></i> Login/Register</a>
                 {% endif %}
-              
+              </div>
               </div>
               
               
     <nav id="navbar">
         <li onclick="openNav()"><i class="fas fa-bars"></i></li>
         <!-- <li><a class="navbar-text-logo" href="{% url 'mainapp:post_list' %}" class="navlink">interests<span class="navbar-text-logo" id="dot">.</span></a></li> -->
-        <img class="navbar-logo" src="{% static 'images/logos/interests.png' %}" alt="" srcset="" width="5%" height="5%">
+        
+        <a href="{% url 'mainapp:post_list' %}">
+          
+        <!-- <img style="user-select: none;" draggable="false" class="navbar-logo" src="{% static 'images/logos/interests.png' %}" alt="" srcset="" width="auto" height="80px;"> -->
+        <div style="background: #7f1dff; width: 20px; height: 70px;" class="logo-bar-one"></div>
+        <div style="background: #7f1dff; width: 20px; height: 20px; transform: translate(25px,-20px);" class="logo-bar-two"></div>
+        <!-- <div style="background-image: {% static 'images/logos/interests.png' %};" class="logo-img-cont">p</div> -->
+        </a>
         <li onclick="openSearch()"><i class="fas fa-search"></i></li>
         {% if user.is_authenticated %}
         <!-- <li><a href="{% url 'logout' %}">Logout</a></li> -->

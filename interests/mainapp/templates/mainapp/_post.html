@@ -11,12 +11,14 @@
   <p>{{ hitcount.total_hits }} Views</p>
   {% endif %} -->
   
-  <a href="{% url 'mainapp:post_likes' pk=post.pk slug=post.slug %}">
+  <!-- <a href="{% url 'mainapp:post_likes' pk=post.pk slug=post.slug %}">
     <i class="fas fa-thumbs-up">&nbsp;{{ post.likes.count }}</i>
-  </a>
-    <hr id="divider_post"><br>
-    <h1><a title="View {{ post.title }}" class="title" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">{{ post.title }}</a></h1>&nbsp;{% if post.NSFW %} <div class="nsfw"><p>NSFW</p></div> 
-    <br>
+  </a> -->
+    <!-- <hr id="divider_post"><br> -->
+    <h1><a title="View {{ post.title }}" class="title" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">{{ post.title }}</a></h1>
+    <div class="title-text-post-divider"></div>
+    {% if post.NSFW %}<div class="nsfw"><p>NSFW</p></div> 
+    
     <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">Read this NSFW Post&nbsp;<i class="fas fa-angle-right"></i></a></p>
     {% elif post.spoiler %}<div class="spoiler"><p>Spoiler</p></div> 
     <br>

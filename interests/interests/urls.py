@@ -35,6 +35,7 @@ urlpatterns = [
     path('emoji/',include('emoji.urls')),
     path('register/',views.register,name='register'),
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('django_private_chat.urls')),
 ]
 

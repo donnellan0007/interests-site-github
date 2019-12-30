@@ -4,6 +4,7 @@
 {% load hitcount_tags %}
 {% block content %}
 
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 <script>
 
@@ -50,6 +51,7 @@ $(".like-btn").click(function(e) {
   <p>{{ hitcount.total_hits }} Views</p>
   {% endif %}
   <p>|</p> -->
+  {% comment %}
   {% if user in post.likes.all %}
   <a class='like-btn' href="{% url 'mainapp:post_likes' pk=post.pk slug=post.slug %}">
     <i class="fas fa-thumbs-up">&nbsp;<span class="like-count">{{ post.likes.count }}</span></i>
@@ -58,20 +60,21 @@ $(".like-btn").click(function(e) {
   <a class='like-btn' href="{% url 'mainapp:post_likes' pk=post.pk slug=post.slug %}">
     <i class="far fa-thumbs-up">&nbsp;<span class="like-count">{{ post.likes.count }}</span></i>
   </a>
-  {% endif %} &nbsp;&nbsp;
+  {% endif %}
+  
   {% if user in post.saves.all %}
   <a class='like-btn' href="{% url 'mainapp:post_saves' pk=post.pk slug=post.slug %}">
-    <i class="fas fa-bookmark"></i>
+    <i class="fas fa-bookmark saved-post-thing"></i>
   </a>
   {% else %}
   <a class='like-btn' href="{% url 'mainapp:post_saves' pk=post.pk slug=post.slug %}">
-    <i class="far fa-bookmark"></i>
+    <i class="far fa-bookmark saved-post-thing"></i>
   </a>
 
   {% endif %}
-  
+  {% endcomment %}
 
-        <br><hr id="divider_post"><br>
+        <!-- <br><hr id="divider_post"><br> -->
         {% comment %}
         {% if object.author == user %}
           <div>
@@ -82,7 +85,7 @@ $(".like-btn").click(function(e) {
         {% endcomment %}
         <h1><a title="{{ post.title }}" class="title" href="#">{{ post.title }}</a></h1>
         <!-- <h1 class="title" title="View {{ post.title }}">{{ post.title }}</h1> -->
-        <br>
+        <div class="title-text-post-divider"></div>
         {% if post.image %}
         {% if post.NSFW %}
         <img class="post-image-nsfw myImg" src="{{ post.image.url }}" alt="pfp" width="20%" height="20%" draggable="false"><br><br><br>

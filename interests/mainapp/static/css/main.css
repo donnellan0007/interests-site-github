@@ -1,19 +1,28 @@
-/* CSS IS WORKING */
+
+/* Custom fonts */
+@font-face {
+  font-family: Modernist;
+  src: url(Sk-Modernist-Bold.woff);
+  unicode-range: U+00-FF, U+980-9FF;
+}
+
 * {
-    margin: 0%;
-    box-sizing: border-box;
-    padding: 0%;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    animation-name: opacity-set;
-    /* animation-duration: 1s; */
+  /* font-family: Modernist; */
+  margin: 0%;
+  box-sizing: border-box;
+  padding: 0%;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  animation-name: opacity-set;
+  /* animation-duration: 1s; */
     
 }
+
 #navbar {
     display: flex;
     list-style: none;
     font-size: 40px;
-    font-family: 'Nunito', sans-serif;
+    font-family: Modernist;
     font-weight: 900;
     justify-content: space-around;
     text-align: center;
@@ -26,7 +35,7 @@
   display: flex;
   list-style: none;
   font-size: 40px;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   font-weight: 900;
   justify-content: space-around;
   text-align: center;
@@ -42,7 +51,7 @@
 }
 .navbar-new ul {
   display: flex;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   list-style: none;
   justify-content: flex-start;
 }
@@ -88,12 +97,12 @@
     justify-content: space-around;
     text-align: center;
     font-size: 25px;
-    font-family: 'Nunito', sans-serif;
+    font-family: Modernist;
 }
 
 .like-count {
   color: black;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   font-weight: 100;
   -webkit-touch-callout: none;
        -webkit-user-select: none;
@@ -142,7 +151,7 @@
     border: none;
       width: 30%;
       text-align: center;
-      font-family: 'Nunito', sans-serif;
+      font-family: Modernist;
       outline: none;
   }
 #search-navbar {
@@ -150,7 +159,7 @@
   padding: 12px 18px;
   border: none;
   border-bottom: rgba(58, 56, 56, 0.623) 1px solid;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   width: 60%;
 }
 #search-navbar:focus {
@@ -166,12 +175,15 @@
   outline: none;
   font-size: 1rem;
 }
-
+.sidenav-txt {
+  margin: 0.75rem;
+}
   /* The side navigation menu */
 .sidenav {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
     height: 100%; /* 100% Full-height */
-    text-align: center;
+    text-align: left;
+    
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
@@ -188,12 +200,14 @@
   .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 1.5em;
     color: #818181;
     display: block;
     transition: 0.3s;
   }
-  
+  #a-non-link:hover {
+    color: #818181;
+  }
   /* When you mouse over the navigation links, change their color */
   .sidenav a:hover {
     color: #f1f1f1;
@@ -229,13 +243,13 @@
     border-bottom: solid black 2px;
     outline: none;
     width: 25%;
-    font-family: 'Nunito', sans-serif;
+    font-family: Modernist;
   }
   .mainform {
     padding-top: 2%;
 }
  #login {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
  }
  .accounttext {
    justify-content: space-around;
@@ -251,7 +265,7 @@
    border: none;
    background-color: #3F51B5;
    padding: 10px 20px;
-   font-family: 'Nunito', sans-serif;
+   font-family: Modernist;
    cursor: pointer;
    color: white;
  }
@@ -275,7 +289,7 @@
   white-space: pre-line;
 }
 .post {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   color: black;
   padding-left: 3%;
 
@@ -307,11 +321,11 @@
   }
 }
 .tag-list-box {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   cursor: pointer;
 }
 .tag-list-box-profile {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   cursor: pointer;
   background:
   linear-gradient(
@@ -332,7 +346,7 @@ border-radius: 8px;
 color: white;
 }
 .tag-list-box-profile-profile {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   cursor: pointer;
 padding: 8px;
 margin: 4px;
@@ -348,7 +362,7 @@ color: white;
 }
 .search-results-thing {
   margin-left: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   font-size: 2rem;
 }
 .search-thing {
@@ -368,7 +382,7 @@ color: white;
 	-webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bolder;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 .comment {
   color: black;
@@ -395,7 +409,7 @@ color: white;
   background: #3F51B5;
   margin: 2%;
   margin-right: 30%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   background: rgb(221, 221, 221);
   border-radius: 20px;
   padding-top: 2%;
@@ -421,7 +435,7 @@ color: white;
 }
 .search-form {
   margin-left: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   margin-top: 2%;
 }
 .search-box {
@@ -429,7 +443,7 @@ color: white;
   -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
     -moz-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
     box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   width: 40%;
   border: none;
   outline: none;
@@ -442,7 +456,7 @@ color: white;
   margin: 2%;
 }
 #need-account {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   padding-top: 2%;
 }
 .user-image {
@@ -481,7 +495,7 @@ color: white;
 .remember-me-div {
   text-align: center;
   border: none;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 .remember-me {
   background: #818181;
@@ -558,7 +572,7 @@ li {
   padding-top: 2%;
   text-align: center;
   border: none;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 /* Style the Image Used to Trigger the Modal */
 #myImg {
@@ -634,14 +648,19 @@ li {
 }
 .if-comments {
   margin-left: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 .account-settings-logout-div {
   display: flex;
   justify-content: space-between;
 }
+.logo-img-cont {
+  width: auto;
+  height: 80px;
+
+}
 #saved-posts- {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   font-weight: 400;
   color: white;
   opacity: 0.4;
@@ -665,7 +684,7 @@ br {
 .tag-list-style {
   margin-left: 2%;
   cursor: pointer;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   padding: 5px 20px;
   border-radius: 3px;
   border: none;
@@ -707,7 +726,7 @@ br {
 }
 .aclass {
   color: white;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   text-decoration: none;
 }
 .textareaclass {
@@ -715,7 +734,7 @@ br {
 }
 .empty-text {
   text-align: center;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   margin-top: 1rem;
 }
 .profile-image-header {
@@ -730,7 +749,7 @@ br {
   padding: 2rem;
   text-align: center;
   background: linear-gradient(90deg, rgba(242,44,125,1) 0%, rgba(127,29,255,1) 100%); 
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   color: white;
 
 }
@@ -765,15 +784,15 @@ br {
 }
 .container {
   margin-left: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 .container-home {
   margin-left: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 .create-post-link {
   margin-left: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   padding: 12px 12px;
   background: #3F51B5;
   margin-top: 2%;
@@ -786,7 +805,7 @@ br {
 .profilepage {
   margin-left: 2%;
   margin-top: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 .friendreq {
   margin-top: 2%;
@@ -826,7 +845,7 @@ br {
   position: absolute;
   height: 90vh;
   z-index: 0;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 @keyframes opacity-set {
   0% {
@@ -885,7 +904,7 @@ br {
 div.content {
   margin-left: 25%;
   padding: 1px 16px;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
@@ -923,7 +942,7 @@ div.content {
   padding: 2%;
   border-radius: 12px;
   color: white;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 } 
 .reply-li {
   margin-left: 2%;
@@ -936,7 +955,7 @@ div.content {
   padding: 2%;
   border-radius: 12px;
   color: white;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 
 .fa-times-circle {
@@ -945,7 +964,7 @@ div.content {
 
 
 .tags-list-tag-page {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   margin-left: 2%;
 }
 /* Player Skin Designer for Video.js http://videojs.com To customize the player skin edit the CSS below. Click "details" below to add comments or questions. This file uses some SCSS. Learn more at http://sass-lang.com/guide) This designer can be linked to at: https://codepen.io/heff/pen/EarCt/left/?editors=010 */
@@ -1051,7 +1070,7 @@ div.content {
   width: 50%;
   border-radius: 8px;
   outline: none;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   border: none;
 }
 .editable {
@@ -1090,7 +1109,7 @@ padding: 8px 26px;
   background: #8E2DE2;  /* fallback for old browsers */
 background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-font-family: 'Nunito', sans-serif;
+font-family: Modernist;
 font-size: 1rem;
   border: none;
   outline: none;
@@ -1099,18 +1118,18 @@ font-size: 1rem;
   margin: 2%;
   background: #c7cace;
   padding: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   width: 75%;
   border-radius: 8px;
 }
 .comment-form {
   margin: 2%;
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   width: 75%;
   border-radius: 8px;
 }
 .comment-from {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
   width: 50%;
   outline: none;
   padding: 1%;
@@ -1122,8 +1141,20 @@ font-size: 1rem;
   border: rgb(78, 150, 218) 1.25px solid;
 }
 .title {
-  font-family: 'Nunito', sans-serif;
+  font-family: Modernist;
 }
 .fa-bookmark {
+}
+.saved-post-thing {
   color: black;
+}
+.new-post-nav {
+  font-size: ;
+}
+.title-text-post-divider {
+  width: 20em;
+  height: 0.1em;
+  background: black;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }

@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 STATIC_DIR = os.path.join(BASE_DIR,'static')
-MEDIA_DIR = os.path.join(BASE_DIR,'media')
+MEDIA_DIR = os.path.join(BASE_DIR,'media')  
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -26,7 +26,7 @@ SECRET_KEY = 'm0-up!(#l)jr08sb*^9s82$h2lp%y)nwguwm%z6=b)!j#malgd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 
 
@@ -49,9 +49,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'emoji_picker',
     'pyuploadcare.dj',
+    'django_wysiwyg',
     'emoji',
     'django_private_chat',
     'tagulous',
+    'tinymce',
     'imagekit',
     'django_countries',
     'hitcount',
@@ -76,6 +78,15 @@ UPLOADCARE = {
 }
 
 ROOT_URLCONF = 'interests.urls'
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+
+DJANGO_WYSIWYG_FLAVOR = "ckeditor"
 
 TEMPLATES = [
     {
