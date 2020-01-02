@@ -2,12 +2,24 @@
 {% block content %}
 
 <div class="search-container">
-  <h3 class="search-results-thing" >Search results for <span class="search-thing"><strong>{{ request.GET.q }}</strong></span></h3>
-            {% for post in object_list %}
-            {% include 'mainapp/_post.html' %}
-       
-    {% empty %}
-      <p>Sorry, no search results were found.</p>
-    {% endfor %}
+  {% if 'nigga' in request.GET.q %}
+  <h3 class="search-results-thing">Your search query for <span class="search-thing"><strong>{{ request.GET.q }}</strong></span> was not processed</h3>
+  {% elif '     ' in request.GET.q %}
+  <h3 class="search-results-thing">Please enter a valid search query</h3>
+  <form action="{% url 'mainapp:search_results' %}" method="GET" value="{{request.GET.q}}">
+    <!-- <input name="q" value="{{request.GET.q}}" type="text" placeholder="Search"> -->
+    <input autofocus required name="q" value="{{request.GET.q}}" type="text" id="search-r" placeholder="Search">
+    
+</form>
+  {% else %}
+  <h3 class="search-results-thing">Search results for <span class="search-thing"><strong>{{ request.GET.q }}</strong></span></h3>
+  {% for post in object_list %}
+  {% include 'mainapp/_post.html' %}
+
+{% empty %}
+<p>Sorry, no search results were found.</p>
+{% endfor %}
+  {% endif %}
+  
   
 {% endblock %}

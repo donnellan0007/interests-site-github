@@ -1,10 +1,16 @@
 {% extends 'mainapp/base.html' %}
 {% block content %}
 
+{% if request.user == post.author %}
 <form method="POST">
     {% csrf_token %}
     <p>Are you sure you want to delete {{ object}}?</p>
     <input type="submit" class="submitbutton" value="Delete">
 </form>
+{% else %}
+<div class="error-warning-div">
+    <h1>You don't have access to this page</h1>
+</div>
+{% endif %}
 
 {% endblock %}

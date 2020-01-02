@@ -75,7 +75,14 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         instance.userprofileinfo.save()
 
 
-    
+class HomePage(models.Model):
+    image = ProcessedImageField(upload_to='home_page',
+                                           processors=[ResizeToFill(150, 150)],
+                                           blank=True,
+                                           null=True,
+                                           format='JPEG',
+                                           options={'quality': 60})
+
 
 class Group(models.Model):
     name = models.CharField(max_length=200)
@@ -222,6 +229,7 @@ class SendMessageToAdmin(models.Model):
 class Friend(models.Model):
     users = models.ManyToManyField(User)
     current_user = models.ForeignKey(User,related_name='owner',null=True,on_delete=models.CASCADE)
+    
 
     @classmethod
     def make_friend(cls,current_user,new_friend):

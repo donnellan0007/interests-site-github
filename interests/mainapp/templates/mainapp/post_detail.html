@@ -144,12 +144,16 @@ $(".like-btn").click(function(e) {
     <div class="divider"></div><br>
     <div class="if-comments">
     </div>
-    
+                
+      <a style="display: inline-block; margin-left: 2%; font-family: Modernist;" href="{% url 'mainapp:profile' %}"><p><img draggable="false" id="img-profile-nav-small" width="30" height="30" src="{{ request.user.userprofileinfo.image.url }}" alt="User profile picture ">Commenting as {{ request.user }} <!--new-post-nav<a class="new-post-nav" style="display: inline-block; font-size: 0.8em;" href="{% url 'mainapp:post_new' %}">New Post</a>--></p></a>
+     
     <form class="comment-form" method="POST" action="{% url 'mainapp:add_comment_to_post' pk=post.pk slug=post.slug %}">
+      
       {% csrf_token %}
       {{form.as_p}}
       <button type="submit" class="commentbtn"><a class="aclass" href="#"></a>Comment</button>
   </form>
+
  
 <br><br>
   <div class="container">

@@ -1,0 +1,19 @@
+{% load static %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+    <p>{{ message }}</p>
+    </div>
+{% endfor %}
+{% endif %}
+
+<style>
+    .alert {
+        background: rgb(16, 179, 92);
+        padding: 1rem;
+        margin: 1rem;
+        font-family: Modernist;
+        color: white;
+    }
+</style>

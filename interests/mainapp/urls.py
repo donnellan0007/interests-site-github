@@ -16,7 +16,7 @@ urlpatterns = [
     path('profile/<pk>/',views.view_profile,name='view_profile_with_pk'),
     path('posts/',views.PostListView.as_view(),name='post_list'),
     path('register/',user_view.register,name='register'),
-    path('user_login/',auth_views.LoginView.as_view(template_name='mainapp/login.html'),name='user_login'),
+    path('user_login/',auth_views.LoginView.as_view(template_name='mainapp/login.html',),name='user_login'),
     path('profile/',views.profile_page,name='profile'),
     path('account/update/',views.profile_update,name='profile_update'),
     path('posts/saved/',views.PostSaveListView.as_view(),name='saved-posts'),

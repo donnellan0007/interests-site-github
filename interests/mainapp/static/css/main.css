@@ -220,8 +220,11 @@
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+
   }
-  
+.closebtn {
+  user-select: none;
+}  
   /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
   #main {
     transition: margin-left .5s;
@@ -438,6 +441,17 @@ color: white;
   font-family: Modernist;
   margin-top: 2%;
 }
+#search-r {
+  border: none;
+  outline: none;
+  margin: 2%;
+  width: 20%;
+  border-bottom: 1px solid black;
+  font-family: Modernist;
+}
+/* #search-r:focus {
+  width: 30%;
+} */
 .search-box {
   padding: 16px 16px;
   -webkit-box-shadow: 0px 0px 14px 1px rgba(0,0,0,0.26);
@@ -1149,7 +1163,8 @@ font-size: 1rem;
   color: black;
 }
 .new-post-nav {
-  font-size: ;
+  padding: 0.25em;
+  color: white;
 }
 .title-text-post-divider {
   width: 20em;
@@ -1157,4 +1172,56 @@ font-size: 1rem;
   background: black;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+.menu-bar-nav {
+  width: 0.75em;
+  height: 0.125em;
+  background: black;
+  margin-top: 0.125em;
+  transform: translateY(0.5em);
+  cursor: pointer;
+}
+.menu-search-nav {
+  width: 0.60em;
+  height: 0.60em;
+  border: black 0.1em solid;
+  border-radius: 50%;
+  margin-top: 0.125em;
+  transform: translateY(0.5em);
+  cursor: pointer;
+}
+.menu-search-line {
+  width: 0.3em;
+  height: 0.125em;
+  
+  background: black;
+  /* margin-top: 0.125em; */
+  
+  cursor: pointer;
+  transform: rotate(45deg) translateY(0.01em) translateX(0.60em);
+}
+.nav-search-li {
+  transform: translateY(-0.1em);
+  cursor: pointer;
+}
+.menu-bar-nav:hover {
+  background: rgb(70, 70, 70);
+}
+.profile-stuff-inline {
+  /* display: inline-block; */
+}
+#img-profile-nav-small {
+  transform: translateY(0.22em);
+  user-select: none;
+  border-radius: 50%;
+}
+.error-warning-div {
+  background: rgb(219, 41, 10);
+  padding: 2rem;
+  color: white;
+  margin: 2rem;
+  font-family: Modernist;
+}
+.comment-stuff {
+  margin-top: 2px;
 }

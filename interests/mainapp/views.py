@@ -8,11 +8,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixi
 from django.db import IntegrityError
 from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView,RedirectView
 from django.contrib.auth.decorators import login_required
-from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference,Reply,SendMessageToAdmin
+from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference,Reply,SendMessageToAdmin,HomePage
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext 
 from django.urls import resolve
 from django.views import generic
 from django.contrib import messages
@@ -40,6 +40,7 @@ def index(self,request):
         return render(request,'mainapp/registration.html')
 
 class Home(View):
+    model = HomePage
     def get(self,request):
         user = self.request.user
         if user.is_authenticated:
@@ -56,6 +57,7 @@ def random(request):
 @login_required
 def user_logout(request):
     logout(request)
+    messages.success(request, 'You have successfully logged out')
     return HttpResponseRedirect(reverse('index'))
 
 def register(request):
@@ -64,7 +66,7 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, 'Your account has been created! You are now able to log in')
+            messages.success(request, f'Welcome {username}, and thanks for joining interests!')
             return redirect('mainapp:user_login')
     else:
         form = UserProfileInfoForms()
@@ -445,6 +447,7 @@ def add_comment_to_post(request,pk,slug):
             comment.post = post
             comment.author = request.user # add this line
             comment.save()
+            messages.success(request, 'Comment added successfully')
             return redirect('mainapp:post_detail',pk=post.pk,slug=post.slug)
            
     else:
