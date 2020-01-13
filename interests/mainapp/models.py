@@ -15,6 +15,7 @@ from django_countries.fields import CountryField
 from .validators import validate_file_extension
 from tinymce.models import HTMLField
 import uuid
+from notifications.signals import notify
 # Create your models here.
 
 
@@ -50,17 +51,19 @@ class UserProfileInfo(models.Model):
         default=MALE,
     )
     verified = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True,allow_unicode=True)
     colour = models.CharField(max_length=500,default='#4287f5')
     moderator = models.BooleanField(default=False)
     skills = models.PositiveIntegerField(default=0)
     owner = models.CharField(max_length=100,default="",blank=True,null=True)
-    
+    premium = models.BooleanField(default=False)
     tags = TaggableManager()
 
     def __str__(self):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
+        self.slug = slugify(self.user)
         super().save(*args, **kwargs)
     
     def parse_mentions(self):
@@ -124,7 +127,9 @@ class Tag(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(User,related_name='posts',on_delete=models.CASCADE)
     title = models.CharField(max_length=75)
-    text = models.TextField()
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,max_length=8)
+    # id = models.BigIntegerField(unique=True, primary_key=True)
+    text = models.TextField(null=True,blank=True)
     random_url = models.UUIDField(default=uuid.uuid4)
     group = models.ForeignKey(Group,null=True,blank=True,related_name='posts',on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
@@ -143,13 +148,16 @@ class Post(models.Model):
         default='',
         editable=False,
         max_length=75,
+        unique=True
     )
     
     def __str__(self):
         return self.title
     
-
-   
+    def get_slug(self):
+        uuid_value = str(uuid.uuid4())
+        unique_slug = slugify(uuid_value[0:12])
+        return unique_slug
 
     def publish(self):
         self.published_date = timezone.now()
@@ -160,15 +168,34 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         kwargs = {
-            'pk': self.id,
             'slug':self.slug,
         }
         return reverse('mainapp:post_detail',kwargs=kwargs)
     
     def save(self, *args, **kwargs):
         value = self.title
-        self.slug = slugify(value,allow_unicode=True)
+        self.slug = self.get_slug()
         super().save(*args, **kwargs)
+
+class Message(models.Model):
+    sender = models.ForeignKey(User,related_name='senders',on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User,related_name='receivers',on_delete=models.CASCADE)
+    content = models.TextField(max_length=200)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return reverse('index')
+
+    def save(self,*args,**kwargs):
+        super(Message,self).save(*args,**kwargs)
+        notify.send(self.sender,recipient=self.receiver,verb='has sent you a ',description='message',target=self)
+    
+    class Meta():
+        ordering = ['-date_created']
+    
+    def __str__(self):
+        return self.content
+
 
 class Preference(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -186,6 +213,8 @@ class Comment(models.Model):
     post = models.ForeignKey('mainapp.Post',related_name='comments',on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
+    slug = models.SlugField()
+    parent = models.ForeignKey("self",on_delete=models.CASCADE,null=True,blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=True)
 

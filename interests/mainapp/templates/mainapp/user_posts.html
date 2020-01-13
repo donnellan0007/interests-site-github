@@ -2,34 +2,12 @@
 {% load static %}
 <script src="{% static 'js/app.js' %}"></script>
 {% block content %}
-<div id="sidebar">
-        <p class="active" href="#">{{ view.kwargs.username }}</p>
-        <button class="commentbtn"><a class="aclass" href="#">Connect with {{ view.kwargs.username }}</a></button>
-        <p>{{ user.userprofileinfo.description }}</p>
-        <p>Lorem</p>
+
+      {% for post in posts %}
+      <div class="content">
+        {% include 'mainapp/_post.html' %}
       </div>
-
-
-{% for post in posts %}
-<div class="content">
-<div class="post">
-        <h1 class='posttitle'>{{ post.title }}</h1>
-        <img class="user-image" src="{{ post.author.userprofileinfo.image.url }}" alt="pfp" width="20%" height="20%">
-                {% if post.published_date %}
-                    <!-- <div class="postdate">
-                        <i class="fas fa-calendar-day"></i> &nbsp; <p>Posted {{ post.published_date|timesince }} ago</p>
-                    </div>   -->
-                    <div class="posted-by">
-                        <p>Posted by <strong>{{ post.author }}</strong>  {{ post.published_date|timesince }} ago</p>
-                    </div>
-                {% else %}
-                    <a class="pub-post" href="{% url 'mainapp:post_publish' pk=post.pk %}">Publish</a>
-                {% endif %}
-                
-              <p class='postcontent' >{{ post.text|safe|linebreaksbr }}</p>
-                  </div>
-                  </div>
-{% endfor %}
+      {% endfor %}
 <script>
     window.onscroll = function() {myFunction()};
     

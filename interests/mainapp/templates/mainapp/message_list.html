@@ -1,0 +1,15 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% for message in sender_qs %}
+        <a href="{% url 'mainapp:message-form' message.sender.username %}" id="black-link">
+            <p>
+                <strong>{{ message.sender }}</strong> {{ message.content|truncatewords:4 }}
+                <small>Sent <strong>{{ message.date_created|timesince }}</strong> ago</small>
+            </p>
+        </a>
+    {% empty %}
+    <p>No messages</p>
+    {% endfor %}
+{% endblock %}

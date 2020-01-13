@@ -1,9 +1,8 @@
 {% load static %}
 {% load hitcount_tags %}
-
 <div class="post">
         
-    <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk %}"><strong title="{{ post.author.first_name }} {{ post.author.last_name }}">{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %} {% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %} {{ post.published_date|timesince }} ago {% if post.group %}in <a href="{% url 'mainapp:single' slug=post.group.slug %}">{{ post.group.name }}</a>{% endif %}</p>
+    <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk slug=user.userprofileinfo.slug %}"><strong title="{{ post.author.first_name }} {{ post.author.last_name }}">{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %} {% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %} {{ post.published_date|timesince }} ago {% if post.group %}in <a href="{% url 'mainapp:single' slug=post.group.slug %}">{{ post.group.name }}</a>{% endif %}</p>
     <br>
     <!-- {% if hitcount.total_hits >= 50 %}
   <p title="This post has gained over 50 views, meaning it is trending" id="trending"><i class="fas fa-fire"></i> {{ hitcount.total_hits }} Views</p>
@@ -11,24 +10,21 @@
   <p>{{ hitcount.total_hits }} Views</p>
   {% endif %} -->
   
-  <!-- <a href="{% url 'mainapp:post_likes' pk=post.pk slug=post.slug %}">
-    <i class="fas fa-thumbs-up">&nbsp;{{ post.likes.count }}</i>
-  </a> -->
-    <!-- <hr id="divider_post"><br> -->
-    <h1><a title="View {{ post.title }}" class="title" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">{{ post.title }}</a></h1>
+
+    <h1><a title="View {{ post.title }}" class="title" href="{% url 'mainapp:post_detail' slug=post.slug %}">{{ post.title }}</a></h1>
     <div class="title-text-post-divider"></div>
     {% if post.NSFW %}<div class="nsfw"><p>NSFW</p></div> 
     
-    <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">Read this NSFW Post&nbsp;<i class="fas fa-angle-right"></i></a></p>
+    <p><a id="readmore" href="{% url 'mainapp:post_detail' slug=post.slug %}">Read this NSFW Post&nbsp;<i class="fas fa-angle-right"></i></a></p>
     {% elif post.spoiler %}<div class="spoiler"><p>Spoiler</p></div> 
     <br>
-    <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">Read this post which contains a spoiler&nbsp;<i class="fas fa-angle-right"></i></a></p>
+    <p><a id="readmore" href="{% url 'mainapp:post_detail' slug=post.slug %}">Read this post which contains a spoiler&nbsp;<i class="fas fa-angle-right"></i></a></p>
     {% elif post.spoiler and post.NSFW %}<div class="nsfw"><p>NSFW</p></div> <div class="spoiler"><p>Spoiler</p></div> 
     <br>
-    <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">Woah! This post is a double wammy of NSFW and has a spoiler! Proceed with care!&nbsp;<i class="fas fa-angle-right"></i></a></p>
+    <p><a id="readmore" href="{% url 'mainapp:post_detail' slug=post.slug %}">Woah! This post is a double wammy of NSFW and has a spoiler! Proceed with care!&nbsp;<i class="fas fa-angle-right"></i></a></p>
     {% else %}
     {{ post.text|safe|linebreaksbr|truncatechars_html:50 }}
-    <p><a id="readmore" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">Read More&nbsp;<i class="fas fa-angle-right"></i></a></p>
+    <p><a id="readmore" href="{% url 'mainapp:post_detail' slug=post.slug %}">Read More&nbsp;<i class="fas fa-angle-right"></i></a></p>
     {% endif %}
     <br>
     <div class="tags-list-detail">
@@ -44,7 +40,7 @@
    
     
 <br>
-<a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">Comments: {{ post.approve_comments.count }}</a>
+<a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' slug=post.slug %}#comments">Comments: {{ post.approve_comments.count }}</a>
 </div>
 </div><br>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>

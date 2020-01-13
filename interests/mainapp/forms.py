@@ -1,10 +1,23 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfileInfo, Post, Comment, Reply, SendMessageToAdmin
+from .models import UserProfileInfo, Post, Comment, Reply, SendMessageToAdmin,Message
 from emoji_picker.widgets import EmojiPickerTextInput, EmojiPickerTextarea
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.forms.utils import flatatt
+from django.utils.safestring import mark_safe
 
+class DivTextWidget(forms.Textarea):
+    def render(self, name, value, attrs=None,renderer=None):
+        super().render(name, value, attrs)
+        flat_attrs = flatatt(attrs)
+        html = """
+        <div contenteditable='true' id='%(id)s' name='text' role='textbox'></div>
+        """ % {
+            'attrs': flat_attrs,
+            'id': attrs['id'],
+        }
+        return mark_safe(html)
 
 
 class UserProfileInfoForms(UserCreationForm):
@@ -33,13 +46,27 @@ class UserProfileInfoForms(UserCreationForm):
 
 
 class PostForm(forms.ModelForm):
+    # text = forms.CharField(widget=DivTextWidget())
     class Meta():
         model = Post
         fields = ['title','text','group','image','file','tags','spoiler','NSFW','tag']
         widgets = {
             'title':forms.TextInput(attrs={'class':'textinputclass text-title','placeholder':'Title'}),
-            'text':forms.Textarea(attrs={'class':'textareaclass textinputclass editable','placeholder':'Post Contents'}),
+            'text':forms.Textarea(attrs={'class':'textareaclass text-area-post','placeholder':'Post contents','id':'textareaclass'}),
         }
+
+    def clean(self):
+        cleaned_data = super(PostForm, self).clean()
+        title = cleaned_data.get('title')
+        text = cleaned_data.get('text')
+        group = cleaned_data.get('group')
+        image = cleaned_data.get('image')
+        file = cleaned_data.get('file')
+        tags = cleaned_data.get('tags')
+        NSFW = cleaned_data.get('NSFW') 
+        spoiler = cleaned_data.get('spoiler') 
+        tag = cleaned_data.get('tag') 
+
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = ""
@@ -47,9 +74,13 @@ class PostForm(forms.ModelForm):
         self.fields['image'].label = ""
         self.fields['file'].label = ""
         self.fields['tags'].label = "Please select up to 5 interests"
+        self.fields['NSFW'].label = "NSFW"
+        self.fields['spoiler'].label = "Spoiler"
         self.fields['image'].required = False
         self.fields['file'].required = False
 
+    
+    
     
             
         # def clean_tags(self):
@@ -65,13 +96,13 @@ class AdminMessageForm(forms.ModelForm):
         def __init__(self,*args,**kwargs):
             super(AdminMessageForm,self).__str__(*args,**kwargs)
 
-    
+class MessageForm(forms.ModelForm):
+    class Meta():
+        model = Message
+        fields = ['content']
 
-    
-    
-    
-
-
+        def __init__(self,*args,**kwargs):
+            super(Message,self).__str__(*args,**kwargs)
 
 class CommentForm(forms.ModelForm):
     class Meta():

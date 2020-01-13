@@ -4,8 +4,9 @@
 
 <html lang="en">
 <head>
-  <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="">
@@ -43,8 +44,9 @@
     <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.4.0/lib/darkmode-js.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 </head>
-  <script>var editor = new MediumEditor('.editable');</script>
+  <!-- <script>var editor = new MediumEditor('.editable');</script> -->
   <script>
       $("img").on("contextmenu",function(e){
         return false;
@@ -54,7 +56,7 @@
 
   
 </script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+
 
 <body>
   <div class="bodydiv">
@@ -120,6 +122,15 @@
 
         {% endif %}
     </nav>
+    <!-- {% if request.user.is_superuser %}
+    <div class="admin-banner-alert">
+      <p>You are logged in as an admin</p>
+      </div>
+    {% elif request.user.userprofileinfo.moderator %}
+    <div class="mod-banner-alert">
+      <p>You are logged in as a moderator</p>
+      </div>
+    {% endif %} -->
 <!--     
     <div class="navbar-container">
     <nav class="navbar-new">
@@ -132,13 +143,18 @@
     </nav>
     </div> -->
 
+<!-- 
 
+this is kind of epic ngl
+this is kind of epic and i want to finish this project in the next few days/weeks
+ -->
     <!-- {% if request.is_IE %}<div class="alert">Watch out! You're using IE, but unfortunately, this website need HTML5 features...</div>{% endif %} -->
 
 
     {% block pre_post_content %}
     {% endblock %}
     {% include 'mainapp/messages.html' %}
+    
     {% block content %}
     {% load staticfiles %}
     {% load avatar_tags %}
@@ -150,5 +166,23 @@
     <script>
       
     </script>
+    
+
+<style>
+    .admin-banner-alert {
+        background: rgb(16, 103, 179);
+        padding: 1rem;
+        margin: 1rem;
+        font-family: Modernist;
+        color: white;
+    }
+    .mod-banner-alert {
+        background: rgb(179, 16, 179);
+        padding: 1rem;
+        margin: 1rem;
+        font-family: Modernist;
+        color: white;
+    }
+</style>
 </body>
 </html>

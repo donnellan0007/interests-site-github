@@ -53,21 +53,21 @@ $(".like-btn").click(function(e) {
   <p>|</p> -->
   {% comment %}
   {% if user in post.likes.all %}
-  <a class='like-btn' href="{% url 'mainapp:post_likes' pk=post.pk slug=post.slug %}">
+  <a class='like-btn' href="{% url 'mainapp:post_likes' slug=post.slug %}">
     <i class="fas fa-thumbs-up">&nbsp;<span class="like-count">{{ post.likes.count }}</span></i>
   </a>
   {% else %}
-  <a class='like-btn' href="{% url 'mainapp:post_likes' pk=post.pk slug=post.slug %}">
+  <a class='like-btn' href="{% url 'mainapp:post_likes' slug=post.slug %}">
     <i class="far fa-thumbs-up">&nbsp;<span class="like-count">{{ post.likes.count }}</span></i>
   </a>
   {% endif %}
   
   {% if user in post.saves.all %}
-  <a class='like-btn' href="{% url 'mainapp:post_saves' pk=post.pk slug=post.slug %}">
+  <a class='like-btn' href="{% url 'mainapp:post_saves' slug=post.slug %}">
     <i class="fas fa-bookmark saved-post-thing"></i>
   </a>
   {% else %}
-  <a class='like-btn' href="{% url 'mainapp:post_saves' pk=post.pk slug=post.slug %}">
+  <a class='like-btn' href="{% url 'mainapp:post_saves' slug=post.slug %}">
     <i class="far fa-bookmark saved-post-thing"></i>
   </a>
 
@@ -134,7 +134,7 @@ $(".like-btn").click(function(e) {
   
   
     <br>
-    <a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' pk=post.pk slug=post.slug %}">Comments: {{ post.approve_comments.count }}</a>
+    <a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' slug=post.slug %}">Comments: {{ post.approve_comments.count }}</a>
 </div>
 </div><br>
         
@@ -147,7 +147,7 @@ $(".like-btn").click(function(e) {
                 
       <a style="display: inline-block; margin-left: 2%; font-family: Modernist;" href="{% url 'mainapp:profile' %}"><p><img draggable="false" id="img-profile-nav-small" width="30" height="30" src="{{ request.user.userprofileinfo.image.url }}" alt="User profile picture ">Commenting as {{ request.user }} <!--new-post-nav<a class="new-post-nav" style="display: inline-block; font-size: 0.8em;" href="{% url 'mainapp:post_new' %}">New Post</a>--></p></a>
      
-    <form class="comment-form" method="POST" action="{% url 'mainapp:add_comment_to_post' pk=post.pk slug=post.slug %}">
+    <form class="comment-form" method="POST" action="{% url 'mainapp:add_comment_to_post' slug=post.slug %}">
       
       {% csrf_token %}
       {{form.as_p}}
@@ -156,6 +156,7 @@ $(".like-btn").click(function(e) {
 
  
 <br><br>
+<div id="comments">
   <div class="container">
 
     
@@ -165,7 +166,7 @@ $(".like-btn").click(function(e) {
   {% if user.is_authenticated or comment.approved_comment %}
   <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=comment.author.pk %}"><strong></a> {{ comment.author }}</strong> {{ comment.created_date|timesince }} ago</p> 
   <p id="comment-text">{{ comment.text|safe|linebreaks }}</p>
-  <a href="{% url 'mainapp:add_reply_to_comment' pk=comment.pk %}"><p>Reply</p></a>
+  <a href="{% url 'mainapp:add_reply_to_comment' slug=post.slug %}"><p>Reply</p></a>
   <p></p>
 {% endif %}
 
@@ -184,7 +185,7 @@ $(".like-btn").click(function(e) {
   
   
 </div>
-    
+    </div>
 
 <script>
     // Get the modal

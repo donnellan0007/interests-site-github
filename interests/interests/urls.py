@@ -23,6 +23,7 @@ from mainapp import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+import notifications.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('register/',views.register,name='register'),
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),
     path('tinymce/', include('tinymce.urls')),
+    path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('', include('django_private_chat.urls')),
 ]
 

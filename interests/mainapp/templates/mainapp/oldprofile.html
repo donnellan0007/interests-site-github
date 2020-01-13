@@ -1,12 +1,16 @@
 {% load static %}
 
 <div id="sidebar">
-        <img draggable="false" style="border-radius: 50%; user-select: none; overflow: visible;" class="header-profile-image" src="{{ user.userprofileinfo.image.url }}" alt="Profile Image">
+        <img draggable="false" style="border-radius: 50%; text-align: center; user-select: none; overflow: visible; margin: 0 auto;" class="header-profile-image" src="{{ user.userprofileinfo.image.url }}" alt="Profile Image">
         <div style="transform: translateY(-20%);" class="profile-info-profile">
-      <h1 id="header-profile"><a href="{% url 'mainapp:view_profile_with_pk' pk=user.userprofileinfo.pk %}">@{{ user }}</a>{% if user.userprofileinfo.verified %} <img style="user-select: none;" draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="20" height="20" srcset=""> {% endif %} {% if user.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %}</h1>
-      <!-- <h1 id="header-profile"><a href="{% url 'mainapp:view_profile_with_pk' pk=user.userprofileinfo.pk %}">@{{ user }}</a>{% if user.userprofileinfo.verified %} <i class="fas fa-check-circle"></i>{% endif %} {% if user.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %}</h1> -->
+      <h1 id="header-profile"><a style="color: #4287f4; text-decoration: none;" href="{% url 'mainapp:view_profile_with_pk' pk=user.userprofileinfo.pk slug=user.userprofileinfo.slug %}">@{{ user }}</a>{% if user.userprofileinfo.verified %} <img style="user-select: none;" draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="20" height="20" srcset=""> {% endif %} {% if user.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %}</h1>
       <h2 id="header-profile">{{ user.first_name }} {{ user.last_name }}</h2>
       <h3 id="description-profile-page">{{ user.userprofileinfo.description }}</h3>
+      <a id="message-user" href="">
+      <div id="message-user-div">
+      <h4 id="description-profile-page"><i class="fas fa-comment"></i></h4>
+      </div>
+      </a>
       <br>
       <div class="tags-list-detail">
         {% for tag in user.userprofileinfo.tags.all %}
@@ -18,5 +22,6 @@
           <li style="user-select: none;">No tags</li>
           {% endfor %}
           </div>
+          
           </div>
     </div>

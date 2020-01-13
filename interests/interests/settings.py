@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'avatar',
     'taggit',
     'crispy_forms',
+    'notifications',
     'rest_framework',
     'emoji_picker',
     'pyuploadcare.dj',
