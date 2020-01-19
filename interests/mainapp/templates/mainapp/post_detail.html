@@ -40,10 +40,10 @@ $(".like-btn").click(function(e) {
   })
 })
 </script>
+<div class="post-container-de">
 <div class="post">
 
-  <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk %}"><strong>{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %}{% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %} {% if post.published_date == 0 %}just now {% else %}{{ post.published_date|timesince }} ago {% endif%} {% if post.group %}in <a href="#">{{ post.group.name }}</a>{% endif %}</p>
-  <!-- <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=post.author.pk %}"><strong>{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <i class="verified-tick"></i> {% endif %} {% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %} {% if post.published_date == 0 %}just now {% else %}{{ post.published_date|timesince }} ago {% endif%} {% if post.group %}in <a href="#">{{ post.group.name }}</a>{% endif %}</p> -->
+  <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' post.author.username %}"><strong>{{ post.author|safe|linebreaksbr|truncatechars_html:50 }}</strong></a>{% if post.author.userprofileinfo.verified %} <img draggable="false" title="Verified User" class="verifed" src="{% static 'images\verified.png' %}" alt="verified" width="15" height="15" srcset=""> {% endif %}{% if post.author.userprofileinfo.moderator %}<span title="Moderator" id="moderator">[M]</span>{% endif %} {% if post.published_date == 0 %}just now {% else %}{{ post.published_date|timesince }} ago {% endif%} {% if post.group %}in <a href="#">{{ post.group.name }}</a>{% endif %}</p>
   <!-- <br> -->
   <!-- {% if hitcount.total_hits >= 50 %}
   <p title="This post has gained over 50 views, meaning it is trending" id="trending"><i class="fas fa-fire"></i> {{ hitcount.total_hits }} Views</p>
@@ -137,7 +137,7 @@ $(".like-btn").click(function(e) {
     <a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' slug=post.slug %}">Comments: {{ post.approve_comments.count }}</a>
 </div>
 </div><br>
-        
+</div>
 
       
         

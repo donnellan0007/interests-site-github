@@ -68,6 +68,7 @@ def register(request):
         form = UserProfileInfoForms(request.POST)
         if form.is_valid():
             form.save()
+            user = request.user
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             email = form.cleaned_data.get('email')
@@ -164,6 +165,7 @@ def profile_update(request):
 class PostDetailView(HitCountDetailView,DetailView):
     model = Post
     count_hit = True
+    context_object_name = 'post'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm() # Inject CommentForm
@@ -307,7 +309,7 @@ class PostListView(HitCountDetailView,SelectRelatedMixin,TagMixin,ListView):
     count_hit = True
     template_name = 'mainapp/post_list.html'
     selected_related = ("user","group")
-    paginate_by = 10
+    paginate_by = 5
     context_object_name = 'posts'
     queryset = models.Post.objects.all()
 
@@ -476,35 +478,26 @@ class UserPostListView(ListView):
         # description = get_object_or_404(UserProfileInfo,description=self.kwargs.get('description'))
         return Post.objects.filter(author=user).order_by('-published_date')
 
-# def view_profile(request,pk=None):
-#         if pk:
-#             user_profile = User.objects.get(pk=pk)
-#         else:
-#             user_profile = request.user
-#         context = {'user':user_profile}
-#         return render(request,'mainapp/profile.html',context)
 
-def view_profile(request,pk=None,slug=None):
-        if pk:
-            user_profile = User.objects.get(pk=pk)
-            # user = get_object_or_404(User,username=self.kwargs.get('username'))
-            user_posts = Post.objects.filter(author__id=pk).order_by('-published_date')   #<---add these
-            last_two = Post.objects.filter(author__id=pk).order_by('-published_date')[:2]
-            friend, created = Friend.objects.get_or_create(current_user=request.user)
-            friends = friend.users.all()
-        else:
-            user_profile = request.user
-            user_posts = Post.objects.filter(author__id = request.user.id).order_by('-published_date')   #<---add these
-            last_two = Post.objects.filter(author__id = request.user.id).order_by('-published_date')[:2]
-            friend, created = Friend.objects.get_or_create(current_user=request.user)
-            friends = friend.users.all()
-        context = {
-                   'user':user_profile,
-                   'user_posts':user_posts,
-                   'last_two':last_two,
-                   'friends':friends,
-                  }
-        return render(request,'mainapp/profile.html',context)
+def view_profile(request,username=None):
+    if username:
+        user_profile = User.objects.get(username=username)
+        last_two = Post.objects.filter(author__username=user_profile).order_by('-published_date')[:2]
+        friend, created = Friend.objects.get_or_create(current_user=request.user)
+        friends = friend.users.all()
+    else:
+        user_profile = request.user
+        user_posts = Post.objects.filter(author__username = request.user.id).order_by('-published_date')   #<---add these
+        last_two = Post.objects.filter(author__username = request.user.id).order_by('-published_date')[:2]
+        friend, created = Friend.objects.get_or_create(current_user=request.user)
+        friends = friend.users.all()
+    context = {
+        'username':user_profile,
+        'user_posts': Post.objects.filter(author__username=user_profile).order_by('-published_date'),
+        'last_two':last_two,
+        'friends':friends,
+    }
+    return render(request,'mainapp/profile.html',context)
 
 class UserDetailView(ListView):
     model = Post
@@ -514,18 +507,7 @@ class UserDetailView(ListView):
     def get_queryset(self):
         return user.post_set.all()
 
-# def view_profile(request,pk=None):
-#         if pk:
-#             user_profile = User.objects.get(pk=pk)
-#             user_posts = Post.objects.filter(user__id=pk)   #<---add these
-#         else:
-#             user_profile = request.user
-#             user_posts = Post.objects.filter(user__id = request.user.id)   #<---add these
-#         context = {
-#                    'user':user_profile,
-#                    'user_posts':user_posts
-#                   }
-#         return render(request,'mainapp/profile.html',context)
+
 
 
 class CreatePostView(LoginRequiredMixin,CreateView):

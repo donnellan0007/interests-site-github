@@ -1,24 +1,26 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
 {% block content %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Send</button>
-    </form>
+    
     {% for message in receiver_message_objects %}
         {% if message.sender == user %}
             <p>
                 {{ message.content }}
-                <i>{{ message.date_created }}</i>
+                <i>{{ message.date_created|timesince }} ago</i>
 
                 <a href="{% url 'mainapp:view_profile_with_pk' message.sender %}" id="message-link">{{ message.sender }}</a>
             </p>
         {% else %}
             <p>
                 <a href="{% url 'mainapp:view_profile_with_pk' message.sender %}" id="message-link">{{ message.sender }}</a>
-                <i>{{ message.date_created }}</i> {{ message.content }}
+                <i>{{ message.date_created|timesince }} ago</i> {{ message.content }}
             </p>
         {% endif %}
     {% endfor %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.errors }}
+        {{ form.content }}
+        <button type="submit">Send</button>
+    </form>
 {% endblock %}

@@ -12,10 +12,11 @@ app_name = 'mainapp'
 urlpatterns = [
     path('',views.Home.as_view(),name='index'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
-    path('profile/',views.view_profile,name='view_profile'),
+    
     path('new/<username>/',views.CreateMessageView.as_view(),name='message-form'),
     path('inbox/',views.MessageInbox.as_view(),name='inbox-list'),
-    path('profile/<pk>/<str:slug>/',views.view_profile,name='view_profile_with_pk'),
+    path('profile/<str:username>/',views.view_profile,name='view_profile_with_pk'),
+    path('profile/',views.view_profile,name='view_profile'),
     path('posts/',views.PostListView.as_view(),name='post_list'),
     path('post_new/', views.CreatePostView.as_view(), name='post_new'),
     path('register/',user_view.register,name='register'),
@@ -23,8 +24,7 @@ urlpatterns = [
     path('profile/',views.profile_page,name='profile'),
     path('account/update/',views.profile_update,name='profile_update'),
     path('posts/saved/',views.PostSaveListView.as_view(),name='saved-posts'),
-    # path('user/<str:username>',views.ProfileView.as_view(),name='profile'),
-    path('<str:slug>/', views.PostDetailView.as_view(), name='post_detail'),
+    
     path('<int:pk>/<str:slug>/like', views.PostLikeRedirect.as_view(), name='post_likes'),
     path('<int:pk>/<str:slug>/save', views.PostSaveRedirect.as_view(), name='post_saves'),
     path('<int:pk>/<str:slug>/like', views.PostLikeAPIRedirect.as_view(), name='post_api_likes'),
@@ -51,6 +51,7 @@ urlpatterns = [
     path('premium/',views.get_premium,name='get_premium'),
     path('random_number/',views.random,name='random_number'),
     path('admin/send/',views.SendAdminMessage.as_view(),name='send_admin_msg'),
+    path('<str:slug>/',views.PostDetailView.as_view(),name='post_detail'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

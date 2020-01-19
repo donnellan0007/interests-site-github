@@ -14,10 +14,13 @@
         <div class="tab" style="margin-top: 1rem;" aria-autocomplete="none">
                 {% csrf_token %}
           {{ u_form.username }}
+          {{ u_form.first_name }}
+          {{ u_form.last_name }}
           {{ u_form.email }}
           {{ p_form.image }} <br><br>
           {{ p_form.description }}
           {{ p_form.tags }}
+          <p>{{ p_form.is_private }} Private Account</p>
           {{ p_form.colour }} <br>
           {{ p_form.gender }}
           {{ p_form.banner }}

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load avatar_tags %}
-
 <html lang="en">
 <head>
     <script src="{% static 'js/app.js' %}"></script>
@@ -75,10 +74,12 @@
                 <!-- <a href="{% url 'mainapp:post_new' %}"><i class="fas fa-pen"></i> Make a new post</a> -->
                 
                 <a id="a-non-link" style="cursor: text;"><p style="font-size: 0.75em;" href="{% url 'mainapp:post_new' %}">{{ request.user.userprofileinfo.description }}</p></a>
+                <!-- <a id="a-non-link" style="cursor: text;"><p style="font-size: 0.75em;" href="{% url 'mainapp:post_new' %}">{{ request.user.notifications.count }}</p></a> -->
               
                 <a href="#"><i class="fas fa-users"></i></i> Discover New People</a>
                 
                 <a href="{% url 'mainapp:saved-posts' %}"><i class="fas fa-bookmark"></i> Saved Posts</a>
+                <a id="base-id-inbox" href="{% url 'mainapp:inbox-list' %}"><i class="fas fa-inbox"></i><small id="notif-count-base">{{ request.user.notifications.count }}</small> Inbox</a>
               
                 <a href="{% url 'mainapp:profile_update' %}"><i class="fas fa-cog"></i> Account Settings</a>
                 <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>

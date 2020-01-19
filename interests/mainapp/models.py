@@ -51,6 +51,7 @@ class UserProfileInfo(models.Model):
         default=MALE,
     )
     verified = models.BooleanField(default=False)
+    is_private = models.BooleanField(default=False)
     slug = models.SlugField(unique=True,allow_unicode=True)
     colour = models.CharField(max_length=500,default='#4287f5')
     moderator = models.BooleanField(default=False)
@@ -63,7 +64,7 @@ class UserProfileInfo(models.Model):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.user)
+        self.slug = slugify(self.user.username)
         super().save(*args, **kwargs)
     
     def parse_mentions(self):
@@ -180,7 +181,7 @@ class Post(models.Model):
 class Message(models.Model):
     sender = models.ForeignKey(User,related_name='senders',on_delete=models.CASCADE)
     receiver = models.ForeignKey(User,related_name='receivers',on_delete=models.CASCADE)
-    content = models.TextField(max_length=200)
+    content = models.CharField(max_length=2000)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def get_absolute_url(self):
@@ -191,7 +192,7 @@ class Message(models.Model):
         notify.send(self.sender,recipient=self.receiver,verb='has sent you a ',description='message',target=self)
     
     class Meta():
-        ordering = ['-date_created']
+        ordering = ['date_created']
     
     def __str__(self):
         return self.content

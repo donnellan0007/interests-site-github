@@ -30,9 +30,10 @@ class UserProfileInfoForms(UserCreationForm):
         fields = ['username','first_name','last_name','email']
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Username'}),
-            'email': forms.TextInput(attrs={'placeholder': 'Email'}),
             'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
+            'email': forms.TextInput(attrs={'placeholder': 'Email'}),
+            
             }
 
 
@@ -101,8 +102,13 @@ class MessageForm(forms.ModelForm):
         model = Message
         fields = ['content']
 
+        def clean(self):
+            cleaned_data = super(MessageForm, self).clean()
+            content = cleaned_data.get('content')
+
         def __init__(self,*args,**kwargs):
             super(Message,self).__str__(*args,**kwargs)
+            self.fields['content'].label = ""
 
 class CommentForm(forms.ModelForm):
     class Meta():
@@ -131,17 +137,19 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username','email']
+        fields = ['username','email','first_name','last_name']
     
     def clean(self):
         cleaned_data = super(UserUpdateForm, self).clean()
         username = cleaned_data.get('username')
         email = cleaned_data.get('email')
+        first_name = cleaned_data.get('first_name')
+        last_name = cleaned_data.get('last_name')
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfileInfo
-        fields = ['image','description','gender','banner','tags','colour','website']
+        fields = ['image','description','gender','banner','tags','is_private','colour','website']
         widgets = {
             'description':forms.Textarea(attrs={'class':'textinputclass text-title','placeholder':'Title'}),
             # 'text':forms.Textarea(attrs={'class':'textareaclass textinputclass editable','placeholder':'Post Contents'}),
@@ -153,5 +161,6 @@ class ProfileUpdateForm(forms.ModelForm):
         description = cleaned_data.get('description')
         gender = cleaned_data.get('gender')
         tags = cleaned_data.get('tags')
+        is_private = cleaned_data.get('is_private')
         colour = cleaned_data.get('colour')
         website = cleaned_data.get('website')

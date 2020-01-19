@@ -4,46 +4,12 @@
 {% load hitcount_tags %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {% block pre_post_content %}
+<div class="search-and-new-block">
 <form class="search-form" action="{% url 'mainapp:search_results' %}" method="GET" value="{{request.GET.q}}">
     <input class="search-box" name="q" value="{{request.GET.q}}" type="text" placeholder="Search">
 </form>
-{% if user.is_authenticated %}
-<br><br>
-<a class="create-post-link" href="{% url 'mainapp:post_new' %}">Create Post&nbsp;&nbsp;<i class="fas fa-pen"></i></a>
-<br>
-{% else %}
-<br><br>
-<a class="create-post-link" href="{% url 'mainapp:user_login' %}">Login or Signup<i class="fas fa-sign-in-alt"></i></a>
-<br>
-{% endif %} <br>
-{% comment %}
-{% if user.is_authenticated %}
-<p>People to connect with</p>
-{% for user in users %}
-<a href="{% url 'mainapp:view_profile_with_pk' pk=user.pk slug=user.userprofileinfo.slug %}">
-    <p>{{ user.username }}</p>
-</a>
-{% if not user in friends %}
-<a href="{% url 'mainapp:change_friends' operation='add' pk=user.pk slug=user.userprofileinfo.slug %}">
-    <button type="button">Add friend</button>
-</a>
-{% endif %}
-{% endfor %} <br>
+</div>
 
-<p>Friends: <strong>{{ friends.count }}</strong></p>
-
-{% for friend in friends %}
-<a href="{% url 'mainapp:view_profile_with_pk' pk=friend.pk slug=user.userprofileinfo.slug %}">
-    <p>{{ friend.username }}</p>
-</a>
-<a href="{% url 'mainapp:change_friends' operation='remove' pk=friend.pk slug=user.userprofileinfo.slug %}">
-    <button type="button">Remove Friend</button>
-</a>
-{% empty %}
-<p>You have no friends</p>
-{% endfor %}
-{% endif %}
-{% endcomment %}
 <!-- {% for tag in tags %}
 <div class="tag-list">
     <li><a href="{% url 'mainapp:tagged' tag.slug %}">{{ tag.name }}</a></li>
@@ -86,6 +52,7 @@
 <div class="centercontent">
     {% for post in posts %}
     {% include 'mainapp/_post.html' %}
+    {% endfor %}
     {% if is_paginated %}
   <ul class="pagination">
     {% if page_obj.has_previous %}
@@ -107,7 +74,7 @@
     {% endif %}
   </ul>
 {% endif %}
-{% endfor %}
+
 </div> 
 
 

@@ -1,18 +1,33 @@
 {% extends 'mainapp/base.html' %}
 
 {% load static %}
-<link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
 {% block content %}
-
+{% if request.user == username %}
 {% include 'mainapp/profile_header.html' %}
-
 {% include 'mainapp/oldprofile.html' %}
 
 {% for post in user_posts %}
-<div class="content">
+<div style="transform: translateY(-15%);" class="content">
 {% include 'mainapp/_post.html' %}
 </div>
 {% endfor %}
+
+{% elif username.userprofileinfo.is_private %}
+
+<div id="info-msg">
+    <h1><i class="fas fa-info-circle"></i> This account is private. Befriend @{{ username }} to view their profile</h1>
 </div>
+
+{% else %}
+{% include 'mainapp/profile_header.html' %}
+{% include 'mainapp/oldprofile.html' %}
+
+{% for post in user_posts %}
+<div style="transform: translateY(-15%);" class="content">
+{% include 'mainapp/_post.html' %}
+</div>
+{% endfor %}
+{% endif %}
+
 
 {% endblock %}

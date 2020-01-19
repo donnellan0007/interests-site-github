@@ -1,6 +1,6 @@
 from django.contrib import admin
 from emoji_picker.widgets import EmojiPickerTextInput, EmojiPickerTextarea
-from mainapp.models import UserProfileInfo,Post,Comment,Group,GroupMember,Friend,Preference,Reply,SendMessageToAdmin,Tag,HomePage
+from mainapp.models import UserProfileInfo,Post,Comment,Group,GroupMember,Friend,Preference,Reply,SendMessageToAdmin,Tag,HomePage,Message
 from django.db import models
 
 
@@ -16,6 +16,7 @@ admin.site.register(Reply)
 admin.site.register(SendMessageToAdmin)
 admin.site.register(Tag)
 admin.site.register(HomePage)
+admin.site.register(Message)
 
 admin.site.site_header = 'Interests Admin Panel'
 admin.site.site_title = 'Interest Admin Panel'
