@@ -2,9 +2,6 @@
 {% block content %}
 
 <div class="search-container">
-  {% if 'nigga' in request.GET.q %}
-  <h3 class="search-results-thing">Your search query for <span class="search-thing"><strong>{{ request.GET.q }}</strong></span> was not processed</h3>
-  {% else %}
   <div style="margin-bottom: 2rem;" class="search-and-new-block">
   <h3 class="search-results-thing" id="center-stuff-search">Search results for <span class="search-thing"><strong style="">{{ request.GET.q }}</strong></span></h3>
   {% if object_list.count == 0 %}
@@ -21,6 +18,5 @@
 
 {% endfor %}
 
-  {% endif %}
 
 {% endblock %}

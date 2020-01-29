@@ -38,7 +38,7 @@ urlpatterns = [
     path('posts_search/',views.SearchResultsView.as_view(),name='search_results'),
     path('users_search/',views.SearchResultsViewUsers.as_view(),name='search_results_user'),
     path('avatar/',include('avatar.urls')),
-    path('<int:pk>/<str:slug>/update/', PostUpdateView.as_view(), name='post-update'),
+    path('<str:slug>/update/', PostUpdateView.as_view(), name='post-update'),
     path('<int:pk>/<str:slug>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('tag/<slug>',views.TagIndexView.as_view(),name='tagged'),
     path('groups/new/',views.CreateGroup.as_view(),name='create_group'),

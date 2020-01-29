@@ -44,7 +44,7 @@ body {
     font-weight: 900;
     justify-content: space-around;
     text-align: center;
-    box-shadow: 0 14px 28px rgba(0,0,0,0), 0 5px 5px rgba(0,0,0,0.2);
+    /* box-shadow: 0 14px 28px rgba(0,0,0,0), 0 5px 5px rgba(0,0,0,0.2); */
     background-color: white;
     padding-top: 1%;
     padding-bottom: 1%;
@@ -57,7 +57,7 @@ body {
   font-weight: 900;
   justify-content: space-around;
   text-align: center;
-  box-shadow: 0 14px 28px rgba(0,0,0,0), 0 5px 5px rgba(0,0,0,0.2);
+  /* box-shadow: 0 14px 28px rgba(0,0,0,0), 0 5px 5px rgba(0,0,0,0.2); */
   background-color: white;
   padding-top: 1%;
   padding-bottom: 1%;
@@ -697,7 +697,6 @@ li {
   cursor: pointer;
 }
 .if-comments {
-  margin-left: 2%;
   font-family: Modernist;
 }
 .account-settings-logout-div {
@@ -843,7 +842,6 @@ br {
   height: 1px;
 }
 .container {
-  margin-left: 2%;
   font-family: Modernist;
 }
 .container-home {
@@ -867,6 +865,7 @@ br {
   margin-top: 2%;
   font-family: Modernist;
 }
+
 .friendreq {
   margin-top: 2%;
   background:
@@ -1193,7 +1192,7 @@ font-size: 1rem;
   border-radius: 8px;
 }
 .comment-form {
-  margin: 2%;
+  margin-top: 2%;
   font-family: Modernist;
   width: 75%;
   border-radius: 8px;
@@ -1377,4 +1376,11 @@ box-shadow: 0px -8px 23px -9px rgba(0,0,0,0.5);
 ::selection {
   color: white;
   background: #c626af;
+}
+#profile-comments a {
+  margin-left: 2rem;
+}
+#profile-username-comments {
+  margin-left: 0.5em;
+  margin-bottom: 2em;
 }

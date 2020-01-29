@@ -110,13 +110,12 @@ $(".like-btn").click(function(e) {
           <div class="post-text">
         {{ post.text|safe|linebreaksbr }}
 </div>
-        <br>
         <div class="tags-list-detail">
             
               
         {% for tag in post.tags.all|slice:"0:5" %}
-        <a class="tag-list-a" href="{% url 'mainapp:tagged' tag.slug %}" class="tag-list-box"><button class="tag-list-style">{{ tag.name|safe|truncatechars_html:10 }}</button></a>&nbsp;&nbsp;
-        <!-- <p id="tags-test">{{ tag.name|linebreaksbr }}</p>&nbsp;&nbsp; -->
+        <a class="tag-list-a" href="{% url 'mainapp:tagged' tag.slug %}" class="tag-list-box"><button class="tag-list-style">{{ tag.name|safe|truncatechars_html:10 }}</button></a>
+        <br>
         {% empty %}
         <li>No tags</li>
         {% endfor %}
@@ -133,20 +132,14 @@ $(".like-btn").click(function(e) {
   
   
   
-    <br>
     <a class="comment" title="View all {{ post.approve_comments.count }} comments" href="{% url 'mainapp:post_detail' slug=post.slug %}">Comments: {{ post.approve_comments.count }}</a>
-</div>
-</div><br>
-</div>
-
-      
-        
-    <div class="divider"></div><br>
     <div class="if-comments">
     </div>
-                
+      {% comment %}
       <a style="display: inline-block; margin-left: 2%; font-family: Modernist;" href="{% url 'mainapp:profile' %}"><p><img draggable="false" id="img-profile-nav-small" width="30" height="30" src="{{ request.user.userprofileinfo.image.url }}" alt="User profile picture ">Commenting as {{ request.user }} <!--new-post-nav<a class="new-post-nav" style="display: inline-block; font-size: 0.8em;" href="{% url 'mainapp:post_new' %}">New Post</a>--></p></a>
-     
+     {% endcomment %}
+     <!-- Comment section starts below -->
+
     <form class="comment-form" method="POST" action="{% url 'mainapp:add_comment_to_post' slug=post.slug %}">
       
       {% csrf_token %}
@@ -155,16 +148,19 @@ $(".like-btn").click(function(e) {
   </form>
 
  
-<br><br>
 <div id="comments">
   <div class="container">
 
-    
+      {% comment %}
         <h3>Comments: {{ post.approve_comments.count }}</h3><br> <!--Style this up later, it's looking a bit meh atm-->
+        {% endcomment %}
   {% for comment in post.comments.all %}
   
   {% if user.is_authenticated or comment.approved_comment %}
-  <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' pk=comment.author.pk %}"><strong></a> {{ comment.author }}</strong> {{ comment.created_date|timesince }} ago</p> 
+  <a id="profile-comments" style="display: inline-block; font-family: Modernist;" href="{% url 'mainapp:view_profile_with_pk' comment.author.username %}"><p><img draggable="false" id="img-profile-nav-small" width="30" height="30" src="{{ comment.author.userprofileinfo.image.url }}" alt="User profile picture "><a id="profile-username-comments" href="{% url 'mainapp:view_profile_with_pk' comment.author.username %}">{{ comment.author }}</a> <!--new-post-nav<a class="new-post-nav" style="display: inline-block; font-size: 0.8em;" href="{% url 'mainapp:post_new' %}">New Post</a>--></p></a>
+  {% comment %}
+  <p>Posted by <a href="{% url 'mainapp:view_profile_with_pk' comment.author.username %}"><strong> {{ comment.author }}</strong></a> {{ comment.created_date|timesince }} ago</p> 
+  {% endcomment %}
   <p id="comment-text">{{ comment.text|safe|linebreaks }}</p>
   <a href="{% url 'mainapp:add_reply_to_comment' slug=post.slug %}"><p>Reply</p></a>
   <p></p>
@@ -186,6 +182,13 @@ $(".like-btn").click(function(e) {
   
 </div>
     </div>
+</div>
+
+</div>
+
+      
+        
+   
 
 <script>
     // Get the modal
