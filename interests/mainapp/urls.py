@@ -13,7 +13,7 @@ urlpatterns = [
     path('',views.Home.as_view(),name='index'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     
-    path('new/<username>/',views.CreateMessageView.as_view(),name='message-form'),
+    path('new/<username>/',views.CreateMessageView.as_view(),name='message-form', template_name="mainapp/message_form.html"),
     path('inbox/',views.MessageInbox.as_view(),name='inbox-list'),
     path('profile/<str:username>/',views.view_profile,name='view_profile_with_pk'),
     path('profile/',views.view_profile,name='view_profile'),
