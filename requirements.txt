@@ -22,7 +22,7 @@ django-wysiwyg==0.8.0
 djangorestframework==3.11.0
 idna==2.8
 pilkit==2.0
-Pillow==6.2.1
+Pillow==9.3.0
 python-dateutil==2.8.1
 pytz==2019.3
 pyuploadcare==2.6.0
